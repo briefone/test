@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>t2c</title>
+
+  <style>
+     
+    #doc {width:624px;font-family: 'Times New Roman', Times, serif;margin: 80px auto;}
+        #doc:focus {outline:none;}
+
+    p {padding:8px;margin:0 0 8px;box-shadow: 0 0 0 3px rgba(31, 173, 255, 0);transition:box-shadow 125ms ease-in-out;position:relative}
+        .pfocus {box-shadow: 0 0 0 3px rgba(31, 173, 255, 0.2);}
+
+        p::after {content:'';width:28px;height:28px;position:absolute;background:#eee;top:4px;left:-8px;transform:translateX(-100%);border-radius:3px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity 125ms ease-in-out;}
+            p.pfocus::after {opacity:1;pointer-events:all;}
+
+  </style>
+  <script src="../js/base.js"></script>
+  <script src="../js/gator.js"></script>
+</head>
+
+<body>
+    <div id=doc contenteditable=true>
+        <p>Headquarters, Combined Joint Task Force Eastern Resolve</p>
+        <p>OPORD 21-001: Eastern Resolve</p>
+        <p>REF/A/DOC/CDRUSEUCOM/ARCTIC SHIELD SCENARIO PACKET/26JUN21</p>
+        <p>TIME ZONE: Z</p>
+        <p>1. SITUATION. Refer to REF A.</p>
+        <p>2. MISSION. Deescalate the current political crisis and deter Russian aggression in Kandalak in order to enable a peaceful transition of power to the democratically elected government. On order, CJTF employs forces to Kandalak to further deter and, if necessary, defeat Russian aggression. BPT support the transfer of power to elected Kandalak civil authorities.</p>
+        <p>3. EXECUTION.</p>
+        <p style="padding-left: 2em;">3.a. NLT 24 hours of EXORD receipt, provide a detailed CONOPS for deterrence and response operations for approval by CDRUSEUCOM</p>
+        <p style="padding-left: 2em;">3.b. USEUCOM Commander's Intent. TBP.</p>
+        <p style="padding-left: 2em;">3.c. Tasks to CJTF Arctic Shield.</p>
+        <p style="padding-left: 4em;">3.c.1. On order, deploy forces to Kandalak to deter and, if necessary, defeat Russian aggression</p>
+        <p style="padding-left: 4em;">3.c.2. CW USTRANSCOM and USEUCOM functional components, establish Intermediate Staging Bases and logistics nodes to support rapid deployment</p>
+        <p style="padding-left: 4em;">3.c.3. NLT 24 hours of EXORD receipt, ICW USEUCOM functional components, recommend a CJOA for approval by CDRUSEUCOM</p>
+        <p style="padding-left: 4em;">3.c.4. NLT 24 hours of EXORD receipt, receive a JACCE from USAFE. DIRLAUTH</p>
+        <p style="padding-left: 4em;">3.c.5. NLT 48 hours of EXORD receipt, provide a JMD with identified shortfalls to be filled by partner nations, USEUCOM functional components, and individual augmentees.</p>
+        <p style="padding-left: 4em;">3.c.6. NLT 72 hours of EXORD receipt, receive planning, communications, and public affairs augmentation from the JECC. DIRLAUTH.</p>
+        <p style="padding-left: 4em;">3.c.7. BPT provide medical capabilities, including Role II surgical resuscitative care, as required to support coalition forces</p>
+        <p>4. ADMINISTRATION AND LOGISTICS.</p>
+        <p>4.a. Concept of Sustainment: TBP.</p>
+        <p>4.b. Air Movement Priority for deployment is 1B1. Component Commands will coordinate deployment planning with USEUCOM Deployment Management Team (DMT)</p>
+        <p>4.c. Coordinate deployment and redeployment planning with USEUCOM DMT</p>
+        <p>4.d. Component Commands will utilize ABO in Norway, Finland, Poland to forward position and stockpile assets for future operations. </p>
+        <p>5. COMMAND AND SIGNAL.</p>
+        <p>5.a. Command Relationships.</p>
+        <p>5.a.1. All command relationships are IAW Reference A, Section VI.C.</p>
+        <p>5.a.2. On declaration of IOC, Commander, CJTF Arctic Shield will take OPCON of US Forces currently in Kandalak.</p>
+        <p>5.a.3. USEUCOM anticipates that 2nd Cavalry Regiment (Stryker), 2nd Brigade Combat Team, 82nd Airborne Div, 12th Combat Aviation Brigade, and 41st Field Artillery Brigade will deploy to Kandalak and be OPCON to CJFLCC-AS. CJTF-AS and its subordinate units are authorized to share planning details with these units. DIRLAUTH.</p>
+        <p>5.b. Acknowledge receipt to the USEUCOM JOC Director.</p>
+    </div>
+
+
+    <script>
+        Attach.on('click', 'p', pfocus);
+        Attach.on('mouseup', 'body', textselect);
+
+        function pfocus(){
+            let aft = psuedoClick(this).after;
+
+            if ( aft ){
+                console.log('after');
+                return;
+            }
+
+            let old = document.getElementsByClassName('pfocus');
+            old.removeclass('pfocus');
+
+            this.classList.add('pfocus');
+
+
+            let off = this.offset();
+
+            console.log(off.x, off.y);
+        }
+        
+        function textselect(){
+            let old = document.getElementsByClassName('pfocus');
+            old.removeclass('pfocus');
+
+            const sel = window.getSelection();
+            if ( !sel.rangeCount){return;}
+            const range = sel.getRangeAt(0);
+            const {
+                commonAncestorContainer,
+                startContainer,
+                endContainer,
+                startOffset,
+                endOffset,
+            } = range;
+            const nodes = [];
+
+            commonAncestorContainer.childNodes.forEach((node) => {
+                const nodeSel = sel.containsNode(node, true);
+
+                // if is not selected
+                if (!nodeSel) {
+                    return;
+                }
+
+                if ( node.nodeType == 1){
+                    if ( node.tagName == 'P'){
+                        node.classList.add('pfocus');
+                    }
+                }
+
+            });
+        }
+
+
+        function highlight() {
+            const sel = window.getSelection();
+            const range = sel.getRangeAt(0);
+            const {
+                commonAncestorContainer,
+                startContainer,
+                endContainer,
+                startOffset,
+                endOffset,
+            } = range;
+            const nodes = [];
+
+            console.group("range");
+
+            console.log("range", range);
+            console.log("commonAncestorContainer", commonAncestorContainer);
+            console.log("startContainer", startContainer);
+            console.log("endContainer", endContainer);
+            console.log("startOffset", startOffset);
+            console.log("endOffset", endOffset);
+            console.log("startContainer.parentNode", startContainer.parentNode);
+            console.groupEnd();
+
+            if (startContainer === endContainer) {
+                const span = document.createElement("span");
+                span.className = "highlight";
+                range.surroundContents(span);
+                return;
+            }
+
+            // get all posibles selected nodes
+            function getNodes(childList) {
+                console.group("***** getNode: ", childList);
+                childList.forEach((node) => {
+                console.log("node:", node, "nodoType", node.nodeType);
+
+                const nodeSel = sel.containsNode(node, true);
+                console.log("nodeSel", nodeSel);
+
+                // if is not selected
+                if (!nodeSel) return;
+
+                const tempStr = node.nodeValue;
+                console.log("nodeValue:", tempStr);
+
+                if (node.nodeType === 3 && tempStr.replace(/^\s+|\s+$/gm, "") !== "") {
+                    console.log("nodo agregado");
+                    nodes.push(node);
+                }
+
+                if (node.nodeType === 1) {
+                    if (node.childNodes) getNodes(node.childNodes);
+                }
+                });
+                console.groupEnd();
+            }
+
+            getNodes(commonAncestorContainer.childNodes);
+
+            console.log(nodes);
+
+            nodes.forEach((node, index, listObj) => {
+                const { nodeValue } = node;
+                let text, prevText, nextText;
+
+                if (index === 0) {
+                prevText = nodeValue.substring(0, startOffset);
+                text = nodeValue.substring(startOffset);
+                } else if (index === listObj.length - 1) {
+                text = nodeValue.substring(0, endOffset);
+                nextText = nodeValue.substring(endOffset);
+                } else {
+                text = nodeValue;
+                }
+
+                const span = document.createElement("span");
+                span.className = "highlight";
+                span.append(document.createTextNode(text));
+                const { parentNode } = node;
+
+                parentNode.replaceChild(span, node);
+
+                if (prevText) {
+                const prevDOM = document.createTextNode(prevText);
+                parentNode.insertBefore(prevDOM, span);
+                }
+
+                if (nextText) {
+                const nextDOM = document.createTextNode(nextText);
+                parentNode.insertBefore(nextDOM, span.nextSibling);
+                }
+            });
+
+            sel.removeRange(range);
+        }
+
+        function getSelectionParentElement() {
+            var parentEl = null, sel;
+            if (window.getSelection) {
+                sel = window.getSelection();
+                if (sel.rangeCount) {
+                    parentEl = sel.getRangeAt(0).commonAncestorContainer;
+                    if (parentEl.nodeType != 1) {
+                        parentEl = parentEl.parentNode;
+                        console.log(parentEl);
+                    }
+                }
+            } else if ( (sel = document.selection) && sel.type != "Control") {
+                parentEl = sel.createRange().parentElement();
+            }
+            return parentEl;
+        }
+
+        function getSelectionTextAndContainerElement() {
+            var text = "", containerElement = null;
+            if (typeof window.getSelection != "undefined") {
+                var sel = window.getSelection();
+                if (sel.rangeCount) {
+                    var node = sel.getRangeAt(0).commonAncestorContainer;
+                    containerElement = node.nodeType == 1 ? node : node.parentNode;
+                    text = sel.toString();
+                }
+            } else if (typeof document.selection != "undefined" &&
+                    document.selection.type != "Control") {
+                var textRange = document.selection.createRange();
+                containerElement = textRange.parentElement();
+                text = textRange.text;
+            }
+            return {
+                text: text,
+                containerElement: containerElement
+            };
+        }
+
+        function psuedoClick(parentElem) {
+            var beforeClicked,
+            afterClicked;
+
+            var parentLeft = parseInt(parentElem.getBoundingClientRect().left, 10),
+            parentTop = parseInt(parentElem.getBoundingClientRect().top, 10);
+
+            var parentWidth = parseInt(window.getComputedStyle(parentElem).width, 10),
+            parentHeight = parseInt(window.getComputedStyle(parentElem).height, 10);
+
+            var before = window.getComputedStyle(parentElem, ':before');
+            var bTransform = new WebKitCSSMatrix(before.webkitTransform);
+            var bleft = bTransform.m41;
+            var btop = bTransform.m42;
+
+            var beforeStart = parentLeft + (parseInt(before.getPropertyValue("left"), 10)) + bleft,
+            beforeEnd = beforeStart + parseInt(before.width, 10);
+
+            var beforeYStart = parentTop + (parseInt(before.getPropertyValue("top"), 10)) + btop,
+            beforeYEnd = beforeYStart + parseInt(before.height, 10);
+
+            var after = window.getComputedStyle(parentElem, ':after');
+            var aTransform = new WebKitCSSMatrix(after.webkitTransform);
+            var aleft = aTransform.m41;
+            var atop = aTransform.m42;
+
+            var afterXStart = parentLeft + (parseInt(after.getPropertyValue("left"), 10)) + aleft,
+            afterXEnd = afterXStart + parseInt(after.width, 10);
+
+            var afterYStart = parentTop + (parseInt(after.getPropertyValue("top"), 10)) + atop,
+            afterYEnd = afterYStart + parseInt(after.height, 10);
+
+            var mouseX = event.clientX,
+            mouseY = event.clientY;
+
+            beforeClicked = (mouseX >= beforeStart && mouseX <= beforeEnd && mouseY >= beforeYStart && mouseY <= beforeYEnd ? true : false);
+            afterClicked = (mouseX >= afterXStart && mouseX <= afterXEnd && mouseY >= afterYStart && mouseY <= afterYEnd ? true : false);
+
+            return {
+                "before" : beforeClicked,
+                "after"  : afterClicked
+            };      
+
+        }
+    </script>
+</body>
+</html>
