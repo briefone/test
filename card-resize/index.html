@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>card resize</title>
+  <style >
+    :root {
+            --canvas:#323440;
+            --tool: #282931;
+            --toolhover: #1e1f25;
+            --toolpress: #1B1B1C;
+            --toolselect: #1B1B1C;
+            --toolselect2: #0f0f10;
+            --toolselect3: #1B1B1C;
+            --icon:#bbb;
+            --iconcurrent:#fff;
+            --color:#fff;
+            --incolor:#000;
+            --ui:27, 26, 28;
+            --shadow:rgba(0,0,0, .16);
+            --shadow2:rgba(0,0,0, .4);
+            --panel: rgb(var(--ui));
+            --select: #00CEFF;
+
+            --secondarytext: rgba(255,255,255,.54);
+
+            --toolbtn: 60px;
+            /* --toolbtnicon: 32px; */
+            --toolgap: 12px;
+            --toolradius: 50%;
+            --toolicons: 52%;
+
+            --toolbarradius: 12px;
+            
+            --hover:rgba(255, 255, 255, 0.025);
+            --active:rgba(255, 255, 255, 0.05);
+
+            --handlegap: -4px;
+            --handlecolor: var(--select);
+            --handlesize: 8px;
+
+            --gridopacity: 125;
+
+            --dotgrid: 48px;
+            --dotsize: 1px;
+            --dotcolor: rgba(255, 255, 255, calc(var(--gridopacity) / 1000));
+            --gridcolor: rgba(255, 255, 255, calc(var(--gridopacity) / 5000));
+
+            --dotcolor2: rgba(255, 255, 255, calc(var(--gridopacity) / 312));
+            --gridcolor2: rgba(255, 255, 255, calc(var(--gridopacity) / 2500));
+
+            --panelicons: var(--icon); /* rgba(255, 255, 255, 0.85) */
+
+
+
+            --null: rgb(66,66,66);
+
+            --selectgap: 0px;
+            --selectwidth: 2px;
+
+            --menutitle: rgba(255, 255, 255, 0.54);
+
+            --canvaslabel: 14px;
+        }
+
+
+        * {margin:0;padding:0;}
+    html {font: normal 12px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif;}
+    html, body {width:100%;height:100%;}
+
+    .card {background:#EBEDEF;border-radius:6px;padding:12px;position:absolute;user-select:none;box-sizing:border-box;line-height:0;}
+      .kt {padding:2px 4px;background:#dadde0;border-radius:3px;font-weight:700;color:#111;display: inline-block;margin-bottom:4px;text-transform:uppercase;font-size:10px;line-height:12px;}
+      .text {font-size:12px;font-weight:500;min-height:calc(100% - 32px);line-height:1.2;}
+
+
+      .boundingbox {box-shadow: 0 0 0 var(--selectwidth) var(--select);pointer-events:none;
+                padding:var(--selectgap);margin:calc(var(--selectgap) * -1) 0 0  calc(var(--selectgap) * -1);
+            }
+
+            .selectwhite .boundingbox {box-shadow: 0 0 0 var(--selectwidth) var(--select), inset 0 0 0 1px white;}
+            .selectblack .boundingbox {box-shadow: 0 0 0 var(--selectwidth) var(--select), inset 0 0 0 1px black;}
+
+
+                .bhandle {border-radius:50%;position:absolute;background:var(--handlecolor);box-shadow:0 0 0 1px var(--handlecolor);width:var(--handlesize);height:var(--handlesize);transition:box-shadow 125ms ease-in-out, transform 125ms ease-in-out, opacity 125ms ease-in-out;pointer-events:all;}
+                    .bhandle:hover, .bhandle.active {box-shadow:0 0 0 1px var(--handlecolor), inset 0 0 0 12px #fff;}
+
+                    .bhandle::after {content:'';position:absolute;width:48px;height:48px;top:50%;left:50%;transform:translate(-50%, -50%);}
+
+                .boundingbox .bhandle:nth-child(1) {top:calc(var(--handlegap) - (var(--selectwidth) / 2) );left:calc(var(--handlegap) - (var(--selectwidth) / 2) );cursor:nwse-resize;}
+                .boundingbox .bhandle:nth-child(2) {top:calc(var(--handlegap) - (var(--selectwidth) / 2) );right:calc(var(--handlegap) - (var(--selectwidth) / 2) );cursor:nesw-resize;}
+                .boundingbox .bhandle:nth-child(3) {bottom:calc(var(--handlegap) - (var(--selectwidth) / 2) );left:calc(var(--handlegap) - (var(--selectwidth) / 2) );cursor:nesw-resize;}
+                .boundingbox .bhandle:nth-child(4) {bottom:calc(var(--handlegap) - (var(--selectwidth) / 2) );right:calc(var(--handlegap) - (var(--selectwidth) / 2) );cursor:nwse-resize;}
+
+
+                .boundingbox .bhandle:nth-child(5) {top:calc(var(--handlegap) - (var(--selectwidth) / 2) );left:50%;cursor:ns-resize;transform:translateX(-50%);}
+                .boundingbox .bhandle:nth-child(6) {top:50%;right:calc(var(--handlegap) - (var(--selectwidth) / 2) );cursor:ew-resize;transform:translateY(-50%);}
+                .boundingbox .bhandle:nth-child(7) {bottom:calc(var(--handlegap) - (var(--selectwidth) / 2) );left:50%;cursor:ns-resize;transform:translateX(-50%);}
+                .boundingbox .bhandle:nth-child(8) {top:50%;left:calc(var(--handlegap) - (var(--selectwidth) / 2) );cursor:ew-resize;transform:translateY(-50%);}
+
+                .boundingbox.minwidth .bhandle:nth-child(5), .boundingbox.minwidth .bhandle:nth-child(7)  {opacity:0;pointer-events:none;transform:translateX(-50%) scale(0);}
+                .boundingbox.minheight  .bhandle:nth-child(6), .boundingbox.minheight .bhandle:nth-child(8)  {opacity:0;pointer-events:none;transform:translateY(-50%) scale(0);}
+            
+                    .boundingbox.minwidth .bhandle::after, .boundingbox.minheight .bhandle::after  {width:24px;height:24px;}
+
+
+                .boundingbox.widthonly .bhandle {display:none;}
+                .boundingbox.widthonly .bhandle:nth-child(6), .boundingbox.widthonly .bhandle:nth-child(8) {display:block;opacity:1;pointer-events:all;transform:translateY(-50%) scale(1);}
+            
+
+                    /* .boundingbox .hitbox {width:64px;height:64px;max-width:80%;max-height:80%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);} */
+   
+  </style>
+</head>
+
+<body>
+  <div id=layers>
+    <div class="card sizetofix" style="width:240px;left: 147px; top:250px;" id=card1>
+      <div class=kt>size to fit</div>
+      <div class=text>US clandestinely assists Kandalak in maintaining control of Murmansk Port</div>
+    </div>
+
+    <div class="card widthonly" style="width:240px;min-width:96px;top: 61px; left: 204px;" id=card2>
+      <div class=kt>width only</div>
+      <div class=text>US clandestinely assists Kandalak in maintaining control of Murmansk Port</div>
+    </div>
+
+    <div class="card " style="width:240px;min-width:96px;top: 380px; left: 368px;" id=card4>
+      <div class=kt>width & height</div>
+      <div class=text>US clandestinely assists Kandalak in maintaining control of Murmansk Port</div>
+    </div>
+
+    <div class="card widthonly ems" style="width:240px; top: 140px; left: 529px; " id=card3>
+      <div class=kt>Scale</div>
+      <div class=text style="font-size:1em;">US clandestinely assists Kandalak in maintaining control of Murmansk Port</div>
+    </div>
+  </div>
+
+  <script src="./js/gator.js"></script>
+  <script src="./js/base.js"></script>
+  <script>
+    TEXTSIZE = 24;
+    TEXTCOLOR = 'white';
+    TYPEFACE = 'Helvetica';
+    LAYERSCALE = 1;
+    GRIDSIZE = 48;
+    DELTASCALE = 1;
+    SHARESTREAM = null;
+    STREAM = null;
+    USERNAME = 'Dave';
+
+    DEFAULTS = {};
+    HASH = 't@';
+
+    DEBUG = function(){};//console.log;
+
+    ZOOMLEVEL = 100;
+
+    function cardfocus(e){
+      this.classList.add('current');
+      setboundingbox.call(this);
+    }
+
+    function removebounding(e){
+        var bb = document.getElementsByClassName('boundingbox');
+
+        while(bb[0]){
+            // bb[0].object.bounds = null;
+
+            // DEBUG(bb[0].object);
+            // bb[0].object['bounds'] = null;
+            // DEBUG(bb[0].object['bounds']);
+
+            // delete bb[0].object.bounds;
+            bb[0].parentNode.removeChild(bb[0]);
+        }
+    }
+
+    function setboundingbox(e){
+
+      DEBUG('UGH', this.bounds);
+      if ( !!this.bounds && document.body.contains(this.bounds) ){
+        return;
+      }
+
+      var off = this.offset();
+
+      var x = off.x;
+      var y = off.y;
+      var w = off.w;
+      var h = off.h;
+
+      var b = document.createElement('div');
+      var handles = document.createElement('div');
+      // var hitbox = document.createElement('div');
+
+      b.className = 'boundingbox';
+
+      if ( this.classList.contains('widthonly')){
+        b.className += ' widthonly'
+      }
+
+      // hitbox.className = 'hitbox';
+
+      b.object = [this];
+
+      this.bounds = b;
+
+      b.style.left = x + 'px';
+      b.style.top = y + 'px';
+      b.style.position = 'absolute';
+      b.style.width = w + 'px';
+      b.style.height = h + 'px';
+      b.style.zIndex = 2147483640;
+
+      if ( h <= 72 ){
+        b.classList.add('minheight');
+      } else {
+        b.classList.remove('minheight');
+      }
+
+      if ( w <= 72 ){
+        b.classList.add('minwidth');
+      } else {
+        b.classList.remove('minwidth');
+      }
+
+      if ( this.classList.contains('canvasboard') ){
+        b.style.boxShadow = 'none';
+      }
+
+      for(var i=0;i<8;i++){
+        var a = document.createElement('div');
+        a.className = 'bhandle';
+
+        handles.appendChild(a);
+      }
+
+      b.appendChild(handles);
+      // b.appendChild(hitbox);
+
+      DEBUG('-----BB----');
+      document.body.appendChild(b);
+      }
+
+      function setboundingposition(e){
+      var b = document.getElementsByClassName('boundingbox')[0];
+
+        if ( !b ){
+          return;
+        }
+
+        var s = document.getElementsByClassName('card current');
+
+        var tx = null;
+        var ty = null;
+        var tw = null;
+        var th = null;
+
+        b.object = [];
+
+        for(var i=0;i<s.length;i++){
+          var r = s[i];
+          var off = r.offset();
+
+          var x = off.x;
+          var y = off.y;
+          var w = off.w;
+          var h = off.h;
+
+          var x2 = x + w;
+          var y2 = y + h;
+
+          if ( !tx || x < tx){
+            tx = x;
+          }
+
+          if ( !ty || y < ty){
+            ty = y;
+          }
+
+          if ( !tw || x2 > tw ){
+            tw = x2;
+          }
+
+          if ( !th || y2 > th){
+            th = y2;
+          }
+
+          r.bounds = b;
+
+          b.object.push(r);
+        }
+
+        var nw = tw - tx;
+        var nh = th - ty;
+
+        b.style.left = tx + 'px';
+        b.style.top = ty + 'px';
+        b.style.position = 'absolute';
+        b.style.width = nw + 'px';
+        b.style.height = nh + 'px';
+        b.style.zIndex = 2147483641;
+
+        if ( nh <= 72 ){
+          b.classList.add('minheight');
+        } else {
+          b.classList.remove('minheight');
+        }
+
+        if ( nw <= 72 ){
+          b.classList.add('minwidth');
+        } else {
+          b.classList.remove('minwidth');
+        }
+      }
+
+      function bhandle(e){
+        rectangleresize.call(this,e);
+      }
+
+        function rectangleresize(e){
+
+        if ( document.documentElement.classList.contains('spacecadet') ){
+          return;
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        DEBUG('fff');
+
+        var evt = e.touches ? e.touches[0] : e;
+
+        var box = this.getparent('boundingbox');
+
+        var rect = box ? box.object[0] : this.getparent('rectangle');
+
+        //     var multi = false;
+        // alert(typeof rect);
+        //     if ( typeof rect == 'array' ){
+        //       multi = true;
+
+        //       //rect = document.getElementsByClassName('boundingbox multi')[0];
+        //       rect = rect[0];
+        //     }
+
+        var zscale = 100 / ZOOMLEVEL;
+
+        var w = rect.offsetWidth;
+        var h = rect.offsetHeight;
+
+        DEBUG(w,h);
+
+        var cx = 0;
+        var cy = 0;
+
+        var sx = evt.pageX * zscale;
+        var sy = evt.pageY * zscale;
+
+        // var ot = rect.offsetTop;
+        // var ol = rect.offsetLeft;
+
+        var ol = rect.offset().x  * zscale;
+        var ot = rect.offset().y  * zscale;
+
+        var re = w + ol;
+        var be = h + ot;
+
+        var ratio = w/h;
+
+        var handle = 1;
+
+        var hs = box ? box.getElementsByClassName('bhandle') : rect.getElementsByClassName('resizehandle');
+
+        for(var i=0;i<hs.length;i++){
+            var a = hs[i];
+
+            if ( a === this ){
+                handle = i + 1;
+                break;
+            }
+        }
+
+        var a1 = (sx - ol);
+        var b1 = (sx - (ol + w));
+
+        var offx = Math.abs(a1) < Math.abs(b1) ? a1 : b1;
+
+        DEBUG(a1,b1, offx)
+
+
+        var a2 = (sy - ot);
+        var b2 = (sy - (ot + h));
+        var offy = Math.abs(a2) < Math.abs(b2) ? a2 : b2;
+
+        //var offx = sx - Math.min(Math.max(sx, ol), ol + w);
+        //var offy = sy - Math.min(Math.max(sy, ot), ot + h);
+
+
+
+
+        var moved = false;
+
+        function move(e){
+            e.preventDefault();
+
+            if ( !moved ){
+              moved = true;
+
+              if ( rect.classList.contains('textwrap') ){
+                rect.classList.add('resized');
+              }
+            }
+            
+
+            var evt = e.touches ? e.touches[0] : e;
+
+            var shift = e.shiftKey;
+
+            var x = evt.pageX * zscale;
+            var y = evt.pageY * zscale;
+            
+            
+            var nx = x - sx;
+            var ny = y - sy;
+
+            // if ( shift ){
+            //   if ( nx <= ny ){
+            //     ny = nx;
+            //   } else {
+            //     nx = ny;
+            //   }
+            // }
+
+            var nw = Math.abs(w + nx);
+            var nh = Math.abs(h + ny);
+
+            var tx = 0;//nx < 0 ? sx : 0;
+            var ty = 0;//ny < 0 ? sy : 0;
+
+            var xa = x - offx;
+            var ya = y - offy;
+
+            if ( xa < ol ) {
+                nw = ol - xa;
+                tx = -nw;
+            }
+
+            if ( ya < ot ) {
+                nh = ot - ya;
+                ty = -nh;
+            }
+
+            if ( handle === 1 || handle === 2 ){
+                nh = h - ny;
+                if ( ny < 0 ){
+                    ty = ny;
+                } else {
+                    ty = Math.abs(ny);
+                }
+
+                if ( ya > be ){
+                    nh = ya - be;
+                    ty = ty - nh;
+                }
+            }
+            
+            if ( handle === 1 || handle === 3 ){
+                nw = w - nx;
+                if ( nx >= 0 ){
+                    tx = nx;
+                }
+
+                if ( xa > re ){
+                    nw = xa - re;
+                    tx = tx - nw;
+                }
+            }
+
+            DEBUG(tx,ty, nw, nh, nx, ny);
+
+            if ( shift ){ // Half works ugh
+
+              var w2 = nw;
+              var h2 = nh;
+              if ( nx >= ny ){
+                w2 = (nh / h) * w;
+              } else {
+                h2 = (nw / w) * h;
+              }
+
+              DEBUG(tx, ty, 'tx ty');
+
+              ty = ty * (h2/nh);
+              tx = tx * (w2/nw);
+
+              DEBUG(tx, ty, 'tx ty 2');
+
+              nw = w2;
+              nh = h2;
+            }
+
+            if( handle > 4 ){
+              nw = w;//Math.abs(w + nx);
+              nh = h;//Math.abs(h + ny);
+
+              tx = 0;
+              ty = 0;
+
+              if ( handle == 5 ){
+                nh = Math.abs(h - ny);
+                ty = ny;
+
+                if ( ya > be ){
+                  nh = ya - be;
+                  ty = ty - nh;
+                }
+              }
+
+              if ( handle == 6 ){
+                nw = Math.abs(w + nx);
+
+                if ( xa < ol ) {
+                  nw = ol - xa;
+                  tx = -nw;
+                }
+              }
+
+              if ( handle == 7 ){
+                nh = Math.abs(h + ny);
+
+                if ( ya < ot ) {
+                    nh = ot - ya;
+                    ty = -nh;
+                }
+                
+              }
+
+              if ( handle == 8 ){
+                nw = Math.abs(w - nx);
+                tx = nx;
+                
+                if ( xa > re ){
+                  nw = xa - re;
+                  tx = tx - nw;
+                }
+              }
+
+
+            }
+
+            if ( nh <= 72 ){
+              rect.classList.add('minheight');
+            } else {
+              rect.classList.remove('minheight');
+            }
+
+            if ( nw <= 72 ){
+              rect.classList.add('minwidth');
+            } else {
+              rect.classList.remove('minwidth');
+            }
+
+            rect.style.width = nw + 'px';
+            if ( !rect.classList.contains('widthonly')){
+              rect.style.height = nh + 'px';
+            }
+           
+            rect.style.transform = 'translate(' + tx + 'px, ' + ty + 'px)';
+
+            // if ( box ){
+            //   box.style.width = nw + 'px';
+            //   box.style.height = nh + 'px';
+            //   box.style.transform = 'translate(' + tx + 'px, ' + ty + 'px)';
+            // }
+
+            cx = tx;
+            cy = ty;
+
+            // contextfollow.call(rect);
+
+            setboundingposition();
+
+
+            if ( rect.classList.contains('sizetofix') ){
+              var t = rect.getElementsByClassName('text')[0];
+              let h = t.offsetHeight;
+              let w = t.offsetWidth - 2;
+
+              let text= t.innerText;
+
+              // let d = getTextSize2(text, 'normal 112px sans-serif', w);
+              // let fontHeight = d;
+
+             
+
+              // DEBUG(d, h, 'textSize');
+
+
+              // if ( fontHeight > h ){
+              //   i *= -1;
+              // }
+
+              let oldd = document.getElementsByTagName('canvas');
+              oldd.remove();
+              
+              var can = document.createElement("canvas");
+              can.width = w;
+              can.height = h;
+              var ctx = can.getContext("2d");
+              ctx.clearRect(0, 0, w, h);
+              // document.body.appendChild(can);
+
+              ctx = can.getContext("2d");
+              ctx.fillStyle = "black";
+              
+              let f = 1;
+
+              let cw = 0;
+              let ch = 0;
+
+              // while(f+=1, getTextSize2(text, f + 'px', w) < h || f == 100){
+
+                let yy = 0;
+
+              // while(f+=1,  yy < h){
+
+               
+                for(var i = 0; i<999;i++){
+                
+                
+                
+                
+                ctx.font = i + 'px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif';
+                ctx.textBaseline = "top";
+                let metrics = ctx.wrapText(text,0,0,w,i * 1.2);
+
+                DEBUG('metrics', metrics.width,ctx.height, ctx.canvas.clientHeight, metrics.height, metrics.width);
+
+                yy = metrics.height;
+                xx = metrics.width;
+
+                DEBUG('FUCKKKK', yy, h, i);
+                
+
+                if ( yy > h){
+                  break;
+                }
+                f = i;
+                ch = yy;
+                cw = xx;
+              }
+
+              t.style.fontSize = f-1 + 'px';
+
+              rect.style.height = ch + 48 + 'px';
+              rect.style.width = cw + 24 + 'px';
+
+              setboundingposition();
+
+            } else if ( rect.classList.contains('ems')){
+                rect.getElementsByClassName('text')[0].style.fontSize = (12 + ((nw-240) * 0.1)) / 6.66 + 'ch';
+                setboundingposition();
+            } else {
+
+              rect.style.height = Math.max(nh, rect.getElementsByClassName('text')[0].offsetHeight + rect.getElementsByClassName('kt')[0].offsetHeight + 24 + 4) + 'px';
+
+              setboundingposition();
+            }
+        }
+
+        function end(e){
+          window.removeEventListener('mousemove', move);
+          window.removeEventListener('mouseup', end);
+
+          window.removeEventListener('touchmove', move);
+          window.removeEventListener('touchend', end);
+
+          rect.style.transform = 'translate(0,0)';
+
+          var tx2 = rect.offsetLeft + cx;
+          var ty2 = rect.offsetTop + cy;
+
+          rect.style.top =  ty2 + 'px';
+          rect.style.left = tx2 + 'px';
+
+          // if ( box ){
+          //   box.style.transform = 'translate(0,0)';
+
+          //   box.style.top = ty2 + 'px';
+          //   box.style.left = tx2 + 'px';
+          // }
+
+          DEBUG(rect.offsetLeft, rect.offsetTop);
+          DEBUG('ughsuehfku')
+
+          // setcontextpanel.call(rect);
+
+          setboundingposition();
+
+          // minimap();
+        }
+
+        window.addEventListener('mousemove', move);
+        window.addEventListener('mouseup', end);
+
+        window.addEventListener('touchmove', move);
+        window.addEventListener('touchend', end);
+        }
+
+
+        function getTextSize(text, font, width, height) {
+          var canvas = getTextSize.canvas || (getTextSize.canvas = document.createElement("canvas"));
+          var context = canvas.getContext("2d");
+          context.font = font;
+          var metrics = context.measureText(text);
+          return metrics;
+      }
+
+      function getTextSize2(text, font, width) {
+          let s = document.createElement('div');
+          s.style.width = s.style.minWidth =s.style.maxWidth = width + 'px';
+          s.style.fontSize = font;
+          s.appendChild(document.createTextNode(text));
+
+          document.body.appendChild(s);
+
+          let h = s.offsetHeight;
+
+          DEBUG(h, font, 'textheightttt');
+
+          s.parentNode.removeChild(s);
+          
+          return h;
+      }
+
+        SHAPEBORDERCOLOR = 'rgba(0,0,0,0)';
+SHAPECOLOR = 'rgb(255, 58, 48)';
+BORDERWIDTH = 0;
+
+CANVASBORDERCOLOR = 'rgba(255,255,255,.2)';
+CANVASCOLOR = 'rgba(0,0,0,0)';
+
+function rectanglemove(e){
+  // if ( e.touches &&  e.touches.length > 1 ){
+  //   return;
+  // }
+
+  if ( document.documentElement.classList.contains('spacecadet') ){
+    return;
+  }
+
+    DEBUG('mnove');
+    e.preventDefault();
+    
+
+    // if ( document.documentElement.id == 'rectanglex' || document.documentElement.id == 'circlex'  || document.documentElement.id == 'linex' ){
+    //   return;
+    // }
+
+    var cc = document.body.classList;
+
+    if ( cc.contains('type_tool') ){
+      return;
+    }
+
+    blurelm.call(this, e);
+
+    // var old = document.getElementsByClassName('rectangle current');
+    // old.removeclass('current')
+
+    this.classList.add('current');
+
+    setboundingbox.call(this, e);
+
+    // if ( this.classList.contains('paperdiv') ){
+    //   this.classList.add('selecteditem');
+    // }
+
+    var evt = e.touches ? e.touches[0] : e;
+
+    var zscale = 100 / ZOOMLEVEL;
+
+    var sx = evt.pageX * zscale;
+    var sy = evt.pageY * zscale;
+    var rec = this;
+
+    var ox = parseFloat(this.style.left) || 0;
+    var oy = parseFloat(this.style.top) || 0;
+
+    DEBUG(ox, oy, sx, sy);
+
+    var moved = false;
+
+    var box = this.bounds;
+
+    var top = window.pageYOffset || document.documentElement.scrollTop;
+    
+
+    if ( e.touches && e.touches.length > 1 ){
+      DEBUG(e.touches.length);
+      multitouch.call(this, e);
+
+      return;
+    }
+
+    
+
+    function move(e){
+
+      if ( e.touches && e.touches.length > 1 ){
+        DEBUG(e.touches.length);
+
+        end.call(this, e);
+
+        return;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+      var evt = e.touches ? e.touches[0] : e;
+
+      var x = evt.pageX* zscale;
+      var y = evt.pageY* zscale;
+      var nx = x - sx;
+      var ny = y - sy;
+
+      x = nx + ox;
+      y = ny + oy;
+
+      rec.style.top = y  + 'px';
+      rec.style.left = x + 'px';
+
+      // if ( box ){
+      //   box.style.top = y + 'px';
+      //   box.style.left = x + 'px';
+      // }
+
+      if ( !moved && Math.abs(nx) > 4 || Math.abs(ny) > 4 ){
+        moved = true;
+
+
+      }
+
+      // contextfollow.call(rec);
+
+      var recs = document.getElementsByClassName('card current');
+
+      for(var i=0;i<recs.length;i++){
+        var r = recs[i];
+        if ( r == rec ){
+          continue;
+        }
+
+        r.dataset.left = nx;
+        r.dataset.top = ny;
+
+        r.style.transform = 'translate(' + nx + 'px,' + ny + 'px)';
+      }
+
+      if ( rec.classList.contains('canvasboard')){
+        var ys = rec.offset().y;
+
+        if ( (ys-top) < 36 ){
+          rec.classList.add('neartop');
+        } else {
+          rec.classList.remove('neartop');
+        }
+      }
+
+      setboundingposition();
+    }
+
+    function end(e){
+      window.removeEventListener('mousemove', move);
+      window.removeEventListener('mouseup', end);
+
+      window.removeEventListener('touchmove', move);
+      window.removeEventListener('touchend', end);
+
+      //rect.classList.remove('drawing');
+      //rect.classList.add('current');
+
+      // minimap();
+
+      var layer = document.getElementById('layers').offset();
+      var lx = layer.x;
+      var ly = layer.y;
+
+      // setcontextpanel.call(rec);
+
+      var recs = document.getElementsByClassName('card current');
+
+      for(var i=0;i<recs.length;i++){
+        var r = recs[i];
+        if ( r == rec ){
+          //continue;
+        }
+        // var ol = r.offset().x;
+        // var ot = r.offset().y;
+
+        var ol = (Number(r.dataset.left) || 0) * 1;
+        var ot = (Number(r.dataset.top) || 0) * 1;
+
+        r.dataset.left = 0;
+        r.dataset.top = 0;
+
+        if ( rec === r ){
+          ol = ol * ZOOMLEVEL;
+          ot = ot * ZOOMLEVEL;
+        }
+
+        r.style.left = r.offsetLeft + ol + 'px';
+        r.style.top = r.offsetTop + ot + 'px';
+
+        r.style.transform = 'translate(0,0)';
+
+        // if ( r.bounds ){
+        //   r.bounds.style.left = ol + 'px';
+        //   r.bounds.style.top = ot +  'px';
+
+        //   r.bounds.style.transform = 'translate(0,0)';
+        // }
+
+        setboundingposition();
+
+      }
+
+      if ( !moved ){
+        rec.click();
+      }
+    }
+
+    window.addEventListener('touchmove', move);
+    window.addEventListener('touchend', end);
+
+    window.addEventListener('mouseup', end);
+    window.addEventListener('mousemove', move);
+  }
+
+
+  function blurall(e){
+            var c = document.getElementsByClassName('card current');
+            c.removeclass('editable');
+            c.removeclass('preedit');
+            c.removeclass('current');
+
+            removebounding();
+
+
+        }
+
+
+        function blurelm(e){
+            DEBUG('BLUR')
+            var a = document.activeElement;//.blur();
+            a.blur();
+            var c = document.getElementsByClassName('card current');
+            DEBUG(c[0]);
+            if ( !c[0] || c[0] && (c[0] == a || this.getparent('current')) ){
+                return;
+            }
+            DEBUG(a);
+            a.blur();
+
+            c.removeclass('current');
+
+
+            removebounding();
+        }
+
+
+        CanvasRenderingContext2D.prototype.wrapText = function (text, x, y, maxWidth, lineHeight) {
+
+          var lines = text.split("\n");
+
+          let mw = 0;
+
+          for (var i = 0; i < lines.length; i++) {
+
+              var words = lines[i].split(' ');
+              var line = '';
+
+              for (var n = 0; n < words.length; n++) {
+                  var testLine = line + words[n] + ' ';
+                  var metrics = this.measureText(testLine);
+                  var testWidth = metrics.width;
+                  
+                  if (testWidth > maxWidth && n > 0) {
+                      this.fillText(line, x, y);
+                      line = words[n] + ' ';
+                      y += lineHeight;
+                  }
+                  else {
+                      line = testLine;
+
+                      if ( testWidth > mw ){
+                        mw = testWidth;
+                      }
+                  }
+              }
+
+              this.fillText(line, x, y);
+              y += lineHeight;
+          }
+
+          return {height:y, width:mw};
+        }
+
+
+        function blurup(e){
+            var t = e.target;
+
+
+
+            if ( t == document.body ){
+              let c = document.getElementsByClassName('current');
+              c.removeclass('current');
+              let b = document.getElementsByClassName('boundingbox');
+              b.remove();
+            }
+
+            document.body.removeEventListener('mouseup', blurup);
+        }
+
+
+      document.body.addEventListener('mousedown', function(e){
+          var t = e.target;
+          if ( t == document.body ){
+              document.body.addEventListener('mouseup', blurup);
+          }
+      });
+
+
+    // Attach.on('click', '.card', cardfocus);
+    Attach.on('mousedown', '.bhandle', bhandle);
+    // Attach.on('mousedown', '.resizehandle', rectangleresize);
+    Attach.on('mousedown', '.card', rectanglemove);
+    Attach.on('mousedown', '.card', rectanglemove);
+    
+  </script>
+</body>
+</html>
