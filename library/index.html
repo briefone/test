@@ -323,7 +323,7 @@
         document.body.appendChild(c);
         dragcard = c;
         dragged = true;
-
+        bg = window.getComputedStyle(c).backgroundColor;
 
         ol = this.offset().x - sx;
         ot = this.offset().y - sy;
