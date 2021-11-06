@@ -14,10 +14,26 @@
     body {background:#f8f9fa;overflow:hidden;}
 
     #tabs {position:absolute;top:0;left:0;right:0;height:32px;background:#EFF1F4;display:flex;align-items: center;}
-      #tabs .tab {height:100%;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
+      .tab {height:100%;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
         .tab.current {background:white;color:#333;}
 
+        .tab.closeable {position:relative;padding-left:24px;gap:8px;padding-right:8px;}
+          .tab .btn.xbtn {width:16px;height:16px;border-radius:50%;padding:0;min-width:0;margin-top:-2px;}
+
+
+
+        .tab.board::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236C757D' fill-rule='evenodd' d='M2 1.75a1 1 0 00-1 1v6.5a1 1 0 001 1h8a1 1 0 001-1v-6.5a1 1 0 00-1-1H2zm.25 1A.25.25 0 002 3v6c0 .138.112.25.25.25h1.5A.25.25 0 004 9V3a.25.25 0 00-.25-.25h-1.5zM5 3a.25.25 0 01.25-.25h1.5A.25.25 0 017 3v6a.25.25 0 01-.25.25h-1.5A.25.25 0 015 9V3zm3.25-.25A.25.25 0 008 3v6c0 .138.112.25.25.25h1.5A.25.25 0 0010 9V3a.25.25 0 00-.25-.25h-1.5z' clip-rule='evenodd'/%3E%3C/svg%3E");position:absolute;left:8px;top:calc(50% - 8px);transform:translateY(-50%);width:12px;height:12px;}
+
+        .tab.brief::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236C757D' fill-rule='evenodd' d='M2 1.75a1 1 0 00-1 1v6.5a1 1 0 001 1h8a1 1 0 001-1v-6.5a1 1 0 00-1-1H2zm.25 1A.25.25 0 002 3v6c0 .138.112.25.25.25h1.5A.25.25 0 004 9V3a.25.25 0 00-.25-.25h-1.5zM5 3a.25.25 0 01.25-.25h1.5A.25.25 0 017 3v6a.25.25 0 01-.25.25h-1.5A.25.25 0 015 9V3zm3.25-.25A.25.25 0 008 3v6c0 .138.112.25.25.25h1.5A.25.25 0 0010 9V3a.25.25 0 00-.25-.25h-1.5z' clip-rule='evenodd'/%3E%3C/svg%3E");position:absolute;left:8px;top:calc(50% - 8px);transform:translateY(-50%);width:12px;height:12px;}
+
+
       .menubtn {height:100%;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
+
+
+    .row {display:flex;gap:4px;}
+      .wrap {flex-wrap: wrap;}
+
+    .tag {background:rgb(0 0 0 / 10%);color:rgb(0 0 0 / 65%);font-weight:600;text-transform:uppercase;font-size:11px;padding:2px 4px 1px;border-radius:2px;display:inline-block;}
 
     #conwrap {position:absolute;top:32px;left:0;right:0;bottom:0;}
       .clopen #conwrap {right: 337px;}
@@ -25,22 +41,33 @@
     #subnav {height:44px;position:absolute;top:0;left:0;right:0;background:white;border-bottom:1px solid #eee;display:flex;align-items:center;padding:0 8px;    justify-content: space-between;}
       .right {}
 
-    #cl {position:absolute;top:32px;right:0;bottom:0;width:336px;border-left:1px solid #eee;background:white;transform:translateX(100%);}
+    input[type=text] {height:28px;border:1px solid var(--border);border-radius:3px;text-indent: 8px;}
+
+    #cl {position:absolute;top:32px;right:0;bottom:0;width:336px;border-left:1px solid #eee;background:white;transform:translateX(100%);z-index:999999;}
     .clopen #cl {transform:translateX(0);}
-      .filterbar {position:absolute;top:0;left:0;right:0;height:44px;background:white;border-bottom:1px solid #eee;display:flex;gap:4px;padding:0 8px;align-items: center;}
-        .filterbar .searchbar {height:28px;border:1px solid var(--border);border-radius:3px;text-indent: 8px;width:100%;}
+      .filterbar, .editmodebar {position:absolute;top:0;left:0;right:0;height:44px;background:white;border-bottom:1px solid #eee;display:flex;gap:4px;padding:0 8px;align-items: center;}
+        .editmodebar, .editmode .filterbar {display:none;}
+        .editmode .editmodebar {display:flex;}
+        .filterbar .searchbar {width:100%;}
         .filterbar .btn {}
       .cardlist {position:absolute;top:44px;left:0;right:0;bottom:0;overflow-y:scroll;}
 
+      .editmodebar {justify-content: space-between;}
+        .editmodebar .left, .editmodebar .right {display:flex;gap:4px;}
 
 
-    .btn {height:28px;min-width:28px;border-radius:3px;background:transparent;color:#888;display: flex;align-items: center;justify-content: center;padding:0 8px;box-sizing: border-box;font-weight:500;cursor:pointer;user-select:none;}
+    .btn {height:28px;min-width:28px;border-radius:3px;background:transparent;color:#888;display: flex;align-items: center;justify-content: center;padding:0 8px;box-sizing: border-box;font-weight:500;cursor:pointer;user-select:none;font-size:12px;}
       .btn svg {fill:var(--secondary);width:12px;height:12px;}
         .btn:hover {background:#ddd;}
         .btn:active {background:#ccc;}
 
+      .btn.cta {background:#357EAC;color:white;}
+        .btn.cta:hover {background:#2c6c94;}
+        .btn.cta:active {background:#235e83;}
+
     .btn.on {background:var(--secondary);color:white;}
       .btn.on svg {fill:white;}
+
 
 
     .menubtn {}
@@ -48,20 +75,22 @@
       .menubtn.on {background:var(--border)}
 
     .pop {position:relative;}
-      .popover {opacity:0;pointer-events: none;position:absolute;top:calc(100% + 4px);left:-40px;background:white;z-index:999999;padding:4px 0;box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05), 0px 3px 6px rgba(0, 0, 0, 0.08), 0px 8px 24px rgba(0, 0, 0, 0.15);border-radius:3px;min-width:160px;}
+      .popover {opacity:0;pointer-events: none;position:absolute;top:calc(100% + 4px);left:-40px;background:white;z-index:999999999999999;padding:4px 0;box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05), 0px 3px 6px rgba(0, 0, 0, 0.08), 0px 8px 24px rgba(0, 0, 0, 0.15);border-radius:3px;min-width:160px;}
       .on > .popover {opacity:1;pointer-events: all;}
-        .popover h6 {font-size:10px;font-weight:700;color:var(--secondary);text-transform: uppercase;padding:8px 12px 2px;line-height:1;}
+        .popover h6 {font-size:10px;font-weight:700;color:var(--secondary);text-transform: uppercase;padding:8px 12px 4px;line-height:1;}
         .popitem {padding:0 12px;line-height:28px;color:#222;}
           .popitem:hover {background:var(--border);}
+
+            .popitem label {display:flex;gap:8px;align-items: center;}
           .pophover {position:relative;padding-right:32px;white-space: nowrap;}
             .pophover::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath fill='%236C757D' d='M5.284 10.839c-.312-.305-.337-.73 0-1.103L7.907 7 5.284 4.264c-.337-.373-.312-.798 0-1.101.311-.306.838-.286 1.13 0 .293.284 3.152 3.286 3.152 3.286a.766.766 0 010 1.103s-2.86 3.001-3.152 3.287c-.292.285-.819.305-1.13 0z'/%3E%3C/svg%3E");position:absolute;right:8px;top:calc(50% - 3px);transform:translateY(-50%);width:14px;height:14px;}
 
         .popover hr {border:none;height:1px;margin:4px 0;background-color:var(--border)}
 
           .hoverpop {position:absolute;opacity:0;pointer-events: none;left:100%;top:-4px;}
-            .pophover:hover .hoverpop {opacity:1;pointer-events: all;}
+            .pophover:hover > .hoverpop {opacity:1;pointer-events: all;}
 
-    .card {cursor:grab;user-select:none;padding:6px 12px 6px 20px;position:relative;font-size:12px;display: flex;flex-direction: column;gap:4px;border-bottom:1px solid var(--border);}
+    .card {cursor:grab;user-select:none;padding:6px 12px 6px 24px;position:relative;font-size:12px;display: flex;flex-direction: column;gap:4px;border-bottom:1px solid var(--border);}
       .card::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 10'%3E%3Crect width='2' height='2' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' y='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' y='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' y='8' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' y='8' fill='%236C757D' rx='1'/%3E%3C/svg%3E");position:absolute;left:8px;top:50%;transform:translateY(-50%);width:6px;height:10px;}
       .card.hide {display:none;}
       .card.used {background:#eee;}
@@ -70,7 +99,24 @@
    display: -webkit-box;
    -webkit-box-orient: vertical;
    -webkit-line-clamp: 2;}
-      .br {display:flex;gap:12px;}
+
+        .card .expand {display:none;flex-direction: column;gap: 8px;align-items: flex-start;padding:8px 0;}
+        .card.expanded {box-shadow: inset 0 0 0 2px #7a61ff;}
+        .expanded .expand {display:flex;}
+          .expanded .tr, .expanded .mr, .expanded .br, .expanded .check {display:none;}
+
+
+          textarea {width:100%;height:120px;border:1px solid var(--border);border-radius:3px;padding:8px;box-sizing:border-box;font:normal 12px sans-serif;resize:vertical;}
+
+            .btnrow {display:flex;}
+            .label {font-size:12px;color:var(--secondary);margin-bottom:2px;}
+
+        .card .check {display:none;position:absolute;left:6px;top:50%;transform:translateY(-50%);}
+          .editmode .card .check {display:block;}
+            .editmode .card::before {content:'';}
+
+        .c4l .mr {-webkit-line-clamp: 4;}
+      .br {display:flex;gap:4px 12px;flex-wrap: wrap;}
 
       .meta {display:flex;font-size:10px;color:#888;gap:4px;font-weight:700;}
         .meta .icon, .meta svg {width:12px;height:12px;fill:#777;}
@@ -79,7 +125,9 @@
 
 
       .dragcard {position:absolute;z-index:9999;width:200px;padding:8px;color:white;cursor:grabbing;user-select:none;}
+        .dragcard.focused {box-shadow:0 0 0 2px #7B61FF;}
         .dragcard .mr {-webkit-line-clamp: 4;}
+
 
       #container {position:absolute;top:44px;left:0;right:0;bottom:0;}
 
@@ -97,6 +145,14 @@
         .logo svg {width:18px;height:18px;}
 
       .chev {width:12px;height:12px;fill:var(--secondary)}
+
+
+        .meta {display:none;}
+        .ctag .metatag, .ceditor .metaeditor, .cedited .metaedited, .cupdated .metaupdated, .ccreator .metacreator, .ccreated .metacreated, .creactions .metareactions, .ccomments .metacomments, .cuses .metauses, .cactor .metaactor, .csource .metasource, .cid .metaid {display:flex;}
+
+
+        .deck {position:absolute;top:1px;left:0;bottom:0;width:180px;background:white;border-right:1px solid var(--border);}
+          .slide {width:calc(100vw - 600px);aspect-ratio: 16/9;max-height:calc(100vh - 120px);background-color: white;position:absolute;top:50%;left:calc(50%);transform:translate(calc(-50% + 90px), -50%);box-shadow:0 4px 12px rgba(0,0,0,0.1);}
 
   </style>
   <script src="../js/base.js"></script>
@@ -159,8 +215,19 @@
           <div class=popitem>Help</div>
         </div>
       </div>
-      <div class="tab board closeable current" data-view=p1>Phase I</div>
-      <div class="tab board closeable" data-view=p2>Phase II</div>
+      <div class="tab board closeable current" data-view=p1>
+        Phase I
+        <div class="btn xbtn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M14.87 12.002l4.3-4.3a1.352 1.352 0 000-1.91l-.956-.956a1.352 1.352 0 00-1.912 0l-4.3 4.3-4.3-4.3a1.352 1.352 0 00-1.91 0l-.956.955a1.352 1.352 0 000 1.912l4.3 4.3-4.3 4.3a1.352 1.352 0 000 1.91l.955.956a1.352 1.352 0 001.912 0l4.3-4.3 4.3 4.3a1.352 1.352 0 001.91 0l.956-.955a1.352 1.352 0 000-1.912l-4.3-4.3z"/>
+          </svg>
+        </div>
+      </div>
+      <div class="tab brief closeable" data-view=p2>Brief I<div class="btn xbtn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M14.87 12.002l4.3-4.3a1.352 1.352 0 000-1.91l-.956-.956a1.352 1.352 0 00-1.912 0l-4.3 4.3-4.3-4.3a1.352 1.352 0 00-1.91 0l-.956.955a1.352 1.352 0 000 1.912l4.3 4.3-4.3 4.3a1.352 1.352 0 000 1.91l.955.956a1.352 1.352 0 001.912 0l4.3-4.3 4.3 4.3a1.352 1.352 0 001.91 0l.956-.955a1.352 1.352 0 000-1.912l-4.3-4.3z"/>
+        </svg>
+      </div></div>
     </div>
     <div id=conwrap>
       <div id="subnav">
@@ -176,6 +243,16 @@
       </div>
 
       <div id=container class=p1>
+
+        <div id=p2 class=view>
+          <div class=deck>
+
+          </div>
+          <div class=slide>
+
+          </div>
+        </div>
+
         <div id=p1 class=view>
           <div class=list>
             <div class=listtag>List tag</div>
@@ -211,7 +288,26 @@
       </div>
     </div>
 
-    <div id=cl>
+    <div id=cl class="">
+      <div class=editmodebar>
+        <div class=left>
+          <input type=checkbox style="margin-left:-2px" />
+        </div>
+        <div class=right>
+          <div class="btn">
+            Copy
+          </div>
+          <div class="btn">
+            Merge
+          </div>
+          <div class="btn">
+            Delete
+          </div>
+          <div class="btn cta" onclick="document.getElementById('cl').classList.remove('editmode')">
+            Done
+          </div>
+        </div>
+      </div>
       <div class=filterbar>
         <input class=searchbar placeholder="Filter cards..." type=text />
         <div class="btn pop" id=sort>
@@ -243,23 +339,101 @@
             <path d="M10.984.5H1.016a.516.516 0 00-.364.88l3.973 3.974v4.427c0 .168.082.326.22.423l1.719 1.202a.516.516 0 00.811-.422v-5.63l3.973-3.974a.516.516 0 00-.364-.88z"/>
           </svg>
 
-          <div class=popover>
+          <div class=popover style="left:-72px;">
             <h6>Filter</h6>
-            <div class=popitem>Description</div>
-            <div class=popitem>Key tag</div>
-            <div class=popitem>Date created</div>
-            <div class=popitem>Date modified</div>
             <div class="popitem pophover">
-              More
+              Tag
               <div class="hoverpop popover" style="left:-156px;top:-4px;">
-                <div class=popitem>Reaction</div>
-                <div class=popitem>Edits</div>
-                <div class=popitem>Uses</div>
+                <div class=popitem>Logisitics</div>
+                <div class=popitem>Fact</div>
+                <div class=popitem>RFI</div>
+                <div class=popitem>Operation</div>
+                <div class=popitem>Combat</div>
+                <div class=popitem>Enemy</div>
+                <div class=popitem>Danger</div>
+                <div class=popitem>Neutral</div>
+              </div>
+            </div>
+            <div class="popitem pophover">
+              Author
+              <div class="hoverpop popover" style="left:-156px;top:-4px;">
+                <div class=popitem>Dave Brown</div>
+                <div class=popitem>Mike Jones</div>
+                <div class=popitem>Lindsay Weir</div>
+                <div class=popitem>Ashley Smith</div>
+                <div class=popitem>Ted Turner</div>
+                <div class=popitem>Fred Baker</div>
+              </div>
+            </div>
+            <div class="popitem pophover">
+              Editor
+              <div class="hoverpop popover" style="left:-156px;top:-4px;">
+                <div class=popitem>Dave Brown</div>
+                <div class=popitem>Mike Jones</div>
+                <div class=popitem>Lindsay Weir</div>
+                <div class=popitem>Ashley Smith</div>
+                <div class=popitem>Ted Turner</div>
+                <div class=popitem>Fred Baker</div>
+              </div>
+            </div>
+            <div class="popitem pophover">
+              Reaction
+              <div class="hoverpop popover" style="left:-156px;top:-4px;">
+                <div class=popitem>Approved</div>
+                <div class=popitem>Important</div>
+                <div class=popitem>Unclear</div>
+                <div class=popitem>Challenged</div>
+              </div>
+            </div>
+            <div class="popitem pophover">
+              Use
+              <div class="hoverpop popover" style="left:-156px;top:-4px;">
+                <div class="popitem pophover">
+                  Board
+                  <div class="hoverpop popover" style="left:-156px;top:-4px;">
+                    <div class=popitem>Board 1</div>
+                    <div class=popitem>Board 2</div>
+                    <div class=popitem>Board 3</div>
+                    <div class=popitem>Board 4</div>
+                  </div>
+                </div>
+                <div class="popitem pophover">
+                  Cause and effect
+                  <div class="hoverpop popover" style="left:-156px;top:-4px;">
+                    <div class=popitem>CE 1</div>
+                    <div class=popitem>CE 2</div>
+                    <div class=popitem>CE 3</div>
+                    <div class=popitem>CE 4</div>
+                  </div>
+                </div>
+                <div class="popitem pophover">Timeline
+                  <div class="hoverpop popover" style="left:-156px;top:-4px;">
+                    <div class=popitem>T 1</div>
+                    <div class=popitem>T 2</div>
+                    <div class=popitem>T 3</div>
+                    <div class=popitem>T 4</div>
+                  </div>
+                </div>
+                <div class="popitem pophover">Brief
+                  <div class="hoverpop popover" style="left:-156px;top:-4px;">
+                    <div class=popitem>B 1</div>
+                    <div class=popitem>B 2</div>
+                    <div class=popitem>B 3</div>
+                    <div class=popitem>B 4</div>
+                  </div>
+                </div>
+                <div class="popitem pophover">Orders
+                  <div class="hoverpop popover" style="left:-156px;top:-4px;">
+                    <div class=popitem>O 1</div>
+                    <div class=popitem>O 2</div>
+                    <div class=popitem>O 3</div>
+                    <div class=popitem>O 4</div>
+                  </div>
+                </div>
               </div>
             </div>
             <hr>
-            <div class=popitem>Ascending</div>
-            <div class=popitem>Descending</div>
+            <div class=popitem>Clear filters</div>
           </div>
         </div>
         <div class="btn pop">
@@ -267,18 +441,77 @@
             <path d="M11.36 7.382l-.987-.57c.1-.538.1-1.09 0-1.628l.987-.57a.28.28 0 00.127-.325 5.775 5.775 0 00-1.267-2.193.279.279 0 00-.343-.054l-.987.57A4.371 4.371 0 007.48 1.8V.66c0-.13-.09-.243-.217-.27a5.82 5.82 0 00-2.53 0 .278.278 0 00-.218.27v1.141a4.51 4.51 0 00-1.408.814l-.985-.57a.275.275 0 00-.343.053A5.74 5.74 0 00.513 4.29c-.04.125.014.26.127.325l.987.57c-.1.538-.1 1.09 0 1.628l-.987.57a.28.28 0 00-.127.325A5.776 5.776 0 001.78 9.902a.279.279 0 00.343.053l.987-.57c.415.357.892.633 1.408.814v1.14c0 .13.09.244.218.272.85.19 1.721.18 2.53 0a.278.278 0 00.218-.271v-1.141a4.51 4.51 0 001.408-.814l.987.57a.275.275 0 00.343-.053 5.74 5.74 0 001.267-2.193.286.286 0 00-.13-.327zm-5.361.47a1.857 1.857 0 01-1.854-1.854c0-1.023.832-1.855 1.854-1.855 1.021 0 1.853.832 1.853 1.855A1.857 1.857 0 016 7.853z"/>
           </svg>
 
-          <div class=popover>
+          <div class=popover style="left:-104px">
             <h6>Customize</h6>
-            <div class=popitem>Description</div>
-            <div class=popitem>Key tag</div>
-            <div class=popitem>Date created</div>
-            <div class=popitem>Date modified</div>
+            <div class=popitem>
+              <label>
+                <input type=radio class=cradio id=c2l value=c2l name="lines" /> 2 lines
+              </label>
+            </div>
+            <div class=popitem>
+              <label>
+                <input type=radio class=cradio id=c4l value=c4l name=lines /> 4 lines
+              </label>
+            </div>
             <hr>
-            <div class=popitem>Ascending</div>
-            <div class=popitem>Descending</div>
+            <div class=popitem>
+              <label>
+                <input type=checkbox class=ctoggle id=ctag value=ctag /> Tag count
+              </label>
+            </div>
+            <div class=popitem>
+              <label>
+                <input type=checkbox class=ctoggle id=ceditor value=ceditor /> Last editor
+              </label>
+            </div>
+            <div class=popitem>
+              <label>
+                <input type=checkbox class=ctoggle id=cupdated value=cupdated /> Last Updated
+              </label>
+            </div>
+            <div class=popitem>
+              <label>
+                <input type=checkbox class=ctoggle id=ccreator value=ccreator /> Creator
+              </label>
+            </div>
+            <div class=popitem>
+              <label>
+                <input type=checkbox class=ctoggle id=ccreated value=ccreated  /> Created
+              </label>
+            </div>
+            <div class=popitem>
+              <label>
+                <input type=checkbox class=ctoggle id=creactions value=creactions /> Reactions
+              </label>
+            </div>
+            <div class=popitem>
+              <label>
+                <input type=checkbox class=ctoggle id=ccomments value=ccomments /> Comments
+              </label>
+            </div>
+            <div class=popitem>
+              <label>
+                <input type=checkbox class=ctoggle id=cuses value=cuses /> Uses
+              </label>
+            </div>
+            <div class=popitem>
+              <label>
+                <input type=checkbox  class=ctoggle id=cactor value=cactor /> Actor
+              </label>
+            </div>
+            <div class=popitem>
+              <label>
+                <input type=checkbox class=ctoggle id=csource value=csource /> Source
+              </label>
+            </div>
+            <div class=popitem>
+              <label>
+                <input type=checkbox class=ctoggle id=cid value=cid /> ID
+              </label>
+            </div>
           </div>
         </div>
-        <div class="btn pop">
+        <div class="btn" onclick="document.getElementById('cl').classList.add('editmode')">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path fill-rule="evenodd" d="M1 3a2 2 0 012-2h18a2 2 0 012 2v18a2 2 0 01-2 2H3a2 2 0 01-2-2V3zm8.969 14.35L5.5 12.883a.688.688 0 010-.972l.972-.973a.687.687 0 01.973 0l3.01 3.01 6.1-6.1a.688.688 0 01.973 0l.972.973a.687.687 0 010 .972l-7.559 7.559a.687.687 0 01-.972 0z" clip-rule="evenodd"/>
           </svg>
@@ -289,11 +522,59 @@
       </div>
     </div>
   </div>
+
+  <div id=templates style="display:none;">
+    <div id=reactions class="reactions">
+      <div class=label>Reactions</div>
+      <div class=btnrow>
+        <div class="btn">Approve</div>
+        <div class="btn">Important</div>
+        <div class="btn">Unclear</div>
+        <div class="btn">Challenged</div>
+      </div>
+    </div>
+
+    <div id=tags class="tags">
+      <div class=label>Tags</div>
+      <div class=combobox>
+        combobox
+      </div>
+    </div>
+
+    <div id=uses class="uses">
+      <div class=label>Uses</div>
+      <div class="row wrap">
+        <div class=tag>Phase I</div>
+        <div class=tag>Phase II</div>
+        <div class=tag>Phase III</div>
+        <div class=tag>Warno</div>
+        <div class=tag>Brief I</div>
+      </div>
+    </div>
+
+    <div id=actorsource class="actorsource">
+      <div class=row>
+        <div class=col>
+          <div class=label>Actor</div>
+          <input type=text />
+        </div>
+        <div class=col>
+          <div class=label>Source</div>
+          <input type=text />
+        </div>
+      </div>
+    </div>
+
+  </div>
   <script>
     function carddrag(e){
+      if ( e.which == 3){
+        return;
+      }
       let t = this;
       let dragcard = false;
       let dragged = false;
+      let moved = false;
 
       let sx = e.clientX;
       let sy = e.clientY;
@@ -306,6 +587,12 @@
 
       let bg = window.getComputedStyle(keytag).backgroundColor;
 
+      if (!this.classList.contains('focused')){
+        document.getElementsByClassName('focused').removeclass('focused');
+      }
+
+      let used = t.classList.contains('used') ? true : false;
+
       console.log(text);
 
       if ( !this.classList.contains('dragcard')){
@@ -315,6 +602,8 @@
         let kt = keytag.cloneNode(true);
         kt.style.backgroundColor = 'rgba(0,0,0,0.1)';
         dragcard.style.opacity = 0;
+        dragcard.style.zIndex = 999999999999;
+        dragcard.dataset.id = this.id;
         dragcard.appendChild(kt);
         dragcard.appendChild(text);
         document.body.appendChild(dragcard);
@@ -342,6 +631,9 @@
       dragcard.style.top = y +'px';
 
       function move(e){
+        // if ( t.classList.contains('expanded')){
+        //   return;
+        // }
         let x = e.clientX + ol;
         let y = e.clientY + ot;
         let nx = Math.abs(sx - x);
@@ -355,9 +647,12 @@
           return;
         }
 
+        if (!moved && Math.max(nx, ny) > 5 ){
+          moved = true;
+        }
+
         dragcard.style.left = x +'px';
         dragcard.style.top = y +'px';
-
 
         let hovering = document.getElementsByClassName('list hovering');
 
@@ -387,13 +682,18 @@
         document.removeEventListener('mouseup', end);
 
         let tars = document.elementsFromPoint(e.clientX, e.clientY);
-        let used = false;
+
         tars.forEach(tar => {
           if ( tar.classList.contains('list')){
+            if (tar == t.getparent('list')){
+              return;
+            }
             let cc = dragcard.cloneNode(true);
             cc.style.position = 'static';
             cc.style.pointerEvents = 'all';
             cc.style.cursor = 'grab';
+            cc.style.zIndex = 2;
+            cc.classList.add('focused');
             tar.appendChild(cc);
             used = true;
           }
@@ -413,8 +713,24 @@
         } else if ( t.classList.contains('dragcard')){
           t.remove();
         }
-      }
 
+        if ( !moved ){
+          console.log('click');
+
+          document.getElementsByClassName('expanded').removeclass('expanded');
+
+          if(t.classList.contains('dragcard')){
+            t.classList.add('focused');
+
+            let ccc =   document.getElementById(t.dataset.id);
+            ccc.classList.add('expanded');
+            ccc.scrollIntoViewIfNeeded(false);
+          } else {
+
+            t.classList.add('expanded');
+          }
+        }
+      }
 
       document.addEventListener('mousemove', move);
       document.addEventListener('mouseup', end);
@@ -426,15 +742,33 @@
       let tags = [{color: '#003f5c', text: 'logisitics'}, {color: '#2f4b7c', text: 'fact'}, {color: '#665191', text: 'RFI'}, {color: '#a05195', text: 'Operation'}, {color: '#d45087', text: 'combat'}, {color: '#f95d6a', text: 'enemy'}, {color: '#ff7c43', text: 'danger'}, {color: '#ffa600', text: 'neutral'}, ];
 
       for(let i=0;i<c;i++){
-
         let card = document.createElement('div');
         let tr = document.createElement('div');
         let mr = document.createElement('div');
+        let check = document.createElement('input');
+
+        let expand = document.createElement('div');
+        let etag = document.createElement('div');
+        let etext = document.createElement('textarea');
+        let euses = document.getElementById('uses').cloneNode(true);
+        let ereact = document.getElementById('reactions').cloneNode(true);
+        let etags = document.getElementById('tags').cloneNode(true);
+        let eas = document.getElementById('actorsource').cloneNode(true);
+
+        ereact.removeAttribute('id');
+        euses.removeAttribute('id');
+        etags.removeAttribute('id');
+        eas.removeAttribute('id');
 
         card.className = 'card';
 
+        card.dataset.id = i;
+        card.id = i;
+
         tr.className = 'tr';
         mr.className = 'mr';
+
+        expand.className = 'expand';
 
         let kt = document.createElement('div');
         kt.className = 'keytag';
@@ -442,44 +776,76 @@
         kt.style.backgroundColor = tag.color;
         kt.style.color = 'white';
 
+        check.type = 'checkbox';
+        check.className = 'check';
+
+        let content = generate();
+
         kt.appendChild(document.createTextNode(tag.text));
 
+        etag = kt.cloneNode(true);
+
         tr.appendChild(kt);
-        mr.appendChild(document.createTextNode(generate()));
+        mr.appendChild(document.createTextNode(content));
 
+        etext.value = content;
 
-        let meta = makemeta(2);
-
+        let meta = makemeta(i);
 
         card.appendChild(tr);
         card.appendChild(mr);
         card.appendChild(meta);
+        card.appendChild(check);
+
+        expand.appendChild(etag);
+        expand.appendChild(etext);
+        expand.appendChild(ereact);
+        expand.appendChild(etags);
+        expand.appendChild(euses);
+        expand.appendChild(eas);
+
+        card.appendChild(expand);
 
         cl.appendChild(card);
       }
     }
 
-    function makemeta(c){
+    function makemeta(id){
       let wrap = document.createElement('div');
       wrap.className = 'br';
-      for(let i=0;i<c;i++){
+
+      let metas = [{class: 'metatag', label:[1,2,3,4,5,6,7,8,9,0], path: 'M1 11.833v-8.77C1 1.923 1.923 1 3.063 1h8.77c.547 0 1.072.217 1.459.604l9.104 9.104a2.063 2.063 0 010 2.917l-8.77 8.77a2.063 2.063 0 01-2.918 0l-9.104-9.103A2.062 2.062 0 011 11.833zM5.813 3.75a2.062 2.062 0 100 4.125 2.062 2.062 0 000-4.125z'}, {class: 'metaeditor', label:['Dave B', 'Luke S', 'Mike J', 'Tony J', 'Ashley S', 'Fred B'], path: 'M16.377 5.394l3.445 3.445a.373.373 0 010 .527l-8.341 8.342-3.545.393a.743.743 0 01-.821-.821l.393-3.544 8.342-8.342a.373.373 0 01.527 0zm6.188-.875L20.7 2.655a1.494 1.494 0 00-2.109 0L17.24 4.007a.373.373 0 000 .528l3.445 3.445a.373.373 0 00.527 0l1.353-1.352c.58-.585.58-1.528 0-2.109zm-6.898 10.92v3.888H3.444V7.105h8.777a.47.47 0 00.325-.134l1.528-1.527a.458.458 0 00-.325-.783H2.833A1.834 1.834 0 001 6.494v13.444c0 1.013.821 1.834 1.833 1.834h13.445a1.834 1.834 0 001.833-1.834v-6.027a.46.46 0 00-.783-.324L15.8 15.114a.47.47 0 00-.133.325z'}, {class: 'metaupdated', label:['1D', '2W', '4D', '5D', '1M', '6M', '2M', '4D', '2D', '6D', '1W', '1H', '2H', '8H'], path: 'M12 1C5.923 1 1 5.923 1 12s4.923 11 11 11 11-4.923 11-11S18.077 1 12 1zm4.102 13.883l-.887 1.109a.71.71 0 01-.997.11l-2.972-2.204a1.773 1.773 0 01-.665-1.386v-6.9a.71.71 0 01.71-.709h1.419a.71.71 0 01.71.71V12l2.572 1.885a.708.708 0 01.11.998z'}, {class: 'metacreator', label:['Dave B', 'Luke S', 'Mike J', 'Tony J', 'Ashley S', 'Fred B'], path: 'M17.625 1l-2.75 1.375L12.125 1l-2.75 1.375L6.625 1v4.125h11V1zm-1.65 13.063h-.718a7.504 7.504 0 01-3.132.687 7.504 7.504 0 01-3.132-.688h-.718A5.775 5.775 0 002.5 19.837v1.1c0 1.14.923 2.063 2.063 2.063h15.125c1.139 0 2.062-.923 2.062-2.063v-1.1a5.775 5.775 0 00-5.775-5.774zm-3.85-1.376a5.5 5.5 0 005.5-5.5V6.5h-11v.688a5.5 5.5 0 005.5 5.5z'}, {class: 'metacreated', label:['1D', '2W', '4D', '5D', '1M', '6M', '2M', '4D', '2D', '6D', '1W'], path: 'M17.719 7.875H12.76l1.83-5.577A1.035 1.035 0 0013.595 1H7.406c-.515 0-.954.382-1.022.894L5.009 12.206c-.082.619.4 1.169 1.022 1.169h5.1l-1.98 8.357a1.03 1.03 0 001.895.752l7.562-13.062a1.03 1.03 0 00-.89-1.547z'}, {class: 'metareactions', label:['reacts'], path: 'M12 1.5C6.2 1.5 1.5 6.2 1.5 12S6.2 22.5 12 22.5 22.5 17.8 22.5 12 17.8 1.5 12 1.5zm5.987 16.487A8.41 8.41 0 0112 20.467a8.41 8.41 0 01-5.987-2.48A8.41 8.41 0 013.533 12c0-2.26.88-4.386 2.48-5.987A8.41 8.41 0 0112 3.533c2.26 0 4.386.88 5.987 2.48A8.41 8.41 0 0120.467 12a8.41 8.41 0 01-2.48 5.987zm-2.6-7.342c.75 0 1.355-.605 1.355-1.355s-.605-1.355-1.355-1.355-1.355.606-1.355 1.355c0 .75.606 1.355 1.355 1.355zm-6.774 0c.75 0 1.355-.605 1.355-1.355s-.606-1.355-1.355-1.355c-.75 0-1.355.606-1.355 1.355 0 .75.606 1.355 1.355 1.355zm8.23 2.71H7.156a.568.568 0 00-.571.635c.317 2.506 2.494 4.446 5.127 4.446h.576c2.633 0 4.81-1.94 5.127-4.446a.568.568 0 00-.572-.635z'}, {class: 'metacomments', label:[1 , 2 ,3 ,4 , 5,6,7,8,9], path: 'M19.778 2H4.222C2.99 2 2 2.9 2 4v14c0 1.1.989 2 2.222 2h4.445l3.166 2.85a.25.25 0 00.334 0L15.333 20h4.445C21 20 22 19.1 22 18V4c0-1.1-1-2-2.222-2zM8 8.65h2.256c.05-.94.683-1.548 1.64-1.548.949 0 1.582.575 1.582 1.366 0 .79-.325 1.198-1.399 1.84-1.149.674-1.607 1.423-1.498 2.73l.016.483h2.206v-.441c0-.816.308-1.224 1.415-1.865C15.393 10.524 16 9.65 16 8.393c0-1.898-1.573-3.222-3.954-3.222-2.556 0-4.004 1.432-4.046 3.48zm3.73 8.85c.757 0 1.365-.574 1.365-1.307s-.608-1.307-1.366-1.307c-.749 0-1.356.575-1.356 1.307 0 .733.607 1.307 1.356 1.307z'}, {class: 'metaactor', label:['Russia', 'China', 'Foreign', 'Domestic', 'Pacific', 'Kangaroos'], path: 'M5.813 9.6h-.825a.55.55 0 00-.55.55v3.3a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-3.3a.55.55 0 00-.55-.55zm-3.3 1.1h-.825a.55.55 0 00-.55.55v1.1a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-1.1a.55.55 0 00-.55-.55zm6.6-4.4h-.825a.55.55 0 00-.55.55v9.9a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-9.9a.55.55 0 00-.55-.55zm13.2 4.4h-.825a.55.55 0 00-.55.55v1.1a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-1.1a.55.55 0 00-.55-.55zm-3.3-5.5h-.826a.55.55 0 00-.55.55v12.1a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55V5.75a.55.55 0 00-.55-.55zm-3.3 2.2h-.825a.55.55 0 00-.55.55v7.7a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-7.7a.55.55 0 00-.55-.55zm-3.3-4.4h-.825a.55.55 0 00-.55.55v16.5a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55V3.55a.55.55 0 00-.55-.55z'}, {class: 'metasource', label:['Intel', 'Wiki', 'Internal', 'Warno', 'XXX'], path: 'M12 1C5.923 1 1 5.923 1 12s4.923 11 11 11 11-4.923 11-11S18.077 1 12 1zm0 4.258a3.903 3.903 0 110 7.807 3.903 3.903 0 010-7.807zm0 15.258a8.5 8.5 0 01-6.498-3.025c.834-1.57 2.466-2.652 4.369-2.652.106 0 .213.018.315.048.576.187 1.18.306 1.814.306a5.85 5.85 0 001.814-.306c.102-.03.209-.048.315-.048 1.903 0 3.535 1.082 4.369 2.652A8.5 8.5 0 0112 20.516z'}, {class: 'metaid'} ];
+
+      for(let i=0;i<metas.length;i++){
+        let a = metas[i];
+        let l = a.label ? a.label.random() : 'unknown';
+        let c = a.class;
+        let p = a.path;
+
+        if (c == 'metaid'){
+          l = 'ID-' + (id+1);
+        }
+
         let m = document.createElement('div');
-        m.className = 'meta';
+        m.className = 'meta ' + c;
+        m.title = c.replace('meta', '');
 
-        let s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        let path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+        if ( p ){
+          let s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+          let path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
 
-        s.setAttribute('viewBox', '0 0 24 24');
-        path.setAttribute('d', 'M1 11.833v-8.77C1 1.923 1.923 1 3.063 1h8.77c.547 0 1.072.217 1.459.604l9.104 9.104a2.063 2.063 0 010 2.917l-8.77 8.77a2.063 2.063 0 01-2.918 0l-9.104-9.103A2.062 2.062 0 011 11.833zM5.813 3.75a2.062 2.062 0 100 4.125 2.062 2.062 0 000-4.125z');
+          s.setAttribute('viewBox', '0 0 24 24');
+          path.setAttribute('d', a.path);
 
-        s.appendChild(path);
+          s.appendChild(path);
+          m.appendChild(s);
+        }
 
         let d = document.createElement('div');
         d.className = 'data';
 
-        d.appendChild(document.createTextNode('Meta'));
+        d.appendChild(document.createTextNode(l));
 
-        m.appendChild(s);
         m.appendChild(d);
 
         wrap.appendChild(m);
@@ -571,15 +937,102 @@
 
     }
 
+    function ctoggle(e){
+      let v = this.value;
 
-    makecards(40);
+      let cl = document.getElementById('cl');
+      let x = false;
+      if ( this.checked ){
+        cl.classList.add(v);
+        x = true;
+      } else {
+        cl.classList.remove(v);
+      }
+
+      localStorage[v] = x;
+    }
+
+    function cradio(e){
+      let cl = document.getElementById('cl');
+      let g = this.name;
+      let r = document.getElementsByName(g);
+
+      for(var i=0;i<r.length;i++){
+        let rad = r[i];
+        console.log(i, rad.checked);
+        let v = rad.value;
+        let x = false;
+        if ( rad.checked ){
+          cl.classList.add(v);
+          console.log(v)
+          x = true;
+        } else {
+          cl.classList.remove(v);
+        }
+        localStorage[v] = x;
+      }
+    }
+
+    function bodyclick(e){
+      let nonpop = false;
+      let tars = document.elementsFromPoint(e.clientX, e.clientY);
+
+        tars.forEach(tar => {
+          if ( tar.classList.contains('popover') || tar.classList.contains('pop')){
+            nonpop = true
+            return;
+          }
+        });
+
+        console.log(nonpop, 'nonpop');
+        if ( !nonpop ){
+          document.getElementsByClassName('pop on').removeclass('on');
+        }
+    }
+
+    function restorecustom(){
+      if (localStorage.ctag == 'true' || localStorage.ctag === undefined ) document.getElementById('ctag').click();
+      if (localStorage.ceditor == 'true' || localStorage.ceditor === undefined ) document.getElementById('ceditor').click();
+      if (localStorage.cupdated == 'true' ) document.getElementById('cupdated').click();
+      if (localStorage.ccreator == 'true' ) document.getElementById('ccreator').click();
+      if (localStorage.ccreated == 'true' ) document.getElementById('ccreated').click();
+      if (localStorage.creactions == 'true' ) document.getElementById('creactions').click();
+      if (localStorage.ccomments == 'true' ) document.getElementById('ccomments').click();
+      if (localStorage.cuses == 'true' ) document.getElementById('cuses').click();
+      if (localStorage.cactor == 'true' ) document.getElementById('cactor').click();
+      if (localStorage.csource  == 'true') document.getElementById('csource').click();
+      if (localStorage.cid == 'true' ) document.getElementById('cid').click();
+
+      if (localStorage.c2l == 'true' || localStorage.c2l === undefined ) document.getElementById('c2l').click();
+      if (localStorage.c4l == 'true' ) document.getElementById('c4l').click();
+    }
+
+    function keypress(e){
+      console.log(e.keyCode);
+      let k = e.keyCode;
+      if ( k == 8 || k == 46){
+        document.getElementsByClassName('dragcard focused').remove();
+      }
+    }
+
+    function carddb(e){
+      console.log('db');
+    }
 
     Attach.on('mousedown', '.card', carddrag);
     Attach.on('mousedown', '.dragcard', carddrag);
+    Attach.on('dblclick', '.dragcard', carddb);
     Attach.on('click', '.toggle', togglebtn);
     Attach.on('click', '.pop', popbtn);
     Attach.on('click', '.tab', tab);
+    Attach.on('click', '#wrapper', bodyclick);
     Attach.on('input', '.searchbar', filtercards);
+    Attach.on('input', '.ctoggle', ctoggle);
+    Attach.on('input', '.cradio', cradio);
+    document.addEventListener('keyup', keypress);
+
+    makecards(40);
+    restorecustom();
   </script>
 </body>
 </html>
