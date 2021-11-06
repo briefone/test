@@ -24,7 +24,7 @@
 
         .tab.board::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236C757D' fill-rule='evenodd' d='M2 1.75a1 1 0 00-1 1v6.5a1 1 0 001 1h8a1 1 0 001-1v-6.5a1 1 0 00-1-1H2zm.25 1A.25.25 0 002 3v6c0 .138.112.25.25.25h1.5A.25.25 0 004 9V3a.25.25 0 00-.25-.25h-1.5zM5 3a.25.25 0 01.25-.25h1.5A.25.25 0 017 3v6a.25.25 0 01-.25.25h-1.5A.25.25 0 015 9V3zm3.25-.25A.25.25 0 008 3v6c0 .138.112.25.25.25h1.5A.25.25 0 0010 9V3a.25.25 0 00-.25-.25h-1.5z' clip-rule='evenodd'/%3E%3C/svg%3E");position:absolute;left:8px;top:calc(50% - 8px);transform:translateY(-50%);width:12px;height:12px;}
 
-        .tab.brief::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236C757D' fill-rule='evenodd' d='M2 1.75a1 1 0 00-1 1v6.5a1 1 0 001 1h8a1 1 0 001-1v-6.5a1 1 0 00-1-1H2zm.25 1A.25.25 0 002 3v6c0 .138.112.25.25.25h1.5A.25.25 0 004 9V3a.25.25 0 00-.25-.25h-1.5zM5 3a.25.25 0 01.25-.25h1.5A.25.25 0 017 3v6a.25.25 0 01-.25.25h-1.5A.25.25 0 015 9V3zm3.25-.25A.25.25 0 008 3v6c0 .138.112.25.25.25h1.5A.25.25 0 0010 9V3a.25.25 0 00-.25-.25h-1.5z' clip-rule='evenodd'/%3E%3C/svg%3E");position:absolute;left:8px;top:calc(50% - 8px);transform:translateY(-50%);width:12px;height:12px;}
+        .tab.brief::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%236C757D' d='M22.389 2.22H1.61A.61.61 0 001 2.831v.611a.61.61 0 00.611.611h.611v10.39c0 .674.548 1.221 1.222 1.221h7.64v1.67L8.117 20.3a.611.611 0 000 .864l.432.432a.611.611 0 00.864 0L12 19.01l2.586 2.587a.611.611 0 00.865 0l.431-.433a.611.611 0 000-.864l-2.965-2.966v-1.67h7.639c.674 0 1.222-.547 1.222-1.222V4.053h.61a.611.611 0 00.612-.61V2.83a.611.611 0 00-.611-.611zm-2.445 11.611H4.056V4.053h15.888v9.778z'/%3E%3C/svg%3E");position:absolute;left:8px;top:calc(50% - 8px);transform:translateY(-50%);width:12px;height:12px;}
 
 
       .menubtn {height:100%;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
@@ -152,7 +152,8 @@
 
 
         .deck {position:absolute;top:1px;left:0;bottom:0;width:180px;background:white;border-right:1px solid var(--border);}
-          .slide {width:calc(100vw - 600px);aspect-ratio: 16/9;max-height:calc(100vh - 120px);background-color: white;position:absolute;top:50%;left:calc(50%);transform:translate(calc(-50% + 90px), -50%);box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+          .deck .minislide {width:calc(100% - 24px);margin:12px;aspect-ratio: 16/9;border:1px solid var(--border);border-radius:4px;}
+          .slide {width:calc(100vw - 600px);aspect-ratio: 16/9;max-height:calc(100vh - 120px);background-color: white;position:absolute;top:50%;left:calc(50%);transform:translate(calc(-50% + 90px), -50%);box-shadow:0 4px 4px rgba(0,0,0,0.08);}
 
   </style>
   <script src="../js/base.js"></script>
@@ -223,7 +224,7 @@
           </svg>
         </div>
       </div>
-      <div class="tab brief closeable" data-view=p2>Brief I<div class="btn xbtn">
+      <div class="tab brief closeable" data-view=p2>Mission Brief<div class="btn xbtn">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M14.87 12.002l4.3-4.3a1.352 1.352 0 000-1.91l-.956-.956a1.352 1.352 0 00-1.912 0l-4.3 4.3-4.3-4.3a1.352 1.352 0 00-1.91 0l-.956.955a1.352 1.352 0 000 1.912l4.3 4.3-4.3 4.3a1.352 1.352 0 000 1.91l.955.956a1.352 1.352 0 001.912 0l4.3-4.3 4.3 4.3a1.352 1.352 0 001.91 0l.956-.955a1.352 1.352 0 000-1.912l-4.3-4.3z"/>
         </svg>
@@ -246,7 +247,7 @@
 
         <div id=p2 class=view>
           <div class=deck>
-
+            <div class=minislide></div>
           </div>
           <div class=slide>
 
