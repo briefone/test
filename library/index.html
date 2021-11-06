@@ -7,30 +7,68 @@
   <style>
     :root {
       --border: #DEE2E6;
+      --secondary: #6C757D;
     }
     * {padding:0;margin:0;}
     html {font: normal 14px sans-serif;color:#333;}
-    body {background:#f8f9fa;}
+    body {background:#f8f9fa;overflow:hidden;}
 
     #tabs {position:absolute;top:0;left:0;right:0;height:32px;background:#EFF1F4;display:flex;align-items: center;}
-      #tabs .tab {height:100%;font-size:11px;padding: 0 12px;color:#888;align-items: center;line-height:32px;cursor:pointer;}
+      #tabs .tab {height:100%;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
         .tab.current {background:white;color:#333;}
 
-    #subnav {height:44px;position:absolute;top:32px;left:0;right:337px;background:white;border-bottom:1px solid #eee;display:flex;align-items:center;padding:0 8px;}
-      .right {float:right;}
+      .menubtn {height:100%;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
 
-    #cl {position:absolute;top:32px;right:0;bottom:0;width:336px;border-left:1px solid #eee;background:white;}
-      .filterbar {position:absolute;top:0;left:0;right:0;height:44px;background:white;border-bottom:1px solid #eee;}
+    #conwrap {position:absolute;top:32px;left:0;right:0;bottom:0;}
+      .clopen #conwrap {right: 337px;}
+
+    #subnav {height:44px;position:absolute;top:0;left:0;right:0;background:white;border-bottom:1px solid #eee;display:flex;align-items:center;padding:0 8px;    justify-content: space-between;}
+      .right {}
+
+    #cl {position:absolute;top:32px;right:0;bottom:0;width:336px;border-left:1px solid #eee;background:white;transform:translateX(100%);}
+    .clopen #cl {transform:translateX(0);}
+      .filterbar {position:absolute;top:0;left:0;right:0;height:44px;background:white;border-bottom:1px solid #eee;display:flex;gap:4px;padding:0 8px;align-items: center;}
+        .filterbar .searchbar {height:28px;border:1px solid var(--border);border-radius:3px;text-indent: 8px;width:100%;}
+        .filterbar .btn {}
       .cardlist {position:absolute;top:44px;left:0;right:0;bottom:0;overflow-y:scroll;}
 
 
 
-    .btn {height:28px;min-width:28px;border-radius:3px;background:#eee;color:#888;display: flex;align-items: center;justify-content: center;padding:0 8px;box-sizing: border-box;font-weight:500;cursor:pointer;user-select:none;}
+    .btn {height:28px;min-width:28px;border-radius:3px;background:transparent;color:#888;display: flex;align-items: center;justify-content: center;padding:0 8px;box-sizing: border-box;font-weight:500;cursor:pointer;user-select:none;}
+      .btn svg {fill:var(--secondary);width:12px;height:12px;}
+        .btn:hover {background:#ddd;}
+        .btn:active {background:#ccc;}
+
+    .btn.on {background:var(--secondary);color:white;}
+      .btn.on svg {fill:white;}
+
+
+    .menubtn {}
+      .menubtn:hover {background:var(--border)}
+      .menubtn.on {background:var(--border)}
+
+    .pop {position:relative;}
+      .popover {opacity:0;pointer-events: none;position:absolute;top:calc(100% + 4px);left:-40px;background:white;z-index:999;padding:4px 0;box-shadow:0 2px 6px rgba(0,0,0,0.2);border-radius:3px;min-width:160px;}
+      .on > .popover {opacity:1;pointer-events: all;}
+        .popover h6 {font-size:10px;font-weight:700;color:var(--secondary);text-transform: uppercase;padding:8px 12px 2px;line-height:1;}
+        .popitem {padding:0 12px;line-height:28px;color:#222;}
+          .popitem:hover {background:var(--border);}
+          .pophover {position:relative;}
+
+        .popover hr {border:none;height:1px;margin:4px 0;background-color:var(--border)}
+
+          .hoverpop {position:absolute;opacity:0;pointer-events: none;}
+            .pophover:hover .hoverpop {opacity:1;pointer-events: all;}
 
     .card {cursor:grab;user-select:none;padding:6px 12px 6px 20px;position:relative;font-size:12px;display: flex;flex-direction: column;gap:4px;border-bottom:1px solid var(--border);}
       .card::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 10'%3E%3Crect width='2' height='2' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' y='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' y='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' y='8' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' y='8' fill='%236C757D' rx='1'/%3E%3C/svg%3E");position:absolute;left:8px;top:50%;transform:translateY(-50%);width:6px;height:10px;}
+      .card.hide {display:none;}
+      .card.used {background:#eee;}
       .keytag {background:#eee;color:#888;font-weight:600;text-transform:uppercase;font-size:11px;padding:2px 4px 1px;border-radius:2px;display:inline-block;}
-      .mr {max-height:28px;line-height:14px;overflow:hidden;}
+      .mr {line-height:1.2;overflow:hidden;text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 2;}
       .br {display:flex;gap:12px;}
 
       .meta {display:flex;font-size:10px;color:#888;gap:4px;font-weight:700;}
@@ -39,57 +77,175 @@
 
 
 
-      .dragcard {position:absolute;z-index:9999;width:200px;padding:8px;background:red;cursor:grabbing;pointer-events: none;}
+      .dragcard {position:absolute;z-index:9999;width:200px;padding:8px;color:white;cursor:grabbing;user-select:none;}
+        .dragcard .mr {-webkit-line-clamp: 4;}
 
-      #container {position:absolute;top:76px;left:0;right:336px;bottom:0;}
-        #board {display:flex;flex-direction: row;gap:12px;padding:16px;max-width:100%;overflow-y:scroll;height:100%;box-sizing: border-box;}
-          #board .list {width:232px;min-height:200px;padding:8px;border-radius: 6px;flex-shrink:0;background:#DEE2E6;box-sizing: border-box;display:flex;flex-direction: column;gap:4px;}
-          #board .list.hovering {background:#91C7E9;}
+      #container {position:absolute;top:44px;left:0;right:0;bottom:0;}
 
-        .listtag {background:#eee;color:#888;font-weight:600;text-transform:uppercase;font-size:11px;padding:2px 4px 1px;border-radius:2px;display:inline-block;flex-grow: 0;}
+        .view {display:none;flex-direction: row;gap:12px;padding:16px;max-width:100%;overflow-y:scroll;height:100%;box-sizing: border-box;}
+
+        #container.home #home, #container.p1 #p1,#container.p2 #p2 {display:flex;}
+
+          .list {width:232px;min-height:200px;padding:8px;border-radius:3px;flex-shrink:0;background:rgb(0 0 0 / 5%);box-sizing: border-box;display:flex;flex-direction: column;gap:4px;align-items: flex-start;user-select:none;align-self: flex-start;}
+          .list.hovering {background:#aa99ff71;}
+
+        .listtag {background:rgb(0 0 0 / 10%);color:rgb(0 0 0 / 65%);font-weight:600;text-transform:uppercase;font-size:11px;padding:2px 4px 1px;border-radius:2px;display:inline-block;flex-grow: 0;}
+
+
+      .logo {justify-content: center;}
+        .logo svg {width:18px;height:18px;}
+
+      .chev {width:12px;height:12px;fill:var(--secondary)}
 
   </style>
   <script src="../js/base.js"></script>
   <script src="../js/gator.js"></script>
 </head>
 
-<body>
+<body class="clopen">
   <div id=wrapper>
     <div id=tabs>
-      <div class="tab logo">logo</div>
-      <div class="tab planhome">plan home</div>
-      <div class="tab home">home</div>
-      <div class="tab board closeable current">Board</div>
-    </div>
-    <div id="subnav">
-      subnav
-
-      <div class="right">
-        <div class="btn">CL</div>
+      <div class="tab logo" data-view=home>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+          <path fill="#9DCAE7" d="M6.106 10.667L16.449.321H.32V6.11h5.785v4.558z"/>
+          <path fill="#49A2DA" d="M7.333 11.894L17.679 1.55v16.127h-5.788v-5.784H7.333z"/>
+        </svg>
       </div>
-    </div>
+      <div class="menubtn planhome pop" data-view=planhome>Conquer the World
+        <svg class=chev viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5.41921 9.05756C5.94241 8.52236 6.67081 8.48036 7.31041 9.05756L12 13.554L16.6896 9.05756C17.3292 8.48036 18.0588 8.52236 18.5784 9.05756C19.1016 9.59156 19.068 10.494 18.5784 10.9956C18.0912 11.4972 12.9444 16.398 12.9444 16.398C12.684 16.6656 12.342 16.8 12 16.8C11.658 16.8 11.316 16.6656 11.0532 16.398C11.0532 16.398 5.90881 11.4972 5.41921 10.9956C4.92961 10.494 4.89601 9.59156 5.41921 9.05756Z"/>
+        </svg>
+        <div class=popover style="left:0;">
+          <h6>Sort</h6>
+          <div class=popitem>Description</div>
+          <div class=popitem>Key tag</div>
 
-    <div id=container>
-      <div id=board>
-        <div class=list>
-          <div class=listtag>List tag</div>
         </div>
-        <div class=list>
-          <div class=listtag>List tag</div>
+      </div>
+      <div class="tab board closeable current" data-view=p1>Phase I</div>
+      <div class="tab board closeable" data-view=p2>Phase II</div>
+    </div>
+    <div id=conwrap>
+      <div id="subnav">
+        <div class=left></div>
+        <div class="right">
+          <div class="btn toggle clbtn on" data-class=clopen>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+              <path fill-rule="evenodd" d="M3.162 1.714a.839.839 0 00-.841.837v5.017c0 .462.376.836.84.836h7.57c.464 0 .84-.374.84-.836V2.55a.839.839 0 00-.84-.837H3.16zm.105 1.255a.105.105 0 00-.105.104V3.7c0 .058.047.105.105.105h2.312a.105.105 0 00.106-.105v-.627a.105.105 0 00-.106-.104H3.267zm-.105 1.777c0-.058.047-.105.105-.105h7.358c.058 0 .105.047.105.105v.627a.105.105 0 01-.105.104H3.267a.105.105 0 01-.105-.104v-.627zm.105 1.568a.105.105 0 00-.105.104v.627c0 .058.047.105.105.105h6.517a.105.105 0 00.105-.105v-.627a.105.105 0 00-.105-.104H3.267z" clip-rule="evenodd"/>
+              <path d="M1.48 3.596h-.105a.943.943 0 00-.947.94v4.809c0 .52.424.94.947.94h7.358a.943.943 0 00.946-.94V9.24H2.741A1.258 1.258 0 011.48 7.986v-4.39z"/>
+            </svg>
+          </div>
         </div>
-        <div class=list>
-          <div class=listtag>List tag</div>
-        </div>
-        <div class=list>
-          <div class=listtag>List tag</div>
+      </div>
+
+      <div id=container class=p1>
+        <div id=p1 class=view>
+          <div class=list>
+            <div class=listtag>List tag</div>
+          </div>
+          <div class=list>
+            <div class=listtag>List tag</div>
+          </div>
+          <div class=list>
+            <div class=listtag>List tag</div>
+          </div>
+          <div class=list>
+            <div class=listtag>List tag</div>
+          </div>
+          <div class=list>
+            <div class=listtag>List tag</div>
+          </div>
+          <div class=list>
+            <div class=listtag>List tag</div>
+          </div>
+          <div class=list>
+            <div class=listtag>List tag</div>
+          </div>
+          <div class=list>
+            <div class=listtag>List tag</div>
+          </div>
+          <div class=list>
+            <div class=listtag>List tag</div>
+          </div>
+          <div class=list>
+            <div class=listtag>List tag</div>
+          </div>
         </div>
       </div>
     </div>
 
     <div id=cl>
       <div class=filterbar>
-        filter bar
-        <input type=text />
+        <input class=searchbar placeholder="Filter cards..." type=text />
+        <div class="btn pop" id=sort>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+            <path d="M5.781 8.063H4.75V1.53a.344.344 0 00-.344-.343H3.72a.344.344 0 00-.344.343v6.532H2.344a.344.344 0 00-.243.586l1.719 2.063a.343.343 0 00.486 0l1.719-2.063a.344.344 0 00-.244-.586zM10.15 3.35L8.43 1.288a.344.344 0 00-.486 0L6.225 3.351a.344.344 0 00.244.587h1.03v6.53a.344.344 0 00.345.345h.687a.344.344 0 00.344-.344V3.938h1.031c.305 0 .46-.37.243-.587z" />
+          </svg>
+
+          <div class=popover>
+            <h6>Sort</h6>
+            <div class=popitem>Description</div>
+            <div class=popitem>Key tag</div>
+            <div class=popitem>Date created</div>
+            <div class=popitem>Date modified</div>
+            <div class="popitem pophover">
+              More
+              <div class="hoverpop popover" style="left:-156px;top:-4px;">
+                <div class=popitem>Reaction</div>
+                <div class=popitem>Edits</div>
+                <div class=popitem>Uses</div>
+              </div>
+            </div>
+            <hr>
+            <div class=popitem>Ascending</div>
+            <div class=popitem>Descending</div>
+          </div>
+        </div>
+        <div class="btn pop">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+            <path d="M10.984.5H1.016a.516.516 0 00-.364.88l3.973 3.974v4.427c0 .168.082.326.22.423l1.719 1.202a.516.516 0 00.811-.422v-5.63l3.973-3.974a.516.516 0 00-.364-.88z"/>
+          </svg>
+
+          <div class=popover>
+            <h6>Filter</h6>
+            <div class=popitem>Description</div>
+            <div class=popitem>Key tag</div>
+            <div class=popitem>Date created</div>
+            <div class=popitem>Date modified</div>
+            <div class="popitem pophover">
+              More
+              <div class="hoverpop popover" style="left:-156px;top:-4px;">
+                <div class=popitem>Reaction</div>
+                <div class=popitem>Edits</div>
+                <div class=popitem>Uses</div>
+              </div>
+            </div>
+            <hr>
+            <div class=popitem>Ascending</div>
+            <div class=popitem>Descending</div>
+          </div>
+        </div>
+        <div class="btn pop">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+            <path d="M11.36 7.382l-.987-.57c.1-.538.1-1.09 0-1.628l.987-.57a.28.28 0 00.127-.325 5.775 5.775 0 00-1.267-2.193.279.279 0 00-.343-.054l-.987.57A4.371 4.371 0 007.48 1.8V.66c0-.13-.09-.243-.217-.27a5.82 5.82 0 00-2.53 0 .278.278 0 00-.218.27v1.141a4.51 4.51 0 00-1.408.814l-.985-.57a.275.275 0 00-.343.053A5.74 5.74 0 00.513 4.29c-.04.125.014.26.127.325l.987.57c-.1.538-.1 1.09 0 1.628l-.987.57a.28.28 0 00-.127.325A5.776 5.776 0 001.78 9.902a.279.279 0 00.343.053l.987-.57c.415.357.892.633 1.408.814v1.14c0 .13.09.244.218.272.85.19 1.721.18 2.53 0a.278.278 0 00.218-.271v-1.141a4.51 4.51 0 001.408-.814l.987.57a.275.275 0 00.343-.053 5.74 5.74 0 001.267-2.193.286.286 0 00-.13-.327zm-5.361.47a1.857 1.857 0 01-1.854-1.854c0-1.023.832-1.855 1.854-1.855 1.021 0 1.853.832 1.853 1.855A1.857 1.857 0 016 7.853z"/>
+          </svg>
+
+          <div class=popover>
+            <h6>Customize</h6>
+            <div class=popitem>Description</div>
+            <div class=popitem>Key tag</div>
+            <div class=popitem>Date created</div>
+            <div class=popitem>Date modified</div>
+            <hr>
+            <div class=popitem>Ascending</div>
+            <div class=popitem>Descending</div>
+          </div>
+        </div>
+        <div class="btn pop">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" d="M1 3a2 2 0 012-2h18a2 2 0 012 2v18a2 2 0 01-2 2H3a2 2 0 01-2-2V3zm8.969 14.35L5.5 12.883a.688.688 0 010-.972l.972-.973a.687.687 0 01.973 0l3.01 3.01 6.1-6.1a.688.688 0 01.973 0l.972.973a.687.687 0 010 .972l-7.559 7.559a.687.687 0 01-.972 0z" clip-rule="evenodd"/>
+          </svg>
+        </div>
       </div>
       <div class=cardlist>
 
@@ -99,12 +255,14 @@
   <script>
     function carddrag(e){
       let t = this;
+      let dragcard = false;
       let dragged = false;
 
       let sx = e.clientX;
       let sy = e.clientY;
 
-      let dragcard = false;
+      let ol = 0;
+      let ot = 0;
 
       let text = this.getElementsByClassName('mr')[0].cloneNode(true);
       let keytag = this.getElementsByClassName('keytag')[0];
@@ -113,22 +271,49 @@
 
       console.log(text);
 
+      if ( !this.classList.contains('dragcard')){
+        dragcard = document.createElement('div');
+        dragcard.className = 'dragcard';
+        dragcard.style.backgroundColor = bg;
+        let kt = keytag.cloneNode(true);
+        kt.style.backgroundColor = 'rgba(0,0,0,0.1)';
+        dragcard.style.opacity = 0;
+        dragcard.appendChild(kt);
+        dragcard.appendChild(text);
+        document.body.appendChild(dragcard);
+      } else {
+        let c = this.cloneNode(true);
+        document.body.appendChild(c);
+        dragcard = c;
+        dragged = true;
+
+
+        ol = this.offset().x - sx;
+        ot = this.offset().y - sy;
+
+        this.style.opacity = 0;
+      }
+
+      let x = e.clientX + ol;
+      let y = e.clientY + ot;
+
+      dragcard.style.pointerEvents = 'none';
+      dragcard.style.position = 'absolute';
+      dragcard.style.cursor = 'grabbing';
+
+      dragcard.style.left = x +'px';
+      dragcard.style.top = y +'px';
+
       function move(e){
-        let x = e.clientX;
-        let y = e.clientY;
+        let x = e.clientX + ol;
+        let y = e.clientY + ot;
         let nx = Math.abs(sx - x);
         let ny = Math.abs(sy - y);
-        console.log(nx,ny);
+        console.log(nx,ny, ol, ot);
         if ( !dragged && Math.max(nx, ny) > 5 ){
+          dragcard.style.opacity = 1;
           dragged = true;
-          dragcard = document.createElement('div');
-          dragcard.className = 'dragcard';
-          dragcard.style.backgroundColor = bg;
-          let kt = keytag.cloneNode(true);
-          kt.style.backgroundColor = 'rgba(0,0,0,0.1)';
-          dragcard.appendChild(kt);
-          dragcard.appendChild(text);
-          document.body.appendChild(dragcard);
+          t.classList.add('used');
         } else if (!dragged ){
           return;
         }
@@ -137,32 +322,60 @@
         dragcard.style.top = y +'px';
 
 
-        document.getElementsByClassName('list hovering').removeclass('hovering');
-        let tar = e.target;
+        let hovering = document.getElementsByClassName('list hovering');
 
-        if ( tar.classList.contains('list')){
-          tar.classList.add('hovering');
+        while(hovering[0]){
+          hovering[0].removeAttribute('style');
+          hovering[0].classList.remove('hovering');
         }
+
+        let tars = document.elementsFromPoint(e.clientX, e.clientY);
+
+        tars.forEach(tar => {
+          if ( tar.classList.contains('list')){
+            tar.classList.add('hovering');
+            console.log(bg)
+
+            if ( bg.indexOf('rgb') >= 0 ){
+              let rgb = bg.replace('rgb(', '').replace(')', '').split(',');
+              tar.style.backgroundColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ', 0.3)';
+            }
+
+          }
+        });
       }
 
       function end(e){
         document.removeEventListener('mousemove', move);
         document.removeEventListener('mouseup', end);
 
-        let tar = e.target;
+        let tars = document.elementsFromPoint(e.clientX, e.clientY);
+        let used = false;
+        tars.forEach(tar => {
+          if ( tar.classList.contains('list')){
+            let cc = dragcard.cloneNode(true);
+            cc.style.position = 'static';
+            cc.style.pointerEvents = 'all';
+            cc.style.cursor = 'grab';
+            tar.appendChild(cc);
+            used = true;
+          }
+        });
 
-        if ( tar.classList.contains('list')){
-          let cc = dragcard.cloneNode(true);
-          cc.style.position = 'static';
-          tar.appendChild(cc);
+        dragcard.remove();
+        let hovering = document.getElementsByClassName('list hovering');
 
-          dragcard.remove();
-
+        while(hovering[0]){
+          hovering[0].removeAttribute('style');
+          hovering[0].classList.remove('hovering');
         }
 
-        document.getElementsByClassName('list hovering').removeclass('hovering');
-
-
+        if ( !used ){
+          t.classList.remove('used');
+          t.style.opacity = 1;
+        } else if ( t.classList.contains('dragcard')){
+          t.remove();
+        }
       }
 
 
@@ -246,13 +459,8 @@
                 output += String.fromCharCode(char);
             }
             switch (Math.floor(Math.random() * 8)) {
-                case 0:
-                    output += ". ";
-                    break;
-                case 1:
-                    output += ", ";
-                    break;
                 default:
+                  output = output.trim();
                     output += " ";
                     break;
             }
@@ -271,10 +479,70 @@
         return output.toLowerCase();
     }
 
+    function togglebtn(){
+      let on = this.classList.contains('on');
+      let c = this.dataset.class;
+      if ( on ){
+        this.classList.remove('on');
+        document.body.classList.remove(c);
+      } else {
+        document.getElementsByClassName('toggle on').removeclass('on');
+        this.classList.add('on');
+        document.body.classList.add(c);
+      }
+    }
+
+    function tab(){
+      document.getElementsByClassName('tab current').removeclass('current');
+      this.classList.add('current');
+
+      let v = this.dataset.view;
+
+      document.getElementById('container').className = v;
+
+    }
+
+    function filtercards(e){
+      let v = this.value.toLowerCase().trim();
+
+      console.log(v);
+
+      let cards = document.getElementsByClassName('card');
+
+      for(let i=0;i<cards.length;i++){
+        let card = cards[i];
+        let kt = card.getElementsByClassName('keytag')[0].innerText;
+        let mr = card.getElementsByClassName('mr')[0].innerText;
+
+        if ( kt.toLowerCase().indexOf(v) >= 0 ){
+          card.classList.remove('hide');
+        } else if (mr.toLowerCase().indexOf(v) >= 0){
+          card.classList.remove('hide');
+        } else {
+          card.classList.add('hide');
+        }
+      }
+    }
+
+    function popbtn(){
+      if (this.classList.contains('on')) {
+        this.classList.remove('on');
+      } else {
+        document.getElementsByClassName('pop on').removeclass('on');
+        this.classList.add('on');
+      }
+
+    }
+
 
     makecards(40);
 
     Attach.on('mousedown', '.card', carddrag);
+    Attach.on('mousedown', '.dragcard', carddrag);
+    Attach.on('click', '.toggle', togglebtn);
+    Attach.on('click', '.pop', popbtn);
+    Attach.on('click', '.tab', tab);
+    Attach.on('input', '.searchbar', filtercards);
   </script>
 </body>
 </html>
