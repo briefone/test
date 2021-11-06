@@ -48,16 +48,17 @@
       .menubtn.on {background:var(--border)}
 
     .pop {position:relative;}
-      .popover {opacity:0;pointer-events: none;position:absolute;top:calc(100% + 4px);left:-40px;background:white;z-index:999;padding:4px 0;box-shadow:0 2px 6px rgba(0,0,0,0.2);border-radius:3px;min-width:160px;}
+      .popover {opacity:0;pointer-events: none;position:absolute;top:calc(100% + 4px);left:-40px;background:white;z-index:999999;padding:4px 0;box-shadow:0 2px 6px rgba(0,0,0,0.2);border-radius:3px;min-width:160px;}
       .on > .popover {opacity:1;pointer-events: all;}
         .popover h6 {font-size:10px;font-weight:700;color:var(--secondary);text-transform: uppercase;padding:8px 12px 2px;line-height:1;}
         .popitem {padding:0 12px;line-height:28px;color:#222;}
           .popitem:hover {background:var(--border);}
-          .pophover {position:relative;}
+          .pophover {position:relative;padding-right:32px;white-space: nowrap;}
+            .pophover::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath fill='%236C757D' d='M5.284 10.839c-.312-.305-.337-.73 0-1.103L7.907 7 5.284 4.264c-.337-.373-.312-.798 0-1.101.311-.306.838-.286 1.13 0 .293.284 3.152 3.286 3.152 3.286a.766.766 0 010 1.103s-2.86 3.001-3.152 3.287c-.292.285-.819.305-1.13 0z'/%3E%3C/svg%3E");position:absolute;right:8px;top:calc(50% - 3px);transform:translateY(-50%);width:14px;height:14px;}
 
         .popover hr {border:none;height:1px;margin:4px 0;background-color:var(--border)}
 
-          .hoverpop {position:absolute;opacity:0;pointer-events: none;}
+          .hoverpop {position:absolute;opacity:0;pointer-events: none;left:100%;top:-4px;}
             .pophover:hover .hoverpop {opacity:1;pointer-events: all;}
 
     .card {cursor:grab;user-select:none;padding:6px 12px 6px 20px;position:relative;font-size:12px;display: flex;flex-direction: column;gap:4px;border-bottom:1px solid var(--border);}
@@ -116,10 +117,46 @@
           <path d="M5.41921 9.05756C5.94241 8.52236 6.67081 8.48036 7.31041 9.05756L12 13.554L16.6896 9.05756C17.3292 8.48036 18.0588 8.52236 18.5784 9.05756C19.1016 9.59156 19.068 10.494 18.5784 10.9956C18.0912 11.4972 12.9444 16.398 12.9444 16.398C12.684 16.6656 12.342 16.8 12 16.8C11.658 16.8 11.316 16.6656 11.0532 16.398C11.0532 16.398 5.90881 11.4972 5.41921 10.9956C4.92961 10.494 4.89601 9.59156 5.41921 9.05756Z"/>
         </svg>
         <div class=popover style="left:0;">
-          <h6>Sort</h6>
-          <div class=popitem>Description</div>
-          <div class=popitem>Key tag</div>
+          <div class="popitem pophover">Plans
 
+            <div class="hoverpop popover">
+              <div class=popitem>Create new plan</div>
+              <hr>
+              <div class=popitem>Plan A</div>
+              <div class=popitem>Plan B</div>
+              <div class=popitem>Plan C</div>
+            </div>
+          </div>
+          <hr>
+          <div class="popitem pophover">Plan Conquer the World
+            <div class="hoverpop popover">
+              <div class=popitem>Properties</div>
+              <div class=popitem>Share</div>
+              <div class=popitem>Duplicate</div>
+              <div class=popitem>Delete</div>
+            </div>
+          </div>
+          <div class="popitem pophover">Boards
+
+            <div class="hoverpop popover">
+              <div class=popitem>Create new board</div>
+              <hr>
+              <div class=popitem>Phase I</div>
+              <div class=popitem>Phase II</div>
+              <div class=popitem>Phase III</div>
+              <div class=popitem>RFI</div>
+            </div>
+          </div>
+          <div class="popitem pophover">Timeline</div>
+          <div class="popitem pophover">Cause & effect</div>
+          <div class="popitem pophover">Briefs</div>
+          <div class="popitem pophover">Orders</div>
+          <hr>
+          <div class="popitem pophover">Account</div>
+          <div class="popitem pophover">Team</div>
+          <div class=popitem>Activity</div>
+          <hr>
+          <div class=popitem>Help</div>
         </div>
       </div>
       <div class="tab board closeable current" data-view=p1>Phase I</div>
