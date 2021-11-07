@@ -33,6 +33,8 @@
     .row {display:flex;gap:4px;}
       .wrap {flex-wrap: wrap;}
 
+    .tags {width:100%;}
+
     .tag {background:rgb(0 0 0 / 10%);color:rgb(0 0 0 / 65%);font-weight:600;text-transform:uppercase;font-size:11px;padding:2px 4px 1px;border-radius:2px;display:inline-block;}
 
     #conwrap {position:absolute;top:32px;left:0;right:0;bottom:0;}
@@ -41,7 +43,11 @@
     #subnav {height:44px;position:absolute;top:0;left:0;right:0;background:white;border-bottom:1px solid #eee;display:flex;align-items:center;padding:0 8px;    justify-content: space-between;}
       .right {}
 
-    input[type=text] {height:28px;border:1px solid var(--border);border-radius:3px;text-indent: 8px;}
+    input[type=text] {height:28px;border:1px solid var(--border);border-radius:3px;text-indent: 8px;box-sizing: border-box;}
+
+    .combobox {display:flex;}
+      .combobox input {border-radius: 3px 0 0 3px;width:100%;}
+      .combobox .btn {border-radius: 0 3px 3px 0;border:1px solid var(--border);margin-left:-1px;font-size:9px;}
 
     #cl {position:absolute;top:32px;right:0;bottom:0;width:336px;border-left:1px solid #eee;background:white;transform:translateX(100%);z-index:999999;}
     .clopen #cl {transform:translateX(0);}
@@ -56,7 +62,7 @@
         .editmodebar .left, .editmodebar .right {display:flex;gap:4px;}
 
 
-    .btn {height:28px;min-width:28px;border-radius:3px;background:transparent;color:#888;display: flex;align-items: center;justify-content: center;padding:0 8px;box-sizing: border-box;font-weight:500;cursor:pointer;user-select:none;font-size:12px;}
+    .btn {height:28px;min-width:28px;border-radius:3px;background:transparent;color:var(--secondary);display: flex;align-items: center;justify-content: center;padding:0 8px;box-sizing: border-box;font-weight:500;cursor:pointer;user-select:none;font-size:12px;}
       .btn svg {fill:var(--secondary);width:12px;height:12px;}
         .btn:hover {background:#ddd;}
         .btn:active {background:#ccc;}
@@ -93,20 +99,22 @@
     .card {cursor:grab;user-select:none;padding:6px 12px 6px 24px;position:relative;font-size:12px;display: flex;flex-direction: column;gap:4px;border-bottom:1px solid var(--border);}
       .card::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 10'%3E%3Crect width='2' height='2' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' y='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' y='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' y='8' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' y='8' fill='%236C757D' rx='1'/%3E%3C/svg%3E");position:absolute;left:8px;top:50%;transform:translateY(-50%);width:6px;height:10px;}
       .card.hide {display:none;}
-      .card.used {background:#eee;}
-      .keytag {background:#eee;color:#888;font-weight:600;text-transform:uppercase;font-size:11px;padding:2px 4px 1px;border-radius:2px;display:inline-block;}
+      .card.used {background:#66519114;}
+      .keytag {background:#eee;color:#888;font-weight:600;text-transform:uppercase;font-size:11px;padding:2px 4px 1px;border-radius:2px;display:inline-block;align-self: center;}
       .mr {line-height:1.2;overflow:hidden;text-overflow: ellipsis;
    display: -webkit-box;
    -webkit-box-orient: vertical;
    -webkit-line-clamp: 2;}
 
-        .card .expand {display:none;flex-direction: column;gap: 8px;align-items: flex-start;padding:8px 0;}
+        .card .expand {display:none;flex-direction: column;gap:16px;align-items: flex-start;padding:8px 0;}
         .card.expanded {box-shadow: inset 0 0 0 2px #7a61ff;}
         .expanded .expand {display:flex;}
           .expanded .tr, .expanded .mr, .expanded .br, .expanded .check {display:none;}
 
+          .etr {display:flex;justify-content: space-between;width: 100%;gap:4px;}
+            .etr .right {display:flex;}
 
-          textarea {width:100%;height:120px;border:1px solid var(--border);border-radius:3px;padding:8px;box-sizing:border-box;font:normal 12px sans-serif;resize:vertical;}
+          textarea {width:100%;height:120px;border:none;border:1px solid var(--border);background:transparent;border-radius:3px;padding:8px;box-sizing:border-box;font:normal 12px sans-serif;resize:none;}
 
             .btnrow {display:flex;}
             .label {font-size:12px;color:var(--secondary);margin-bottom:2px;}
@@ -122,7 +130,7 @@
         .meta .icon, .meta svg {width:12px;height:12px;fill:#777;}
         .meta .data {text-transform:uppercase;}
 
-
+      .mousegrab {cursor:grabbing;}
 
       .dragcard {position:absolute;z-index:9999;width:200px;padding:8px;color:white;cursor:grabbing;user-select:none;}
         .dragcard.focused {box-shadow:0 0 0 2px #7B61FF;}
@@ -154,6 +162,13 @@
         .deck {position:absolute;top:1px;left:0;bottom:0;width:180px;background:white;border-right:1px solid var(--border);}
           .deck .minislide {width:calc(100% - 24px);margin:12px;aspect-ratio: 16/9;border:1px solid var(--border);border-radius:4px;}
           .slide {width:calc(100vw - 600px);aspect-ratio: 16/9;max-height:calc(100vh - 120px);background-color: white;position:absolute;top:50%;left:calc(50%);transform:translate(calc(-50% + 90px), -50%);box-shadow:0 4px 4px rgba(0,0,0,0.08);}
+
+      .cardactivity {color:var(--secondary);}
+      .cardactions {display:flex;gap:4px;}
+
+      .starttime {color:var(--secondary);}
+        .starttime .row {align-items: center;gap:8px;}
+          .starttime .row label {display:flex;align-items: center;gap:4px;}
 
   </style>
   <script src="../js/base.js"></script>
@@ -528,17 +543,25 @@
     <div id=reactions class="reactions">
       <div class=label>Reactions</div>
       <div class=btnrow>
-        <div class="btn">Approve</div>
-        <div class="btn">Important</div>
-        <div class="btn">Unclear</div>
-        <div class="btn">Challenged</div>
+        <div class="btn"><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 17 16">
+          <path fill="#288F63" fill-rule="evenodd" d="M1.606 8a6.67 6.67 0 016.667-6.667A6.67 6.67 0 0114.94 8a6.67 6.67 0 01-6.667 6.667A6.67 6.67 0 011.606 8zm2.334.588l2.979 2.98c.179.178.47.178.648 0l5.04-5.04a.458.458 0 000-.648l-.649-.648a.458.458 0 00-.648 0L7.243 9.299 5.236 7.292a.458.458 0 00-.648 0l-.648.648a.458.458 0 000 .648z" clip-rule="evenodd"/>
+        </svg></div>
+        <div class="btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16">
+          <path fill="#1885d8" d="M8.19 1.333a.6.6 0 00-.552.37L6.004 5.596l-4.181.358a.601.601 0 00-.52.417.61.61 0 00.178.645l3.175 2.778-.954 4.129a.61.61 0 00.232.628.595.595 0 00.663.028l3.593-2.19 3.594 2.19a.595.595 0 00.662-.028.61.61 0 00.232-.628l-.954-4.129L14.9 7.016a.61.61 0 00.177-.645.601.601 0 00-.52-.417l-4.18-.358-1.634-3.893a.6.6 0 00-.553-.37z"/>
+        </svg></div>
+        <div class="btn"><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 17 16">
+          <path fill="#F36D07" fill-rule="evenodd" d="M13.458 1.333H3.088c-.822 0-1.482.6-1.482 1.334V12c0 .733.66 1.333 1.482 1.333H6.05l2.11 1.9c.064.057.16.057.224 0l2.11-1.9h2.963c.815 0 1.482-.6 1.482-1.333V2.667c0-.734-.667-1.334-1.482-1.334zM5.606 5.767H7.11c.034-.627.456-1.032 1.094-1.032.632 0 1.054.383 1.054.91s-.216.8-.932 1.227c-.766.45-1.071.949-1 1.82l.012.322h1.47V8.72c0-.544.206-.816.944-1.243.783-.461 1.188-1.044 1.188-1.882 0-1.265-1.05-2.148-2.636-2.148-1.704 0-2.67.955-2.698 2.32zm2.487 5.9c.505 0 .91-.383.91-.872 0-.488-.405-.871-.91-.871-.5 0-.905.383-.905.871 0 .489.405.872.905.872z" clip-rule="evenodd"/>
+        </svg></div>
+        <div class="btn"><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 17 16">
+          <path fill="#E83F45" d="M3.273 2c0-.184.15-.333.334-.333h5.666l.667 1h3c.184 0 .333.149.333.333v6c0 .184-.149.333-.333.333H8.773l-.833-1H5.273V14c0 .184-.149.333-.333.333H3.607A.333.333 0 013.273 14V2z"/>
+        </svg></div>
       </div>
     </div>
 
     <div id=tags class="tags">
       <div class=label>Tags</div>
       <div class=combobox>
-        combobox
+        <input type=text /><div class="btn">▼</div>
       </div>
     </div>
 
@@ -564,6 +587,30 @@
           <input type=text />
         </div>
       </div>
+    </div>
+
+    <div id=starttime class="starttime">
+      <div class=label>Start time</div>
+      <div class=row>
+        <label><input type=radio name=st checked /> Auto</label>
+        <label><input type=radio name=st  /> Relative</label>
+        <label><input type=radio name=st  /> Absolute</label>
+      </div>
+    </div>
+
+    <div id=duration class="duration" style="width:100%;">
+      <div class=label>Duration</div>
+      <input type=text style="width:100%;" />
+    </div>
+
+    <div id=cardactivity class=cardactivity>
+      Updated <u>5 minutes ago</u>
+    </div>
+
+    <div id=cardactions class=cardactions>
+      <div class=btn>Comment</div>
+      <div class=btn>Lock</div>
+      <div class=btn>Activity</div>
     </div>
 
   </div>
@@ -593,6 +640,8 @@
       }
 
       let used = t.classList.contains('used') ? true : false;
+
+      document.body.classList.add('mousegrab');
 
       console.log(text);
 
@@ -682,6 +731,8 @@
         document.removeEventListener('mousemove', move);
         document.removeEventListener('mouseup', end);
 
+        document.body.classList.remove('mousegrab');
+
         let tars = document.elementsFromPoint(e.clientX, e.clientY);
 
         tars.forEach(tar => {
@@ -726,9 +777,12 @@
             let ccc =   document.getElementById(t.dataset.id);
             ccc.classList.add('expanded');
             ccc.scrollIntoViewIfNeeded(false);
-          } else {
 
+            ta.call(ccc.getElementsByTagName('textarea')[0]);
+          } else {
             t.classList.add('expanded');
+            ta.call(t.getElementsByTagName('textarea')[0]);
+            t.scrollIntoViewIfNeeded(false);
           }
         }
       }
@@ -755,11 +809,24 @@
         let ereact = document.getElementById('reactions').cloneNode(true);
         let etags = document.getElementById('tags').cloneNode(true);
         let eas = document.getElementById('actorsource').cloneNode(true);
+        let est = document.getElementById('starttime').cloneNode(true);
+        let ed = document.getElementById('duration').cloneNode(true);
+        let ecs = document.getElementById('cardactivity').cloneNode(true);
+        let eca = document.getElementById('cardactions').cloneNode(true);
+
+        let minb = document.createElement('div');
+        let men = document.createElement('div');
+        let rt = document.createElement('div');
+        let etr = document.createElement('div');
 
         ereact.removeAttribute('id');
         euses.removeAttribute('id');
         etags.removeAttribute('id');
         eas.removeAttribute('id');
+        est.removeAttribute('id');
+        ed.removeAttribute('id');
+        ecs.removeAttribute('id');
+        eca.removeAttribute('id');
 
         card.className = 'card';
 
@@ -780,13 +847,27 @@
         check.type = 'checkbox';
         check.className = 'check';
 
+        rt.className = 'right';
+        men.className = 'btn menubtn';
+        minb.className = 'btn minbtn';
+        etr.className = 'etr';
+
+        minb.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 352H48c-26.5 0-48 21.5-48 48v32c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48v-32c0-26.5-21.5-48-48-48z"></path></svg>`;
+        men.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>`
+
+        minb.onclick = function(){ this.getparent('expanded').classList.remove('expanded'); };
+
         let content = generate();
 
         kt.appendChild(document.createTextNode(tag.text));
 
         etag = kt.cloneNode(true);
 
+        rt.appendChild(minb);
+        rt.appendChild(men);
+
         tr.appendChild(kt);
+
         mr.appendChild(document.createTextNode(content));
 
         etext.value = content;
@@ -798,12 +879,19 @@
         card.appendChild(meta);
         card.appendChild(check);
 
-        expand.appendChild(etag);
+        etr.appendChild(etag);
+        etr.appendChild(rt);
+
+        expand.appendChild(etr);
         expand.appendChild(etext);
         expand.appendChild(ereact);
         expand.appendChild(etags);
         expand.appendChild(euses);
         expand.appendChild(eas);
+        expand.appendChild(est);
+        expand.appendChild(ed);
+        expand.appendChild(ecs);
+        expand.appendChild(eca);
 
         card.appendChild(expand);
 
@@ -1020,6 +1108,13 @@
       console.log('db');
     }
 
+    function ta(e){
+      this.style.height = 0;
+      let sh = this.scrollHeight;
+
+      this.style.height = sh + 4 + 'px';
+    }
+
     Attach.on('mousedown', '.card', carddrag);
     Attach.on('mousedown', '.dragcard', carddrag);
     Attach.on('dblclick', '.dragcard', carddb);
@@ -1030,6 +1125,7 @@
     Attach.on('input', '.searchbar', filtercards);
     Attach.on('input', '.ctoggle', ctoggle);
     Attach.on('input', '.cradio', cradio);
+    Attach.on('input', 'textarea', ta);
     document.addEventListener('keyup', keypress);
 
     makecards(40);

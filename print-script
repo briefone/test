@@ -1,3 +1,4 @@
+// Save Order to PDF
 let d = document.getElementsByTagName('div');
 
 for(var i=0;i<d.length;i++){
@@ -44,7 +45,7 @@ print();
 
 
 
-
+// Save Slide to PDF
 
 
 let d = document.getElementsByTagName('div');
