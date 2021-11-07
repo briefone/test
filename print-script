@@ -1,0 +1,80 @@
+let d = document.getElementsByTagName('div');
+
+for(var i=0;i<d.length;i++){
+  let div = d[i];
+
+  div.style.height = 'auto';
+  div.style.minHeight = 'auto';
+  div.style.display = 'block';
+  div.style.width = '100%';
+
+  if ( div.style.overflow === "hidden" ){
+    div.style.overflow = "visible";
+  }
+
+  let isOverflowing = div.clientHeight < div.scrollHeight;
+
+  if ( isOverflowing ){
+    div.style.overflow = "visible";
+  }
+
+  if ( div.classList.contains('css-nsk33v') || div.id == 'rbd-hidden-text-0-hidden-text-0' ){
+    div.style.display = 'none';
+  }
+
+  div.classList.remove('border');
+  div.classList.remove('shadow');
+  div.classList.remove('shadow-sm');
+  div.classList.remove('mb-5');
+
+  if ( div.classList.contains('ProseMirror')){
+    div.style.paddingTop = '0';
+    div.style.paddingBottom = '0';
+  }
+}
+
+let n = document.getElementsByTagName('nav');
+
+for(var i=0;i<n.length;i++){
+  n[i].style.display = 'none';
+}
+
+print();
+
+
+
+
+
+
+
+let d = document.getElementsByTagName('div');
+
+for(var i=0;i<d.length;i++){
+  let div = d[i];
+
+  div.classList.remove('border');
+  div.classList.remove('shadow');
+  div.classList.remove('shadow-sm');
+  div.classList.remove('mb-5');
+
+
+  if ( div.classList.contains('pt-5')){
+    div.classList.remove('pt-5');
+    div.classList.remove('px-4');
+    div.classList.remove('pb-4');
+  }
+}
+
+let n = document.getElementsByTagName('nav');
+
+for(var i=0;i<n.length;i++){
+  n[i].style.display = 'none';
+}
+
+document.head.insertAdjacentHTML("beforeend", `<style type="text/css" media="print">
+@page { size: landscape; }
+.css-ql29xz, .position-relative.border-right.bg-white.flex-shrink-0, .css-nsk33v, .css-br4tg4 {display:none;}
+</style>`);
+
+
+print();
