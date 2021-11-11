@@ -1,9 +1,25 @@
+<!--
+
+ ▄▄▄       ██▓███   ██▓███       █████▒██▀███   ▄▄▄       ███▄ ▄███▓▓█████ 
+▒████▄    ▓██░  ██▒▓██░  ██▒   ▓██   ▒▓██ ▒ ██▒▒████▄    ▓██▒▀█▀ ██▒▓█   ▀ 
+▒██  ▀█▄  ▓██░ ██▓▒▓██░ ██▓▒   ▒████ ░▓██ ░▄█ ▒▒██  ▀█▄  ▓██    ▓██░▒███   
+░██▄▄▄▄██ ▒██▄█▓▒ ▒▒██▄█▓▒ ▒   ░▓█▒  ░▒██▀▀█▄  ░██▄▄▄▄██ ▒██    ▒██ ▒▓█  ▄ 
+ ▓█   ▓██▒▒██▒ ░  ░▒██▒ ░  ░   ░▒█░   ░██▓ ▒██▒ ▓█   ▓██▒▒██▒   ░██▒░▒████▒
+ ▒▒   ▓▒█░▒▓▒░ ░  ░▒▓▒░ ░  ░    ▒ ░   ░ ▒▓ ░▒▓░ ▒▒   ▓▒█░░ ▒░   ░  ░░░ ▒░ ░
+  ▒   ▒▒ ░░▒ ░     ░▒ ░         ░       ░▒ ░ ▒░  ▒   ▒▒ ░░  ░      ░ ░ ░  ░
+  ░   ▒   ░░       ░░           ░ ░     ░░   ░   ░   ▒   ░      ░      ░   
+      ░  ░                               ░           ░  ░       ░      ░  ░
+
+by Johnny
+
+-->
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Card Library</title>
-
+  <title>App Frame Demo</title>
+  <link rel="icon" href="./favicon.png" sizes="128x128">
   <style>
     :root {
       --border: #DEE2E6;
@@ -14,6 +30,7 @@
     body {background:#f8f9fa;overflow:hidden;}
 
     #tabs {position:absolute;top:0;left:0;right:0;height:32px;background:#EFF1F4;display:flex;align-items: center;}
+      .popwindow #tabs {display:none;}
       .tab {height:100%;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
         .tab.current {background:white;color:#333;}
 
@@ -31,6 +48,7 @@
 
 
     .row {display:flex;gap:4px;}
+      .col {display:flex;flex-direction: column;width:100%;}
       .wrap {flex-wrap: wrap;}
 
     .tags {width:100%;}
@@ -39,24 +57,27 @@
 
     #conwrap {position:absolute;top:32px;left:0;right:0;bottom:0;}
       .clopen #conwrap {right: 337px;}
+      .popwindow #conwrap {display:none;}
 
     #subnav {height:44px;position:absolute;top:0;left:0;right:0;background:white;border-bottom:1px solid #eee;display:flex;align-items:center;padding:0 8px;    justify-content: space-between;}
       .right {}
 
-    input[type=text] {height:28px;border:1px solid var(--border);border-radius:3px;text-indent: 8px;box-sizing: border-box;}
+    input[type=text] {width:100%;height:28px;border:1px solid var(--border);border-radius:3px;text-indent: 8px;box-sizing: border-box;}
 
     .combobox {display:flex;}
       .combobox input {border-radius: 3px 0 0 3px;width:100%;}
-      .combobox .btn {border-radius: 0 3px 3px 0;border:1px solid var(--border);margin-left:-1px;font-size:9px;}
+      .combobox .btn {border-radius: 0 3px 3px 0;border:1px solid var(--border);margin-left:-1px;font-size:9px;background:white;}
 
     #cl {position:absolute;top:32px;right:0;bottom:0;width:336px;border-left:1px solid #eee;background:white;transform:translateX(100%);z-index:999999;}
+    .popwindow #cl {top:0;left:0;width:auto;border:none;transform:translateX(0);}
     .clopen #cl {transform:translateX(0);}
       .filterbar, .editmodebar {position:absolute;top:0;left:0;right:0;height:44px;background:white;border-bottom:1px solid #eee;display:flex;gap:4px;padding:0 8px;align-items: center;}
         .editmodebar, .editmode .filterbar {display:none;}
         .editmode .editmodebar {display:flex;}
         .filterbar .searchbar {width:100%;}
         .filterbar .btn {}
-      .cardlist {position:absolute;top:44px;left:0;right:0;bottom:0;overflow-y:scroll;}
+      .cardlist {position:absolute;top:73px;left:0;right:0;bottom:0;overflow-y:scroll;}
+        .popwindow .cardlist {bottom:0;top:45px;}
 
       .editmodebar {justify-content: space-between;}
         .editmodebar .left, .editmodebar .right {display:flex;gap:4px;}
@@ -74,14 +95,15 @@
     .btn.on {background:var(--secondary);color:white;}
       .btn.on svg {fill:white;}
 
-
+    .btn.floating {position:absolute;top:45px;left:0;right:0;border-radius:0;background:rgb(12, 90, 206);color:white;z-index:9999;}
+      .popwindow .floating {display:none;}
 
     .menubtn {}
       .menubtn:hover {background:var(--border)}
       .menubtn.on {background:var(--border)}
 
     .pop {position:relative;}
-      .popover {opacity:0;pointer-events: none;position:absolute;top:calc(100% + 4px);left:-40px;background:white;z-index:999999999999999;padding:4px 0;box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05), 0px 3px 6px rgba(0, 0, 0, 0.08), 0px 8px 24px rgba(0, 0, 0, 0.15);border-radius:3px;min-width:160px;}
+      .popover {opacity:0;pointer-events: none;position:absolute;top:calc(100% + 4px);left:-40px;background:white;z-index:999999999999999;padding:4px 0;box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05), 0px 3px 6px rgba(0, 0, 0, 0.08), 0px 8px 24px rgba(0, 0, 0, 0.15);border-radius:3px;min-width:160px;user-select:none;}
       .on > .popover {opacity:1;pointer-events: all;}
         .popover h6 {font-size:10px;font-weight:700;color:var(--secondary);text-transform: uppercase;padding:8px 12px 4px;line-height:1;}
         .popitem {padding:0 12px;line-height:28px;color:#222;}
@@ -114,7 +136,7 @@
           .etr {display:flex;justify-content: space-between;width: 100%;gap:4px;}
             .etr .right {display:flex;}
 
-          textarea {width:100%;height:120px;border:none;border:1px solid var(--border);background:transparent;border-radius:3px;padding:8px;box-sizing:border-box;font:normal 12px sans-serif;resize:none;}
+          textarea {width:100%;height:120px;overflow:hidden;background:white;border:1px solid var(--border);border-radius:3px;padding:8px;box-sizing:border-box;font:normal 12px sans-serif;resize:none;}
 
             .btnrow {display:flex;}
             .label {font-size:12px;color:var(--secondary);margin-bottom:2px;}
@@ -126,25 +148,27 @@
         .c4l .mr {-webkit-line-clamp: 4;}
       .br {display:flex;gap:4px 12px;flex-wrap: wrap;}
 
-      .meta {display:flex;font-size:10px;color:#888;gap:4px;font-weight:700;}
+      .meta {display:flex;font-size:10px;color:var(--secondary);gap:4px;font-weight:700;}
         .meta .icon, .meta svg {width:12px;height:12px;fill:#777;}
         .meta .data {text-transform:uppercase;}
 
       .mousegrab {cursor:grabbing;}
 
-      .dragcard {position:absolute;z-index:9999;width:200px;padding:8px;color:white;cursor:grabbing;user-select:none;}
+      .dragcard {position:absolute;z-index:9999;width:200px;padding:8px;color:white;cursor:grabbing;user-select:none;border-radius:3px;}
         .dragcard.focused {box-shadow:0 0 0 2px #7B61FF;}
         .dragcard .mr {-webkit-line-clamp: 4;}
 
 
-      #container {position:absolute;top:44px;left:0;right:0;bottom:0;}
+      #container {position:absolute;top:45px;left:0;right:0;bottom:0;}
 
         .view {display:none;flex-direction: row;gap:12px;padding:16px;max-width:100%;overflow-y:scroll;height:100%;box-sizing: border-box;}
 
         #container.home #home, #container.p1 #p1,#container.p2 #p2 {display:flex;}
 
-          .list {width:232px;min-height:200px;padding:8px;border-radius:3px;flex-shrink:0;background:rgb(0 0 0 / 5%);box-sizing: border-box;display:flex;flex-direction: column;gap:4px;align-items: flex-start;user-select:none;align-self: flex-start;}
+          .list {width:232px;min-height:200px;padding:8px;border-radius:3px;flex-shrink:0;background:rgb(0 0 0 / 5%);box-sizing: border-box;display:flex;flex-direction: column;gap:4px;align-items: flex-start;user-select:none;align-self: flex-start;transition:background-color 25ms linear;}
           .list.hovering {background:#aa99ff71;}
+          .list.draggingover {background:#aa99ff71;}
+            .list.draggingover > * {pointer-events: none !important;}
 
         .listtag {background:rgb(0 0 0 / 10%);color:rgb(0 0 0 / 65%);font-weight:600;text-transform:uppercase;font-size:11px;padding:2px 4px 1px;border-radius:2px;display:inline-block;flex-grow: 0;}
 
@@ -161,7 +185,7 @@
 
         .deck {position:absolute;top:1px;left:0;bottom:0;width:180px;background:white;border-right:1px solid var(--border);}
           .deck .minislide {width:calc(100% - 24px);margin:12px;aspect-ratio: 16/9;border:1px solid var(--border);border-radius:4px;}
-          .slide {width:calc(100vw - 600px);aspect-ratio: 16/9;max-height:calc(100vh - 120px);background-color: white;position:absolute;top:50%;left:calc(50%);transform:translate(calc(-50% + 90px), -50%);box-shadow:0 4px 4px rgba(0,0,0,0.08);}
+          .slide {width:calc(100vw - 600px);aspect-ratio: 16/9;max-height:calc(100vh - 120px);background-color: white;position:absolute;top:50%;left:calc(50%);transform:translate(calc(-50% + 90px), -50%);border:1px solid var(--border);}
 
       .cardactivity {color:var(--secondary);}
       .cardactions {display:flex;gap:4px;}
@@ -219,13 +243,49 @@
               <div class=popitem>RFI</div>
             </div>
           </div>
-          <div class="popitem pophover">Timeline</div>
-          <div class="popitem pophover">Cause & effect</div>
-          <div class="popitem pophover">Briefs</div>
-          <div class="popitem pophover">Orders</div>
+          <div class="popitem pophover">Timeline<div class="hoverpop popover">
+            <div class=popitem>Create new timeline</div>
+            <hr>
+            <div class=popitem>Phase I</div>
+            <div class=popitem>Phase II</div>
+            <div class=popitem>Phase III</div>
+            <div class=popitem>RFI</div>
+          </div></div>
+          <div class="popitem pophover">Cause & effect<div class="hoverpop popover">
+            <div class=popitem>Create new cause & effect</div>
+            <hr>
+            <div class=popitem>Phase I</div>
+            <div class=popitem>Phase II</div>
+            <div class=popitem>Phase III</div>
+            <div class=popitem>RFI</div>
+          </div></div>
+          <div class="popitem pophover">Briefs<div class="hoverpop popover">
+            <div class=popitem>Create new brief</div>
+            <hr>
+            <div class=popitem>Phase I</div>
+            <div class=popitem>Phase II</div>
+            <div class=popitem>Phase III</div>
+            <div class=popitem>RFI</div>
+          </div></div>
+          <div class="popitem pophover">Orders<div class="hoverpop popover">
+            <div class=popitem>Create new orders</div>
+            <hr>
+            <div class=popitem>Phase I</div>
+            <div class=popitem>Phase II</div>
+            <div class=popitem>Phase III</div>
+            <div class=popitem>RFI</div>
+          </div></div>
           <hr>
-          <div class="popitem pophover">Account</div>
-          <div class="popitem pophover">Team</div>
+          <div class="popitem pophover">Account<div class="hoverpop popover">
+            <div class=popitem>Profile</div>
+            <div class=popitem>Security</div>
+            <hr>
+            <div class=popitem>Logout</div>
+          </div></div>
+          <div class="popitem pophover">Team<div class="hoverpop popover">
+            <div class=popitem>Add team member</div>
+            <div class=popitem>View team</div>
+          </div></div>
           <div class=popitem>Activity</div>
           <hr>
           <div class=popitem>Help</div>
@@ -305,6 +365,7 @@
     </div>
 
     <div id=cl class="">
+      <div class="btn floating" onclick="openpop();">Open in new window</div>
       <div class=editmodebar>
         <div class=left>
           <input type=checkbox style="margin-left:-2px" />
@@ -616,7 +677,7 @@
   </div>
   <script>
     function carddrag(e){
-      if ( e.which == 3){
+      if ( e.which == 3 || this.draggable ){
         return;
       }
       let t = this;
@@ -688,7 +749,7 @@
         let y = e.clientY + ot;
         let nx = Math.abs(sx - x);
         let ny = Math.abs(sy - y);
-        console.log(nx,ny, ol, ot);
+
         if ( !dragged && Math.max(nx, ny) > 5 ){
           dragcard.style.opacity = 1;
           dragged = true;
@@ -704,23 +765,27 @@
         dragcard.style.left = x +'px';
         dragcard.style.top = y +'px';
 
-        let hovering = document.getElementsByClassName('list hovering');
-
-        while(hovering[0]){
-          hovering[0].removeAttribute('style');
-          hovering[0].classList.remove('hovering');
-        }
+        
 
         let tars = document.elementsFromPoint(e.clientX, e.clientY);
 
+
+
         tars.forEach(tar => {
           if ( tar.classList.contains('list')){
-            tar.classList.add('hovering');
-            console.log(bg)
+            if ( !tar.classList.contains('hovering')){
+              let hovering = document.getElementsByClassName('list hovering');
 
-            if ( bg.indexOf('rgb') >= 0 ){
-              let rgb = bg.replace('rgb(', '').replace(')', '').split(',');
-              tar.style.backgroundColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ', 0.3)';
+              while(hovering[0]){
+                hovering[0].removeAttribute('style');
+                hovering[0].classList.remove('hovering');
+              }
+              tar.classList.add('hovering');
+
+              if ( bg.indexOf('rgb') >= 0 ){
+                let rgb = bg.replace('rgb(', '').replace(')', '').split(',');
+                tar.style.backgroundColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ', 0.3)';
+              }
             }
 
           }
@@ -736,7 +801,8 @@
         let tars = document.elementsFromPoint(e.clientX, e.clientY);
 
         tars.forEach(tar => {
-          if ( tar.classList.contains('list')){
+          let slide = tar.classList.contains('slide');
+          if ( tar.classList.contains('list') || slide){
             if (tar == t.getparent('list')){
               return;
             }
@@ -744,9 +810,19 @@
             cc.style.position = 'static';
             cc.style.pointerEvents = 'all';
             cc.style.cursor = 'grab';
-            cc.style.zIndex = 2;
+            cc.style.zIndex = 9999;
             cc.classList.add('focused');
-            tar.appendChild(cc);
+
+            if ( slide ){
+              cc.style.position = 'absolute';
+              cc.style.top = e.clientY -77 + ot + 'px';
+              cc.style.left = e.clientX +ol+ 'px';
+              tar.parentElement.appendChild(cc);
+            } else {
+              tar.appendChild(cc);
+            }
+
+            
             used = true;
           }
         });
@@ -774,11 +850,13 @@
           if(t.classList.contains('dragcard')){
             t.classList.add('focused');
 
-            let ccc =   document.getElementById(t.dataset.id);
-            ccc.classList.add('expanded');
-            ccc.scrollIntoViewIfNeeded(false);
+            if ( document.getElementsByClassName('clbtn')[0].classList.contains('on')){
+              let ccc = document.getElementById(t.dataset.id);
+              ccc.classList.add('expanded');
+              ccc.scrollIntoViewIfNeeded(false);
 
-            ta.call(ccc.getElementsByTagName('textarea')[0]);
+              ta.call(ccc.getElementsByTagName('textarea')[0]);
+            }
           } else {
             t.classList.add('expanded');
             ta.call(t.getElementsByTagName('textarea')[0]);
@@ -828,10 +906,12 @@
         ecs.removeAttribute('id');
         eca.removeAttribute('id');
 
-        card.className = 'card';
+        etext.className = 'etext';
 
-        card.dataset.id = i;
-        card.id = i;
+        card.className = 'card';
+        let id = 'c-' + i;
+        card.dataset.id = id;
+        card.id = id;
 
         tr.className = 'tr';
         mr.className = 'mr';
@@ -977,10 +1057,17 @@
       if ( on ){
         this.classList.remove('on');
         document.body.classList.remove(c);
+
       } else {
         document.getElementsByClassName('toggle on').removeclass('on');
         this.classList.add('on');
         document.body.classList.add(c);
+
+        if ( c == 'clopen'){
+          if ( window.clwindow){
+            window.clwindow.close();
+          }
+        }
       }
     }
 
@@ -991,7 +1078,6 @@
       let v = this.dataset.view;
 
       document.getElementById('container').className = v;
-
     }
 
     function filtercards(e){
@@ -1053,7 +1139,6 @@
         let x = false;
         if ( rad.checked ){
           cl.classList.add(v);
-          console.log(v)
           x = true;
         } else {
           cl.classList.remove(v);
@@ -1073,7 +1158,6 @@
           }
         });
 
-        console.log(nonpop, 'nonpop');
         if ( !nonpop ){
           document.getElementsByClassName('pop on').removeclass('on');
         }
@@ -1106,6 +1190,18 @@
 
     function carddb(e){
       console.log('db');
+
+      let clbtn = document.getElementsByClassName('clbtn')[0];
+      if ( !clbtn.classList.contains('on') ){
+        clbtn.click();
+
+        let id = this.dataset.id;
+
+        let card = document.getElementById(id);
+        card.classList.add('expanded');
+
+        card.scrollIntoViewIfNeeded(false);
+      }
     }
 
     function ta(e){
@@ -1113,7 +1209,165 @@
       let sh = this.scrollHeight;
 
       this.style.height = sh + 4 + 'px';
+
+      if ( this.classList.contains('etext')){
+        let c = this.getparent('card');
+        let id = c.id;
+        let cards = document.querySelectorAll(`[data-id="${id}"`);
+        console.log(cards);
+        for(var i=0;i<cards.length;i++){ 
+          let mr = cards[i].getElementsByClassName('mr')[0];
+          mr.empty();
+          mr.appendChild(document.createTextNode(this.value))
+        }
+      }
     }
+
+    function popwindow(){
+      window.clwindow = window.open("./index.html#popwindow", "Card Library", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=336,height="+(window.screen.height- 300)+",top="+(100)+",left="+(window.screen.width-400));
+      document.close();
+    }
+
+    function openpop(){
+
+      if ( window.clwindow){
+        window.clwindow.focus();
+      }
+
+      document.getElementsByClassName('clbtn')[0].click(); 
+      popwindow();
+    }
+
+    function popcorn(){
+      if ( location.hash == '#popwindow'){
+        document.body.classList.add('popwindow');
+        let c = document.getElementsByClassName('card');
+        for(var i=0;i<c.length;i++){
+          let card = c[i];
+          card.draggable = true;
+        }
+      }
+
+      window.onunload = function() {
+        console.log('fsdfs')
+        var win = window.opener;
+          if (!win.closed) {
+              win.someFunctionToCallWhenPopUpCloses();
+          }
+      };
+    }
+
+    function colorset(x){
+      console.log('colorset', x)
+    }
+
+    function dragStart(e) {
+
+
+      e.dataTransfer.effectAllowed = 'copy';
+  
+      e.dataTransfer.setData("application/my-app", e.target.id);
+
+      let t = this;
+
+
+      document.addEventListener('mousemove', dragMove);
+      document.addEventListener('mouseup', dragEnd);
+
+      //this.classList.add(d);
+      // container.style.cursor = 'move';
+
+      function dragMove(e) {
+
+     
+      }
+
+      function dragEnd(e) {
+        
+        document.removeEventListener('mousemove', dragMove);
+        document.removeEventListener('mouseup', dragEnd);
+        
+      }
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      let id = e.dataTransfer.getData('application/my-app');
+      console.log(id , 'dsfsdf');
+
+      document.getElementsByClassName('dragcard focused').removeclass('focused');
+
+
+      let card = document.getElementById(id);
+      let text = card.getElementsByClassName('mr')[0].cloneNode(true);
+      let keytag = card.getElementsByClassName('keytag')[0];
+
+      let bg = window.getComputedStyle(keytag).backgroundColor;
+
+
+      let dragcard = document.createElement('div');
+      dragcard.className = 'dragcard focused';
+      dragcard.style.backgroundColor = bg;
+      let kt = keytag.cloneNode(true);
+      kt.style.backgroundColor = 'rgba(0,0,0,0.1)';
+      dragcard.dataset.id = id;
+      dragcard.style.position = 'static';
+      dragcard.appendChild(kt);
+      dragcard.appendChild(text);
+
+      let slide = this.classList.contains('slide');
+
+      if ( slide ){
+        dragcard.style.position = 'absolute';
+        dragcard.style.top = e.clientY -77 + 'px';
+        dragcard.style.left = e.clientX + 'px';
+        this.parentElement.appendChild(dragcard);
+      } else {
+        this.appendChild(dragcard);
+      }
+
+
+      this.classList.remove('draggingover');
+      if ( window.clwindow){
+        window.clwindow.focus();
+      }
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      
+      e.dataTransfer.dropEffect = 'copy';
+    }
+
+    function handleDragEnter(e) {
+      this.classList.add('draggingover');
+    }
+
+    function handleDragLeave(e) {
+      this.classList.remove('draggingover');
+    }
+
+    function handleDragEnd(e) {
+      this.classList.remove('draggingover');
+    }
+
+    function someFunctionToCallWhenPopUpCloses(){
+      let clbtn = document.getElementsByClassName('clbtn')[0];
+      if ( !clbtn.classList.contains('on')){
+        clbtn.click();
+      }
+    }
+
+    Attach.on('dragstart', '.card', dragStart);
+
+    Attach.on('dragover', '.list, .slide', handleDragOver);
+    Attach.on('dragenter', '.list, .slide', handleDragEnter);
+    Attach.on('dragleave', '.list, .slide', handleDragLeave);
+    Attach.on('dragend', '.list, .slide', handleDragEnd);
+    Attach.on('drop', '.list, .slide', handleDrop);
+
 
     Attach.on('mousedown', '.card', carddrag);
     Attach.on('mousedown', '.dragcard', carddrag);
@@ -1130,6 +1384,7 @@
 
     makecards(40);
     restorecustom();
+    popcorn();
   </script>
 </body>
 </html>
