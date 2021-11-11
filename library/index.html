@@ -704,7 +704,6 @@ by Johnny
 
       document.body.classList.add('mousegrab');
 
-      console.log(text);
 
       if ( !this.classList.contains('dragcard')){
         dragcard = document.createElement('div');
@@ -722,7 +721,6 @@ by Johnny
         let c = this.cloneNode(true);
         document.body.appendChild(c);
         dragcard = c;
-        dragged = true;
         bg = window.getComputedStyle(c).backgroundColor;
 
         ol = this.offset().x - sx;
@@ -745,8 +743,8 @@ by Johnny
         // if ( t.classList.contains('expanded')){
         //   return;
         // }
-        let x = e.clientX + ol;
-        let y = e.clientY + ot;
+        let x = e.clientX;
+        let y = e.clientY;
         let nx = Math.abs(sx - x);
         let ny = Math.abs(sy - y);
 
@@ -762,8 +760,8 @@ by Johnny
           moved = true;
         }
 
-        dragcard.style.left = x +'px';
-        dragcard.style.top = y +'px';
+        dragcard.style.left = x + ol +'px';
+        dragcard.style.top = y + ot +'px';
 
         
 
