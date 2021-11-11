@@ -1074,6 +1074,10 @@ by Johnny
       let v = this.dataset.view;
 
       document.getElementById('container').className = v;
+
+      if ( window.clwindow){
+        window.clwindow.focus();
+      }
     }
 
     function filtercards(e){
