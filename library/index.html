@@ -933,8 +933,6 @@ by Johnny
         minb.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 352H48c-26.5 0-48 21.5-48 48v32c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48v-32c0-26.5-21.5-48-48-48z"></path></svg>`;
         men.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>`
 
-        minb.onclick = function(){ this.getparent('expanded').classList.remove('expanded'); };
-
         let content = generate();
 
         kt.appendChild(document.createTextNode(tag.text));
@@ -1236,6 +1234,7 @@ by Johnny
           let card = c[i];
           card.draggable = true;
           card.classList.add('popcard');
+          card.classList.remove('expanded');
         }
       }
       document.close();
@@ -1378,6 +1377,10 @@ by Johnny
       this.scrollIntoViewIfNeeded(false);
     }
 
+    function minbtn(e){
+      this.getparent('expanded').classList.remove('expanded');
+    }
+
     Attach.on('dragstart', '.card', dragStart);
 
     Attach.on('dragover', '.list, .slide', handleDragOver);
@@ -1395,6 +1398,7 @@ by Johnny
     Attach.on('click', '.pop', popbtn);
     Attach.on('click', '.tab', tab);
     Attach.on('click', '#wrapper', bodyclick);
+    Attach.on('click', '.minbtn', minbtn);
     Attach.on('input', '.searchbar', filtercards);
     Attach.on('input', '.ctoggle', ctoggle);
     Attach.on('input', '.cradio', cradio);
