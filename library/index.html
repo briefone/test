@@ -10,7 +10,8 @@
   ░   ▒   ░░       ░░           ░ ░     ░░   ░   ░   ▒   ░      ░      ░   
       ░  ░                               ░           ░  ░       ░      ░  ░
 
-by Johnny
+by Johnny Hunter
+https://briefone.github.io/test/library/
 
 -->
 
@@ -18,7 +19,7 @@ by Johnny
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>App Frame Demo</title>
+  <title>App Frame Test</title>
   <link rel="icon" href="./favicon.png" sizes="128x128">
   <style>
     :root {
@@ -26,18 +27,18 @@ by Johnny
       --secondary: #6C757D;
     }
     * {padding:0;margin:0;}
-    html {font: normal 14px sans-serif;color:#333;}
+    html {font: normal 14px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";color:#333;}
     body {background:#f8f9fa;overflow:hidden;}
 
-    #tabs {position:absolute;top:0;left:0;right:0;height:32px;background:#EFF1F4;display:flex;align-items: center;}
+    #tabs {position:absolute;top:0;left:0;right:0;height:32px;background:#EFF1F4;display:flex;align-items: center;justify-content: space-between;user-select: none;}
       .popwindow #tabs {display:none;}
-      .tab {height:100%;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
+      .tab {height:100%;min-height:32px;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
         .tab.current {background:white;color:#333;}
 
         .tab.closeable {position:relative;padding-left:24px;gap:8px;padding-right:8px;}
-          .tab .btn.xbtn {width:16px;height:16px;border-radius:50%;padding:0;min-width:0;margin-top:-2px;}
+          .tab .btn.xbtn {width:16px;height:16px;border-radius:50%;padding:0;min-width:0;}
 
-
+          .left {display:flex;}
 
         .tab.board::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236C757D' fill-rule='evenodd' d='M2 1.75a1 1 0 00-1 1v6.5a1 1 0 001 1h8a1 1 0 001-1v-6.5a1 1 0 00-1-1H2zm.25 1A.25.25 0 002 3v6c0 .138.112.25.25.25h1.5A.25.25 0 004 9V3a.25.25 0 00-.25-.25h-1.5zM5 3a.25.25 0 01.25-.25h1.5A.25.25 0 017 3v6a.25.25 0 01-.25.25h-1.5A.25.25 0 015 9V3zm3.25-.25A.25.25 0 008 3v6c0 .138.112.25.25.25h1.5A.25.25 0 0010 9V3a.25.25 0 00-.25-.25h-1.5z' clip-rule='evenodd'/%3E%3C/svg%3E");position:absolute;left:8px;top:calc(50% - 8px);transform:translateY(-50%);width:12px;height:12px;}
 
@@ -45,6 +46,8 @@ by Johnny
 
 
       .menubtn {height:100%;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
+        .menubtn:hover, .menubtn.on  {background:var(--border)};
+        
 
 
     .row {display:flex;gap:4px;}
@@ -53,16 +56,18 @@ by Johnny
 
     .tags {width:100%;}
 
-    .tag {background:rgb(0 0 0 / 10%);color:rgb(0 0 0 / 65%);font-weight:600;text-transform:uppercase;font-size:11px;padding:2px 4px 1px;border-radius:2px;display:inline-block;}
+    .tag {background:rgb(0 0 0 / 10%);color:rgb(0 0 0 / 65%);font-weight:600;text-transform:uppercase;font-size:11px;padding:0px 4px 1px;border-radius:2px;display:inline-block;}
 
     #conwrap {position:absolute;top:32px;left:0;right:0;bottom:0;}
       .clopen #conwrap {right: 337px;}
       .popwindow #conwrap {display:none;}
 
     #subnav {height:44px;position:absolute;top:0;left:0;right:0;background:white;border-bottom:1px solid #eee;display:flex;align-items:center;padding:0 8px;    justify-content: space-between;}
-      .right {}
+      .right {display:flex;gap:4px;}
 
     input[type=text] {width:100%;height:28px;border:1px solid var(--border);border-radius:3px;text-indent: 8px;box-sizing: border-box;}
+
+    input.ctoggle {pointer-events:none;}
 
     .combobox {display:flex;}
       .combobox input {border-radius: 3px 0 0 3px;width:100%;}
@@ -83,9 +88,9 @@ by Johnny
         .editmodebar .left, .editmodebar .right {display:flex;gap:4px;}
 
 
-    .btn {height:28px;min-width:28px;border-radius:3px;background:transparent;color:var(--secondary);display: flex;align-items: center;justify-content: center;padding:0 8px;box-sizing: border-box;font-weight:500;cursor:pointer;user-select:none;font-size:12px;}
+    .btn {height:28px;min-width:28px;border-radius:3px;background:transparent;color:var(--secondary);font-weight:500;display: flex;align-items: center;justify-content: center;padding:0 8px;box-sizing: border-box;font-weight:500;cursor:pointer;user-select:none;font-size:12px;}
       .btn svg {fill:var(--secondary);width:12px;height:12px;}
-        .btn:hover {background:#ddd;}
+        .btn:hover {background:var(--border);}
         .btn:active {background:#ccc;}
 
       .btn.cta {background:#357EAC;color:white;}
@@ -96,11 +101,10 @@ by Johnny
       .btn.on svg {fill:white;}
 
     .btn.floating {position:absolute;top:45px;left:0;right:0;border-radius:0;background:rgb(12, 90, 206);color:white;z-index:9999;}
+      .floating.opened {background:white;color:rgb(12, 90, 206);border-bottom:1px solid var(--border);}
       .popwindow .floating {display:none;}
 
-    .menubtn {}
-      .menubtn:hover {background:var(--border)}
-      .menubtn.on {background:var(--border)}
+      .clbtn {width:32px;padding:0;height:32px;margin:0;min-width:24px;border-radius: 0;}
 
     .pop {position:relative;}
       .popover {opacity:0;pointer-events: none;position:absolute;top:calc(100% + 4px);left:-40px;background:white;z-index:999999999999999;padding:4px 0;box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05), 0px 3px 6px rgba(0, 0, 0, 0.08), 0px 8px 24px rgba(0, 0, 0, 0.15);border-radius:3px;min-width:160px;user-select:none;}
@@ -118,20 +122,30 @@ by Johnny
           .hoverpop {position:absolute;opacity:0;pointer-events: none;left:100%;top:-4px;}
             .pophover:hover > .hoverpop {opacity:1;pointer-events: all;}
 
-    .card {cursor:grab;user-select:none;padding:6px 12px 6px 24px;position:relative;font-size:12px;display: flex;flex-direction: column;gap:4px;border-bottom:1px solid var(--border);}
+    .card {cursor:grab;user-select:none;padding:6px 12px 6px 24px;position:relative;font-size:12px;display: flex;flex-direction: column;gap:4px;border-bottom:1px solid var(--border);align-items: flex-start;}
       .card::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 10'%3E%3Crect width='2' height='2' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' y='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' y='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' y='8' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' y='8' fill='%236C757D' rx='1'/%3E%3C/svg%3E");position:absolute;left:8px;top:50%;transform:translateY(-50%);width:6px;height:10px;}
       .card.hide {display:none;}
       .card.used {background:#66519114;}
-      .keytag {background:#eee;color:#888;font-weight:600;text-transform:uppercase;font-size:11px;padding:2px 4px 1px;border-radius:2px;display:inline-block;align-self: center;}
-      .mr {line-height:1.2;overflow:hidden;text-overflow: ellipsis;
+      .keytag {background:#eee;color:#888;font-weight:600;text-transform:uppercase;font-size:11px;padding:0px 4px 1px;border-radius:2px;}
+      .mr {line-height:1.2;overflow:hidden;text-overflow: ellipsis;padding-bottom: 2px;
    display: -webkit-box;
    -webkit-box-orient: vertical;
    -webkit-line-clamp: 2;}
 
-        .card .expand {display:none;flex-direction: column;gap:16px;align-items: flex-start;padding:8px 0;}
+   .card.archived, .dragcard.archived {display:none !important;}
+
+        
+
+        .card .expand {width:100%;display:none;flex-direction: column;gap:16px;align-items: flex-start;padding:8px 0;}
         .card.expanded {box-shadow: inset 0 0 0 2px #7a61ff;}
         .expanded .expand {display:flex;}
           .expanded .tr, .expanded .mr, .expanded .br, .expanded .check {display:none;}
+        
+          .card.locked {box-shadow:inset 0 0 0 3px var(--secondary);}
+            .card.locked .lockbtn {background:var(--secondary);color:white;}
+
+        .activities, .comments {position: absolute;top:0;left:0;right:0;bottom:0;z-index:4;display:none;background:white;}
+          .aactive .activities, .cactive .comments {display:block;}
 
           .etr {display:flex;justify-content: space-between;width: 100%;gap:4px;}
             .etr .right {display:flex;}
@@ -148,15 +162,17 @@ by Johnny
         .c4l .mr {-webkit-line-clamp: 4;}
       .br {display:flex;gap:4px 12px;flex-wrap: wrap;}
 
-      .meta {display:flex;font-size:10px;color:var(--secondary);gap:4px;font-weight:700;}
+      .meta {display:flex;font-size:10px;color:var(--secondary);gap:4px;font-weight:600;}
         .meta .icon, .meta svg {width:12px;height:12px;fill:#777;}
         .meta .data {text-transform:uppercase;}
 
-      .mousegrab {cursor:grabbing;}
+      .mousegrab  * {cursor:grabbing !important;}
 
-      .dragcard {position:absolute;z-index:9999;width:200px;padding:8px;color:white;cursor:grabbing;user-select:none;border-radius:3px;}
+      .dragcard {position:absolute;z-index:9999;width:200px;padding:8px;color:white;cursor:grabbing;user-select:none;border-radius:3px;display: flex;flex-direction: column;align-items: self-start;justify-content: flex-start;}
         .dragcard.focused {box-shadow:0 0 0 2px #7B61FF;}
         .dragcard .mr {-webkit-line-clamp: 4;}
+
+    .tagdrop {font-size:9px;display:flex;width:100%;padding:4px 8px 4px 4px;border-radius:3px;border:1px solid var(--border);background:white;color:var(--secondary);justify-content: space-between;align-items:center;cursor:pointer;}
 
 
       #container {position:absolute;top:45px;left:0;right:0;bottom:0;}
@@ -170,7 +186,7 @@ by Johnny
           .list.draggingover {background:#aa99ff71;}
             .list.draggingover > * {pointer-events: none !important;}
 
-        .listtag {background:rgb(0 0 0 / 10%);color:rgb(0 0 0 / 65%);font-weight:600;text-transform:uppercase;font-size:11px;padding:2px 4px 1px;border-radius:2px;display:inline-block;flex-grow: 0;}
+        .listtag {background:rgb(0 0 0 / 10%);color:rgb(0 0 0 / 65%);font-weight:700;text-transform:uppercase;font-size:11px;padding:0px 4px 1px;border-radius:2px;display:inline-block;flex-grow: 0;}
 
 
       .logo {justify-content: center;}
@@ -179,7 +195,7 @@ by Johnny
       .chev {width:12px;height:12px;fill:var(--secondary)}
 
 
-        .meta {display:none;}
+        .meta {display:none;margin-top:4px;}
         .ctag .metatag, .ceditor .metaeditor, .cedited .metaedited, .cupdated .metaupdated, .ccreator .metacreator, .ccreated .metacreated, .creactions .metareactions, .ccomments .metacomments, .cuses .metauses, .cactor .metaactor, .csource .metasource, .cid .metaid {display:flex;}
 
 
@@ -194,6 +210,11 @@ by Johnny
         .starttime .row {align-items: center;gap:8px;}
           .starttime .row label {display:flex;align-items: center;gap:4px;}
 
+
+    .toast {position:fixed;bottom:24px;left:24px;background:#E83F45;color:#fff;padding:8px 12px ;border-radius: 8px;z-index:9999999999999999;display:flex;gap:12px;align-items: center;font-size:12px; font-weight: 500;}
+        .toast .btn {color:white;font-weight:700;text-transform: uppercase;}
+          .toast .btn:hover {color:white;background:rgba(255, 255, 255, 0.08);}
+          .toast .btn:active {color:white;background:rgba(255, 255, 255, 0.12);}
   </style>
   <script src="../js/base.js"></script>
   <script src="../js/gator.js"></script>
@@ -202,118 +223,125 @@ by Johnny
 <body class="clopen">
   <div id=wrapper>
     <div id=tabs>
-      <div class="tab logo" data-view=home>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-          <path fill="#9DCAE7" d="M6.106 10.667L16.449.321H.32V6.11h5.785v4.558z"/>
-          <path fill="#49A2DA" d="M7.333 11.894L17.679 1.55v16.127h-5.788v-5.784H7.333z"/>
-        </svg>
-      </div>
-      <div class="menubtn planhome pop" data-view=planhome>Conquer the World
-        <svg class=chev viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5.41921 9.05756C5.94241 8.52236 6.67081 8.48036 7.31041 9.05756L12 13.554L16.6896 9.05756C17.3292 8.48036 18.0588 8.52236 18.5784 9.05756C19.1016 9.59156 19.068 10.494 18.5784 10.9956C18.0912 11.4972 12.9444 16.398 12.9444 16.398C12.684 16.6656 12.342 16.8 12 16.8C11.658 16.8 11.316 16.6656 11.0532 16.398C11.0532 16.398 5.90881 11.4972 5.41921 10.9956C4.92961 10.494 4.89601 9.59156 5.41921 9.05756Z"/>
-        </svg>
-        <div class=popover style="left:0;">
-          <div class="popitem pophover">Plans
+      <div class=left>
+        <div class="tab logo" data-view=home>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+            <path fill="#9DCAE7" d="M6.106 10.667L16.449.321H.32V6.11h5.785v4.558z"/>
+            <path fill="#49A2DA" d="M7.333 11.894L17.679 1.55v16.127h-5.788v-5.784H7.333z"/>
+          </svg>
+        </div>
+        <div class="menubtn planhome pop" data-view=planhome>Conquer the World
+          <svg class=chev viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.41921 9.05756C5.94241 8.52236 6.67081 8.48036 7.31041 9.05756L12 13.554L16.6896 9.05756C17.3292 8.48036 18.0588 8.52236 18.5784 9.05756C19.1016 9.59156 19.068 10.494 18.5784 10.9956C18.0912 11.4972 12.9444 16.398 12.9444 16.398C12.684 16.6656 12.342 16.8 12 16.8C11.658 16.8 11.316 16.6656 11.0532 16.398C11.0532 16.398 5.90881 11.4972 5.41921 10.9956C4.92961 10.494 4.89601 9.59156 5.41921 9.05756Z"/>
+          </svg>
+          <div class=popover style="left:0;">
+            <div class="popitem pophover">Plans
 
-            <div class="hoverpop popover">
-              <div class=popitem>Create new plan</div>
-              <hr>
-              <div class=popitem>Plan A</div>
-              <div class=popitem>Plan B</div>
-              <div class=popitem>Plan C</div>
+              <div class="hoverpop popover">
+                <div class=popitem>Create new plan</div>
+                <hr>
+                <div class=popitem>Plan A</div>
+                <div class=popitem>Plan B</div>
+                <div class=popitem>Plan C</div>
+              </div>
             </div>
-          </div>
-          <hr>
-          <div class="popitem pophover">Plan Conquer the World
-            <div class="hoverpop popover">
-              <div class=popitem>Properties</div>
-              <div class=popitem>Share</div>
-              <div class=popitem>Duplicate</div>
-              <div class=popitem>Delete</div>
+            <hr>
+            <div class="popitem pophover">Plan Conquer the World
+              <div class="hoverpop popover">
+                <div class=popitem>Properties</div>
+                <div class=popitem>Share</div>
+                <div class=popitem>Duplicate</div>
+                <div class=popitem>Delete</div>
+              </div>
             </div>
-          </div>
-          <div class="popitem pophover">Boards
+            <div class="popitem pophover">Boards
 
-            <div class="hoverpop popover">
-              <div class=popitem>Create new board</div>
+              <div class="hoverpop popover">
+                <div class=popitem>Create new board</div>
+                <hr>
+                <div class=popitem>Phase I</div>
+                <div class=popitem>Phase II</div>
+                <div class=popitem>Phase III</div>
+                <div class=popitem>RFI</div>
+              </div>
+            </div>
+            <div class="popitem pophover">Timeline<div class="hoverpop popover">
+              <div class=popitem>Create new timeline</div>
               <hr>
               <div class=popitem>Phase I</div>
               <div class=popitem>Phase II</div>
               <div class=popitem>Phase III</div>
               <div class=popitem>RFI</div>
-            </div>
+            </div></div>
+            <div class="popitem pophover">Cause & effect<div class="hoverpop popover">
+              <div class=popitem>Create new cause & effect</div>
+              <hr>
+              <div class=popitem>Phase I</div>
+              <div class=popitem>Phase II</div>
+              <div class=popitem>Phase III</div>
+              <div class=popitem>RFI</div>
+            </div></div>
+            <div class="popitem pophover">Briefs<div class="hoverpop popover">
+              <div class=popitem>Create new brief</div>
+              <hr>
+              <div class=popitem>Phase I</div>
+              <div class=popitem>Phase II</div>
+              <div class=popitem>Phase III</div>
+              <div class=popitem>RFI</div>
+            </div></div>
+            <div class="popitem pophover">Orders<div class="hoverpop popover">
+              <div class=popitem>Create new orders</div>
+              <hr>
+              <div class=popitem>Phase I</div>
+              <div class=popitem>Phase II</div>
+              <div class=popitem>Phase III</div>
+              <div class=popitem>RFI</div>
+            </div></div>
+            <hr>
+            <div class="popitem pophover">Account<div class="hoverpop popover">
+              <div class=popitem>Profile</div>
+              <div class=popitem>Security</div>
+              <hr>
+              <div class=popitem>Logout</div>
+            </div></div>
+            <div class="popitem pophover">Team<div class="hoverpop popover">
+              <div class=popitem>Add team member</div>
+              <div class=popitem>View team</div>
+            </div></div>
+            <div class=popitem>Activity</div>
+            <hr>
+            <div class=popitem>Help</div>
           </div>
-          <div class="popitem pophover">Timeline<div class="hoverpop popover">
-            <div class=popitem>Create new timeline</div>
-            <hr>
-            <div class=popitem>Phase I</div>
-            <div class=popitem>Phase II</div>
-            <div class=popitem>Phase III</div>
-            <div class=popitem>RFI</div>
-          </div></div>
-          <div class="popitem pophover">Cause & effect<div class="hoverpop popover">
-            <div class=popitem>Create new cause & effect</div>
-            <hr>
-            <div class=popitem>Phase I</div>
-            <div class=popitem>Phase II</div>
-            <div class=popitem>Phase III</div>
-            <div class=popitem>RFI</div>
-          </div></div>
-          <div class="popitem pophover">Briefs<div class="hoverpop popover">
-            <div class=popitem>Create new brief</div>
-            <hr>
-            <div class=popitem>Phase I</div>
-            <div class=popitem>Phase II</div>
-            <div class=popitem>Phase III</div>
-            <div class=popitem>RFI</div>
-          </div></div>
-          <div class="popitem pophover">Orders<div class="hoverpop popover">
-            <div class=popitem>Create new orders</div>
-            <hr>
-            <div class=popitem>Phase I</div>
-            <div class=popitem>Phase II</div>
-            <div class=popitem>Phase III</div>
-            <div class=popitem>RFI</div>
-          </div></div>
-          <hr>
-          <div class="popitem pophover">Account<div class="hoverpop popover">
-            <div class=popitem>Profile</div>
-            <div class=popitem>Security</div>
-            <hr>
-            <div class=popitem>Logout</div>
-          </div></div>
-          <div class="popitem pophover">Team<div class="hoverpop popover">
-            <div class=popitem>Add team member</div>
-            <div class=popitem>View team</div>
-          </div></div>
-          <div class=popitem>Activity</div>
-          <hr>
-          <div class=popitem>Help</div>
         </div>
-      </div>
-      <div class="tab board closeable current" data-view=p1>
-        Phase I
-        <div class="btn xbtn">
+        <div class="tab board closeable current" data-view=p1>
+          Phase I
+          <div class="btn xbtn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M14.87 12.002l4.3-4.3a1.352 1.352 0 000-1.91l-.956-.956a1.352 1.352 0 00-1.912 0l-4.3 4.3-4.3-4.3a1.352 1.352 0 00-1.91 0l-.956.955a1.352 1.352 0 000 1.912l4.3 4.3-4.3 4.3a1.352 1.352 0 000 1.91l.955.956a1.352 1.352 0 001.912 0l4.3-4.3 4.3 4.3a1.352 1.352 0 001.91 0l.956-.955a1.352 1.352 0 000-1.912l-4.3-4.3z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="tab brief closeable" data-view=p2>Mission Brief<div class="btn xbtn">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M14.87 12.002l4.3-4.3a1.352 1.352 0 000-1.91l-.956-.956a1.352 1.352 0 00-1.912 0l-4.3 4.3-4.3-4.3a1.352 1.352 0 00-1.91 0l-.956.955a1.352 1.352 0 000 1.912l4.3 4.3-4.3 4.3a1.352 1.352 0 000 1.91l.955.956a1.352 1.352 0 001.912 0l4.3-4.3 4.3 4.3a1.352 1.352 0 001.91 0l.956-.955a1.352 1.352 0 000-1.912l-4.3-4.3z"/>
           </svg>
+        </div></div>
+      </div>
+      <div class="right">
+        <div class="btn toggle clbtn on" data-class=clopen>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+            <path fill-rule="evenodd" d="M3.162 1.714a.839.839 0 00-.841.837v5.017c0 .462.376.836.84.836h7.57c.464 0 .84-.374.84-.836V2.55a.839.839 0 00-.84-.837H3.16zm.105 1.255a.105.105 0 00-.105.104V3.7c0 .058.047.105.105.105h2.312a.105.105 0 00.106-.105v-.627a.105.105 0 00-.106-.104H3.267zm-.105 1.777c0-.058.047-.105.105-.105h7.358c.058 0 .105.047.105.105v.627a.105.105 0 01-.105.104H3.267a.105.105 0 01-.105-.104v-.627zm.105 1.568a.105.105 0 00-.105.104v.627c0 .058.047.105.105.105h6.517a.105.105 0 00.105-.105v-.627a.105.105 0 00-.105-.104H3.267z" clip-rule="evenodd"/>
+            <path d="M1.48 3.596h-.105a.943.943 0 00-.947.94v4.809c0 .52.424.94.947.94h7.358a.943.943 0 00.946-.94V9.24H2.741A1.258 1.258 0 011.48 7.986v-4.39z"/>
+          </svg>
         </div>
       </div>
-      <div class="tab brief closeable" data-view=p2>Mission Brief<div class="btn xbtn">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M14.87 12.002l4.3-4.3a1.352 1.352 0 000-1.91l-.956-.956a1.352 1.352 0 00-1.912 0l-4.3 4.3-4.3-4.3a1.352 1.352 0 00-1.91 0l-.956.955a1.352 1.352 0 000 1.912l4.3 4.3-4.3 4.3a1.352 1.352 0 000 1.91l.955.956a1.352 1.352 0 001.912 0l4.3-4.3 4.3 4.3a1.352 1.352 0 001.91 0l.956-.955a1.352 1.352 0 000-1.912l-4.3-4.3z"/>
-        </svg>
-      </div></div>
     </div>
     <div id=conwrap>
       <div id="subnav">
         <div class=left></div>
         <div class="right">
-          <div class="btn toggle clbtn on" data-class=clopen>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
-              <path fill-rule="evenodd" d="M3.162 1.714a.839.839 0 00-.841.837v5.017c0 .462.376.836.84.836h7.57c.464 0 .84-.374.84-.836V2.55a.839.839 0 00-.84-.837H3.16zm.105 1.255a.105.105 0 00-.105.104V3.7c0 .058.047.105.105.105h2.312a.105.105 0 00.106-.105v-.627a.105.105 0 00-.106-.104H3.267zm-.105 1.777c0-.058.047-.105.105-.105h7.358c.058 0 .105.047.105.105v.627a.105.105 0 01-.105.104H3.267a.105.105 0 01-.105-.104v-.627zm.105 1.568a.105.105 0 00-.105.104v.627c0 .058.047.105.105.105h6.517a.105.105 0 00.105-.105v-.627a.105.105 0 00-.105-.104H3.267z" clip-rule="evenodd"/>
-              <path d="M1.48 3.596h-.105a.943.943 0 00-.947.94v4.809c0 .52.424.94.947.94h7.358a.943.943 0 00.946-.94V9.24H2.741A1.258 1.258 0 011.48 7.986v-4.39z"/>
-            </svg>
+          <div class="btn " data-class=boardprop>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>
           </div>
         </div>
       </div>
@@ -365,10 +393,10 @@ by Johnny
     </div>
 
     <div id=cl class="">
-      <div class="btn floating" onclick="openpop();">Open in new window</div>
+      <div class="btn floating" onclick="openpop();this.classList.add('opened')">Open in new window</div>
       <div class=editmodebar>
         <div class=left>
-          <input type=checkbox style="margin-left:-2px" />
+          <input type=checkbox class=selectall style="margin-left:-2px" />
         </div>
         <div class=right>
           <div class="btn">
@@ -377,7 +405,7 @@ by Johnny
           <div class="btn">
             Merge
           </div>
-          <div class="btn">
+          <div class="btn deletecards">
             Delete
           </div>
           <div class="btn cta" onclick="document.getElementById('cl').classList.remove('editmode')">
@@ -601,19 +629,20 @@ by Johnny
   </div>
 
   <div id=templates style="display:none;">
+
     <div id=reactions class="reactions">
       <div class=label>Reactions</div>
       <div class=btnrow>
-        <div class="btn"><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 17 16">
+        <div class="btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16">
           <path fill="#288F63" fill-rule="evenodd" d="M1.606 8a6.67 6.67 0 016.667-6.667A6.67 6.67 0 0114.94 8a6.67 6.67 0 01-6.667 6.667A6.67 6.67 0 011.606 8zm2.334.588l2.979 2.98c.179.178.47.178.648 0l5.04-5.04a.458.458 0 000-.648l-.649-.648a.458.458 0 00-.648 0L7.243 9.299 5.236 7.292a.458.458 0 00-.648 0l-.648.648a.458.458 0 000 .648z" clip-rule="evenodd"/>
         </svg></div>
         <div class="btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16">
           <path fill="#1885d8" d="M8.19 1.333a.6.6 0 00-.552.37L6.004 5.596l-4.181.358a.601.601 0 00-.52.417.61.61 0 00.178.645l3.175 2.778-.954 4.129a.61.61 0 00.232.628.595.595 0 00.663.028l3.593-2.19 3.594 2.19a.595.595 0 00.662-.028.61.61 0 00.232-.628l-.954-4.129L14.9 7.016a.61.61 0 00.177-.645.601.601 0 00-.52-.417l-4.18-.358-1.634-3.893a.6.6 0 00-.553-.37z"/>
         </svg></div>
-        <div class="btn"><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 17 16">
+        <div class="btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16">
           <path fill="#F36D07" fill-rule="evenodd" d="M13.458 1.333H3.088c-.822 0-1.482.6-1.482 1.334V12c0 .733.66 1.333 1.482 1.333H6.05l2.11 1.9c.064.057.16.057.224 0l2.11-1.9h2.963c.815 0 1.482-.6 1.482-1.333V2.667c0-.734-.667-1.334-1.482-1.334zM5.606 5.767H7.11c.034-.627.456-1.032 1.094-1.032.632 0 1.054.383 1.054.91s-.216.8-.932 1.227c-.766.45-1.071.949-1 1.82l.012.322h1.47V8.72c0-.544.206-.816.944-1.243.783-.461 1.188-1.044 1.188-1.882 0-1.265-1.05-2.148-2.636-2.148-1.704 0-2.67.955-2.698 2.32zm2.487 5.9c.505 0 .91-.383.91-.872 0-.488-.405-.871-.91-.871-.5 0-.905.383-.905.871 0 .489.405.872.905.872z" clip-rule="evenodd"/>
         </svg></div>
-        <div class="btn"><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 17 16">
+        <div class="btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16">
           <path fill="#E83F45" d="M3.273 2c0-.184.15-.333.334-.333h5.666l.667 1h3c.184 0 .333.149.333.333v6c0 .184-.149.333-.333.333H8.773l-.833-1H5.273V14c0 .184-.149.333-.333.333H3.607A.333.333 0 013.273 14V2z"/>
         </svg></div>
       </div>
@@ -654,8 +683,8 @@ by Johnny
       <div class=label>Start time</div>
       <div class=row>
         <label><input type=radio name=st checked /> Auto</label>
-        <label><input type=radio name=st  /> Relative</label>
-        <label><input type=radio name=st  /> Absolute</label>
+        <label><input type=radio name=st /> Relative</label>
+        <label><input type=radio name=st /> Absolute</label>
       </div>
     </div>
 
@@ -669,9 +698,24 @@ by Johnny
     </div>
 
     <div id=cardactions class=cardactions>
-      <div class=btn>Comment</div>
-      <div class=btn>Lock</div>
-      <div class=btn>Activity</div>
+      <div class="btn commentbtn">Comment</div>
+      <div class="btn lockbtn">Lock</div>
+      <div class="btn activitybtn">Activity</div>
+    </div>
+
+    <div id=cardmenu class="cardmenu popover" style="min-width:80px;left:-52px;">
+      <div class=popitem>Copy</div>
+      <div class="popitem deletecard">Delete</div>
+    </div>
+
+    <div id=comments class=comments>
+      <div class="btn closebtn" data-class="cactive">Close Comments</div>
+      comments
+    </div>
+
+    <div id=activities class=activities>
+      <div class="btn closebtn" data-class="aactive">Close Activity</div>
+      Card history
     </div>
 
   </div>
@@ -843,22 +887,34 @@ by Johnny
         if ( !moved ){
           console.log('click');
 
-          document.getElementsByClassName('expanded').removeclass('expanded');
+          
 
           if(t.classList.contains('dragcard')){
             t.classList.add('focused');
 
             if ( document.getElementsByClassName('clbtn')[0].classList.contains('on')){
               let ccc = document.getElementById(t.dataset.id);
-              ccc.classList.add('expanded');
-              ccc.scrollIntoViewIfNeeded(false);
+              
+              if ( !ccc.classList.contains('expanded')){
+                document.getElementsByClassName('expanded').removeclass('expanded');
+                ccc.classList.add('expanded');
+                ccc.scrollIntoViewIfNeeded(false);
 
-              ta.call(ccc.getElementsByTagName('textarea')[0]);
+                let txa = ccc.getElementsByTagName('textarea')[0];
+                ta.call(txa);
+                txa.focus();
+              }
+
+              
             }
-          } else {
+          } else if ( !e.target.classList.contains('check') && !t.classList.contains('expanded') ) {
+            document.getElementsByClassName('expanded').removeclass('expanded');
             t.classList.add('expanded');
-            ta.call(t.getElementsByTagName('textarea')[0]);
             t.scrollIntoViewIfNeeded(false);
+            let txa = t.getElementsByTagName('textarea')[0];
+            ta.call(txa);
+            txa.focus();
+            
           }
         }
       }
@@ -870,7 +926,35 @@ by Johnny
     function makecards(c){
       let cl = document.getElementById('cl').getElementsByClassName('cardlist')[0];
 
-      let tags = [{color: '#003f5c', text: 'logisitics'}, {color: '#2f4b7c', text: 'fact'}, {color: '#665191', text: 'RFI'}, {color: '#a05195', text: 'Operation'}, {color: '#d45087', text: 'combat'}, {color: '#f95d6a', text: 'enemy'}, {color: '#ff7c43', text: 'danger'}, {color: '#ffa600', text: 'neutral'}, ];
+      let tags = [{color: '#003f5c', text: 'logisitics'}, {color: '#2f4b7c', text: 'fact'}, {color: '#665191', text: 'RFI'}, {color: '#a05195', text: 'Operation'}, {color: '#d45087', text: 'combat'}, {color: '#f95d6a', text: 'enemy'}, {color: '#ff7c43', text: 'danger'}, {color: '#ffa600', text: 'neutral'} ];
+
+      let ktpop = document.createElement('div');
+      ktpop.className ='popover ktpop';
+      ktpop.style.left = '0';
+
+      for(let i=0;i<tags.length;i++){
+        let t = tags[i];
+        let pi = document.createElement('div');
+        let kt = document.createElement('div');
+        
+        pi.className = 'popitem ktitem';
+        pi.style.lineHeight = 'unset';
+        pi.style.height = '28px';
+        pi.style.display = 'flex';
+        pi.style.alignItems = 'center';
+        pi.style.justifyContent = 'start';
+        kt.className = 'keytag';
+        kt.style.backgroundColor = t.color;
+        kt.style.color = 'white';
+        kt.dataset.text = t.text;
+        kt.dataset.color = t.color;
+
+        kt.appendChild(document.createTextNode(t.text));
+
+        pi.appendChild(kt);
+
+        ktpop.appendChild(pi);
+      }
 
       for(let i=0;i<c;i++){
         let card = document.createElement('div');
@@ -880,6 +964,7 @@ by Johnny
 
         let expand = document.createElement('div');
         let etag = document.createElement('div');
+        let ecombo = document.createElement('div');
         let etext = document.createElement('textarea');
         let euses = document.getElementById('uses').cloneNode(true);
         let ereact = document.getElementById('reactions').cloneNode(true);
@@ -889,6 +974,12 @@ by Johnny
         let ed = document.getElementById('duration').cloneNode(true);
         let ecs = document.getElementById('cardactivity').cloneNode(true);
         let eca = document.getElementById('cardactions').cloneNode(true);
+
+        let menupop = document.getElementById('cardmenu').cloneNode(true);
+        let com = document.getElementById('comments').cloneNode(true);
+        let act = document.getElementById('activities').cloneNode(true);
+
+        let ktp = ktpop.cloneNode(true);
 
         let minb = document.createElement('div');
         let men = document.createElement('div');
@@ -903,6 +994,15 @@ by Johnny
         ed.removeAttribute('id');
         ecs.removeAttribute('id');
         eca.removeAttribute('id');
+        menupop.removeAttribute('id');
+        com.removeAttribute('id');
+        act.removeAttribute('id');
+
+        let rad = est.querySelectorAll('input[name=st]');
+        let nn = 'st-' + Date.now() + Math.floor(Math.random() * 1000);
+        for(var ii=0;ii<rad.length;ii++){
+          rad[ii].name = nn;
+        }
 
         etext.className = 'etext';
 
@@ -926,18 +1026,23 @@ by Johnny
         check.className = 'check';
 
         rt.className = 'right';
-        men.className = 'btn menubtn';
+        men.className = 'btn menbtn pop';
         minb.className = 'btn minbtn';
         etr.className = 'etr';
+        etag.className = 'tagdrop pop';
 
         minb.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 352H48c-26.5 0-48 21.5-48 48v32c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48v-32c0-26.5-21.5-48-48-48z"></path></svg>`;
-        men.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>`
+        men.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>`;
+
+        minb.title = 'Minimize';
+
+        men.appendChild(menupop);
 
         let content = generate();
 
         kt.appendChild(document.createTextNode(tag.text));
 
-        etag = kt.cloneNode(true);
+        etag.appendChild(kt.cloneNode(true));
 
         rt.appendChild(minb);
         rt.appendChild(men);
@@ -955,6 +1060,9 @@ by Johnny
         card.appendChild(meta);
         card.appendChild(check);
 
+        etag.appendChild(document.createTextNode('▼'));
+        etag.appendChild(ktp);
+
         etr.appendChild(etag);
         etr.appendChild(rt);
 
@@ -970,6 +1078,8 @@ by Johnny
         expand.appendChild(eca);
 
         card.appendChild(expand);
+        card.appendChild(com);
+        card.appendChild(act);
 
         cl.appendChild(card);
       }
@@ -979,7 +1089,7 @@ by Johnny
       let wrap = document.createElement('div');
       wrap.className = 'br';
 
-      let metas = [{class: 'metatag', label:[1,2,3,4,5,6,7,8,9,0], path: 'M1 11.833v-8.77C1 1.923 1.923 1 3.063 1h8.77c.547 0 1.072.217 1.459.604l9.104 9.104a2.063 2.063 0 010 2.917l-8.77 8.77a2.063 2.063 0 01-2.918 0l-9.104-9.103A2.062 2.062 0 011 11.833zM5.813 3.75a2.062 2.062 0 100 4.125 2.062 2.062 0 000-4.125z'}, {class: 'metaeditor', label:['Dave B', 'Luke S', 'Mike J', 'Tony J', 'Ashley S', 'Fred B'], path: 'M16.377 5.394l3.445 3.445a.373.373 0 010 .527l-8.341 8.342-3.545.393a.743.743 0 01-.821-.821l.393-3.544 8.342-8.342a.373.373 0 01.527 0zm6.188-.875L20.7 2.655a1.494 1.494 0 00-2.109 0L17.24 4.007a.373.373 0 000 .528l3.445 3.445a.373.373 0 00.527 0l1.353-1.352c.58-.585.58-1.528 0-2.109zm-6.898 10.92v3.888H3.444V7.105h8.777a.47.47 0 00.325-.134l1.528-1.527a.458.458 0 00-.325-.783H2.833A1.834 1.834 0 001 6.494v13.444c0 1.013.821 1.834 1.833 1.834h13.445a1.834 1.834 0 001.833-1.834v-6.027a.46.46 0 00-.783-.324L15.8 15.114a.47.47 0 00-.133.325z'}, {class: 'metaupdated', label:['1D', '2W', '4D', '5D', '1M', '6M', '2M', '4D', '2D', '6D', '1W', '1H', '2H', '8H'], path: 'M12 1C5.923 1 1 5.923 1 12s4.923 11 11 11 11-4.923 11-11S18.077 1 12 1zm4.102 13.883l-.887 1.109a.71.71 0 01-.997.11l-2.972-2.204a1.773 1.773 0 01-.665-1.386v-6.9a.71.71 0 01.71-.709h1.419a.71.71 0 01.71.71V12l2.572 1.885a.708.708 0 01.11.998z'}, {class: 'metacreator', label:['Dave B', 'Luke S', 'Mike J', 'Tony J', 'Ashley S', 'Fred B'], path: 'M17.625 1l-2.75 1.375L12.125 1l-2.75 1.375L6.625 1v4.125h11V1zm-1.65 13.063h-.718a7.504 7.504 0 01-3.132.687 7.504 7.504 0 01-3.132-.688h-.718A5.775 5.775 0 002.5 19.837v1.1c0 1.14.923 2.063 2.063 2.063h15.125c1.139 0 2.062-.923 2.062-2.063v-1.1a5.775 5.775 0 00-5.775-5.774zm-3.85-1.376a5.5 5.5 0 005.5-5.5V6.5h-11v.688a5.5 5.5 0 005.5 5.5z'}, {class: 'metacreated', label:['1D', '2W', '4D', '5D', '1M', '6M', '2M', '4D', '2D', '6D', '1W'], path: 'M17.719 7.875H12.76l1.83-5.577A1.035 1.035 0 0013.595 1H7.406c-.515 0-.954.382-1.022.894L5.009 12.206c-.082.619.4 1.169 1.022 1.169h5.1l-1.98 8.357a1.03 1.03 0 001.895.752l7.562-13.062a1.03 1.03 0 00-.89-1.547z'}, {class: 'metareactions', label:['reacts'], path: 'M12 1.5C6.2 1.5 1.5 6.2 1.5 12S6.2 22.5 12 22.5 22.5 17.8 22.5 12 17.8 1.5 12 1.5zm5.987 16.487A8.41 8.41 0 0112 20.467a8.41 8.41 0 01-5.987-2.48A8.41 8.41 0 013.533 12c0-2.26.88-4.386 2.48-5.987A8.41 8.41 0 0112 3.533c2.26 0 4.386.88 5.987 2.48A8.41 8.41 0 0120.467 12a8.41 8.41 0 01-2.48 5.987zm-2.6-7.342c.75 0 1.355-.605 1.355-1.355s-.605-1.355-1.355-1.355-1.355.606-1.355 1.355c0 .75.606 1.355 1.355 1.355zm-6.774 0c.75 0 1.355-.605 1.355-1.355s-.606-1.355-1.355-1.355c-.75 0-1.355.606-1.355 1.355 0 .75.606 1.355 1.355 1.355zm8.23 2.71H7.156a.568.568 0 00-.571.635c.317 2.506 2.494 4.446 5.127 4.446h.576c2.633 0 4.81-1.94 5.127-4.446a.568.568 0 00-.572-.635z'}, {class: 'metacomments', label:[1 , 2 ,3 ,4 , 5,6,7,8,9], path: 'M19.778 2H4.222C2.99 2 2 2.9 2 4v14c0 1.1.989 2 2.222 2h4.445l3.166 2.85a.25.25 0 00.334 0L15.333 20h4.445C21 20 22 19.1 22 18V4c0-1.1-1-2-2.222-2zM8 8.65h2.256c.05-.94.683-1.548 1.64-1.548.949 0 1.582.575 1.582 1.366 0 .79-.325 1.198-1.399 1.84-1.149.674-1.607 1.423-1.498 2.73l.016.483h2.206v-.441c0-.816.308-1.224 1.415-1.865C15.393 10.524 16 9.65 16 8.393c0-1.898-1.573-3.222-3.954-3.222-2.556 0-4.004 1.432-4.046 3.48zm3.73 8.85c.757 0 1.365-.574 1.365-1.307s-.608-1.307-1.366-1.307c-.749 0-1.356.575-1.356 1.307 0 .733.607 1.307 1.356 1.307z'}, {class: 'metaactor', label:['Russia', 'China', 'Foreign', 'Domestic', 'Pacific', 'Kangaroos'], path: 'M5.813 9.6h-.825a.55.55 0 00-.55.55v3.3a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-3.3a.55.55 0 00-.55-.55zm-3.3 1.1h-.825a.55.55 0 00-.55.55v1.1a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-1.1a.55.55 0 00-.55-.55zm6.6-4.4h-.825a.55.55 0 00-.55.55v9.9a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-9.9a.55.55 0 00-.55-.55zm13.2 4.4h-.825a.55.55 0 00-.55.55v1.1a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-1.1a.55.55 0 00-.55-.55zm-3.3-5.5h-.826a.55.55 0 00-.55.55v12.1a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55V5.75a.55.55 0 00-.55-.55zm-3.3 2.2h-.825a.55.55 0 00-.55.55v7.7a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-7.7a.55.55 0 00-.55-.55zm-3.3-4.4h-.825a.55.55 0 00-.55.55v16.5a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55V3.55a.55.55 0 00-.55-.55z'}, {class: 'metasource', label:['Intel', 'Wiki', 'Internal', 'Warno', 'XXX'], path: 'M12 1C5.923 1 1 5.923 1 12s4.923 11 11 11 11-4.923 11-11S18.077 1 12 1zm0 4.258a3.903 3.903 0 110 7.807 3.903 3.903 0 010-7.807zm0 15.258a8.5 8.5 0 01-6.498-3.025c.834-1.57 2.466-2.652 4.369-2.652.106 0 .213.018.315.048.576.187 1.18.306 1.814.306a5.85 5.85 0 001.814-.306c.102-.03.209-.048.315-.048 1.903 0 3.535 1.082 4.369 2.652A8.5 8.5 0 0112 20.516z'}, {class: 'metaid'} ];
+      let metas = [{class: 'metatag', label:[1,2,3,4,5,6,7,8,9,0], path: 'M1 11.833v-8.77C1 1.923 1.923 1 3.063 1h8.77c.547 0 1.072.217 1.459.604l9.104 9.104a2.063 2.063 0 010 2.917l-8.77 8.77a2.063 2.063 0 01-2.918 0l-9.104-9.103A2.062 2.062 0 011 11.833zM5.813 3.75a2.062 2.062 0 100 4.125 2.062 2.062 0 000-4.125z'}, {class: 'metaeditor', label:['Dave B', 'Luke S', 'Mike J', 'Tony J', 'Ashley S', 'Fred B'], path: 'M16.377 5.394l3.445 3.445a.373.373 0 010 .527l-8.341 8.342-3.545.393a.743.743 0 01-.821-.821l.393-3.544 8.342-8.342a.373.373 0 01.527 0zm6.188-.875L20.7 2.655a1.494 1.494 0 00-2.109 0L17.24 4.007a.373.373 0 000 .528l3.445 3.445a.373.373 0 00.527 0l1.353-1.352c.58-.585.58-1.528 0-2.109zm-6.898 10.92v3.888H3.444V7.105h8.777a.47.47 0 00.325-.134l1.528-1.527a.458.458 0 00-.325-.783H2.833A1.834 1.834 0 001 6.494v13.444c0 1.013.821 1.834 1.833 1.834h13.445a1.834 1.834 0 001.833-1.834v-6.027a.46.46 0 00-.783-.324L15.8 15.114a.47.47 0 00-.133.325z'}, {class: 'metaupdated', label:['1D', '2W', '4D', '5D', '1M', '6M', '2M', '4D', '2D', '6D', '1W', '1H', '2H', '8H'], path: 'M12 1C5.923 1 1 5.923 1 12s4.923 11 11 11 11-4.923 11-11S18.077 1 12 1zm4.102 13.883l-.887 1.109a.71.71 0 01-.997.11l-2.972-2.204a1.773 1.773 0 01-.665-1.386v-6.9a.71.71 0 01.71-.709h1.419a.71.71 0 01.71.71V12l2.572 1.885a.708.708 0 01.11.998z'}, {class: 'metacreator', label:['Dave B', 'Luke S', 'Mike J', 'Tony J', 'Ashley S', 'Fred B'], path: 'M17.625 1l-2.75 1.375L12.125 1l-2.75 1.375L6.625 1v4.125h11V1zm-1.65 13.063h-.718a7.504 7.504 0 01-3.132.687 7.504 7.504 0 01-3.132-.688h-.718A5.775 5.775 0 002.5 19.837v1.1c0 1.14.923 2.063 2.063 2.063h15.125c1.139 0 2.062-.923 2.062-2.063v-1.1a5.775 5.775 0 00-5.775-5.774zm-3.85-1.376a5.5 5.5 0 005.5-5.5V6.5h-11v.688a5.5 5.5 0 005.5 5.5z'}, {class: 'metacreated', label:['1D', '2W', '4D', '5D', '1M', '6M', '2M', '4D', '2D', '6D', '1W'], path: 'M17.719 7.875H12.76l1.83-5.577A1.035 1.035 0 0013.595 1H7.406c-.515 0-.954.382-1.022.894L5.009 12.206c-.082.619.4 1.169 1.022 1.169h5.1l-1.98 8.357a1.03 1.03 0 001.895.752l7.562-13.062a1.03 1.03 0 00-.89-1.547z'}, {class: 'metareactions', label:['reacts'], path: 'M12 1.5C6.2 1.5 1.5 6.2 1.5 12S6.2 22.5 12 22.5 22.5 17.8 22.5 12 17.8 1.5 12 1.5zm5.987 16.487A8.41 8.41 0 0112 20.467a8.41 8.41 0 01-5.987-2.48A8.41 8.41 0 013.533 12c0-2.26.88-4.386 2.48-5.987A8.41 8.41 0 0112 3.533c2.26 0 4.386.88 5.987 2.48A8.41 8.41 0 0120.467 12a8.41 8.41 0 01-2.48 5.987zm-2.6-7.342c.75 0 1.355-.605 1.355-1.355s-.605-1.355-1.355-1.355-1.355.606-1.355 1.355c0 .75.606 1.355 1.355 1.355zm-6.774 0c.75 0 1.355-.605 1.355-1.355s-.606-1.355-1.355-1.355c-.75 0-1.355.606-1.355 1.355 0 .75.606 1.355 1.355 1.355zm8.23 2.71H7.156a.568.568 0 00-.571.635c.317 2.506 2.494 4.446 5.127 4.446h.576c2.633 0 4.81-1.94 5.127-4.446a.568.568 0 00-.572-.635z'}, {class: 'metacomments', label:[1 , 2 ,3 ,4 , 5,6,7,8,9], path: 'M19.778 2H4.222C2.99 2 2 2.9 2 4v14c0 1.1.989 2 2.222 2h4.445l3.166 2.85a.25.25 0 00.334 0L15.333 20h4.445C21 20 22 19.1 22 18V4c0-1.1-1-2-2.222-2zM8 8.65h2.256c.05-.94.683-1.548 1.64-1.548.949 0 1.582.575 1.582 1.366 0 .79-.325 1.198-1.399 1.84-1.149.674-1.607 1.423-1.498 2.73l.016.483h2.206v-.441c0-.816.308-1.224 1.415-1.865C15.393 10.524 16 9.65 16 8.393c0-1.898-1.573-3.222-3.954-3.222-2.556 0-4.004 1.432-4.046 3.48zm3.73 8.85c.757 0 1.365-.574 1.365-1.307s-.608-1.307-1.366-1.307c-.749 0-1.356.575-1.356 1.307 0 .733.607 1.307 1.356 1.307z'}, {class: 'metaactor', label:['Russia', 'China', 'Foreign', 'Domestic', 'Pacific', 'Kangaroos'], path: 'M5.813 9.6h-.825a.55.55 0 00-.55.55v3.3a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-3.3a.55.55 0 00-.55-.55zm-3.3 1.1h-.825a.55.55 0 00-.55.55v1.1a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-1.1a.55.55 0 00-.55-.55zm6.6-4.4h-.825a.55.55 0 00-.55.55v9.9a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-9.9a.55.55 0 00-.55-.55zm13.2 4.4h-.825a.55.55 0 00-.55.55v1.1a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-1.1a.55.55 0 00-.55-.55zm-3.3-5.5h-.826a.55.55 0 00-.55.55v12.1a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55V5.75a.55.55 0 00-.55-.55zm-3.3 2.2h-.825a.55.55 0 00-.55.55v7.7a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-7.7a.55.55 0 00-.55-.55zm-3.3-4.4h-.825a.55.55 0 00-.55.55v16.5a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55V3.55a.55.55 0 00-.55-.55z'}, {class: 'metasource', label:['Intel', 'Wiki', 'Internal', 'Warno', 'XXX'], path: 'M12 1C5.923 1 1 5.923 1 12s4.923 11 11 11 11-4.923 11-11S18.077 1 12 1zm0 4.258a3.903 3.903 0 110 7.807 3.903 3.903 0 010-7.807zm0 15.258a8.5 8.5 0 01-6.498-3.025c.834-1.57 2.466-2.652 4.369-2.652.106 0 .213.018.315.048.576.187 1.18.306 1.814.306a5.85 5.85 0 001.814-.306c.102-.03.209-.048.315-.048 1.903 0 3.535 1.082 4.369 2.652A8.5 8.5 0 0112 20.516z'}, {class: 'metaid'}, {class: 'metauses', label: [1,2,3,4,5,6,7,8,9,0], path: 'M17.7188 7.875H12.7602L14.5907 2.29766C14.7626 1.64453 14.2684 1 13.5938 1H7.40634C6.89071 1 6.45243 1.38242 6.38368 1.89375L5.00868 12.2062C4.92704 12.825 5.40829 13.375 6.03134 13.375H11.1317L9.15087 21.7324C8.99618 22.3855 9.49462 23 10.152 23C10.513 23 10.8567 22.8109 11.0458 22.4844L18.6083 9.42188C19.0079 8.73867 18.5138 7.875 17.7188 7.875Z'} ];
 
       for(let i=0;i<metas.length;i++){
         let a = metas[i];
@@ -1151,16 +1261,16 @@ by Johnny
       let nonpop = false;
       let tars = document.elementsFromPoint(e.clientX, e.clientY);
 
-        tars.forEach(tar => {
-          if ( tar.classList.contains('popover') || tar.classList.contains('pop')){
-            nonpop = true
-            return;
-          }
-        });
-
-        if ( !nonpop ){
-          document.getElementsByClassName('pop on').removeclass('on');
+      tars.forEach(tar => {
+        if ( tar.classList.contains('popover') || tar.classList.contains('pop')){
+          nonpop = true
+          return;
         }
+      });
+
+      if ( !nonpop ){
+        document.getElementsByClassName('pop on').removeclass('on');
+      }
     }
 
     function restorecustom(){
@@ -1391,6 +1501,106 @@ by Johnny
       this.getparent('expanded').classList.remove('expanded');
     }
 
+    function deleteallcards(x){
+      let l = x.length;
+      for(var i=0;i<l;i++){
+        let og = x[i].getparent('card');
+        let id = og.id;
+
+        let cards = document.querySelectorAll(`.dragcard[data-id="${id}"]`);
+        let count = cards.length;
+        for(var ii=0;ii<count;ii++){
+          cards[ii].classList.add('archived');
+        }
+        
+        og.classList.add('archived');
+
+        maketoast(`Removed card in ${count + 1} locations`, 'Undo', id, unarchive);
+      }
+    }
+
+    function deletecards(e){
+      let c = document.querySelectorAll('input.check:checked');
+      
+      deleteallcards(c);
+      document.getElementsByClassName('selectall')[0].checked = false;
+    }
+
+    function deletecard(e){      
+      deleteallcards([this]);
+    }
+
+    function unarchive(e, id){
+      let cid = this.dataset.id;
+      console.log(cid, 'unarchive');
+
+      let query = document.querySelectorAll(`[data-id="${cid}"`);
+
+      for(var i=0;i<query.length;i++){
+        query[i].classList.remove('archived');
+      }
+    }
+
+    function maketoast(m, a, id, c){
+
+      let t = document.createElement('div');
+      let w = document.createElement('div');
+      let b = document.createElement('div');
+
+      t.className = 'toast';
+
+      b.className = 'btn toastundo';
+      b.onclick = c;
+      b.dataset.id = id
+      b.appendChild(document.createTextNode(a));
+
+      b.addEventListener('click', function(){
+        t.remove();
+      })
+
+      w.className = 'message';
+      w.appendChild(document.createTextNode(m));
+
+      t.appendChild(w);
+      t.appendChild(b);
+
+      document.body.appendChild(t);
+
+      t.timer = setTimeout(function(){t.remove()}, 5000);
+    }
+
+    function selectall(e){
+      if ( this.checked ){
+        let c = document.querySelectorAll('input.check:not(:checked)');
+        let l = c.length;
+        for(var i=0;i<l;i++){
+          c[i].checked = true;
+        }
+      } else {
+        let c = document.querySelectorAll('input.check:checked');
+        let l = c.length;
+        for(var i=0;i<l;i++){
+          c[i].checked = false;
+        }
+      }
+    }
+
+    function lockbtn(){
+      this.getparent('card').classList.toggle('locked');
+    }
+
+    function activitybtn(){
+      this.getparent('card').classList.toggle('aactive');
+    }
+
+    function commentbtn(){
+      this.getparent('card').classList.toggle('cactive');
+    }
+
+    function closebtn(){
+      this.getparent('card').classList.remove(this.dataset.class);
+    }
+
     Attach.on('dragstart', '.card', dragStart);
 
     Attach.on('dragover', '.list, .slide', handleDragOver);
@@ -1401,6 +1611,8 @@ by Johnny
 
 
     Attach.on('click', '.popcard', cardclick);
+    Attach.on('click', '.deletecards', deletecards);
+    Attach.on('click', '.deletecard', deletecard);
     Attach.on('mousedown', '.card', carddrag);
     Attach.on('mousedown', '.dragcard', carddrag);
     Attach.on('dblclick', '.dragcard', carddb);
@@ -1413,6 +1625,12 @@ by Johnny
     Attach.on('input', '.ctoggle', ctoggle);
     Attach.on('input', '.cradio', cradio);
     Attach.on('input', 'textarea', ta);
+    Attach.on('input', '.selectall', selectall);
+    Attach.on('click', '.lockbtn', lockbtn);
+    Attach.on('click', '.commentbtn', commentbtn);
+    Attach.on('click', '.activitybtn', activitybtn);
+    Attach.on('click', '.closebtn', closebtn);
+    
     document.addEventListener('keyup', keypress);
 
     makecards(40);
