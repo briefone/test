@@ -1273,29 +1273,35 @@ by Johnny
     }
 
     function dragStart(e) {
+      let text = this.getElementsByClassName('mr')[0].cloneNode(true);
+      let keytag = this.getElementsByClassName('keytag')[0];
+      let bg = window.getComputedStyle(keytag).backgroundColor;
 
+      let dragcard = document.createElement('div');
+      dragcard.className = 'dragcard focused';
+      dragcard.style.backgroundColor = bg;
+      let kt = keytag.cloneNode(true);
+      kt.style.backgroundColor = 'rgba(0,0,0,0.1)';
+      dragcard.appendChild(kt);
+      dragcard.appendChild(text);
+
+      document.body.appendChild(dragcard);
 
       e.dataTransfer.effectAllowed = 'copy';
   
       e.dataTransfer.setData("application/my-app", e.target.id);
-      e.dataTransfer.setDragImage(this, 0, 0);
+      e.dataTransfer.setDragImage(dragcard, 0, 0);
 
       let t = this;
-
 
       document.addEventListener('mousemove', dragMove);
       document.addEventListener('mouseup', dragEnd);
 
-      //this.classList.add(d);
-      // container.style.cursor = 'move';
-
       function dragMove(e) {
-
      
       }
 
       function dragEnd(e) {
-        
         document.removeEventListener('mousemove', dragMove);
         document.removeEventListener('mouseup', dragEnd);
         
