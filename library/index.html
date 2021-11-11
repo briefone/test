@@ -1225,8 +1225,17 @@ by Johnny
       window.clwindow = window.open("./index.html#popwindow", "Card Library", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=336,height="+(window.screen.height- 300)+",top="+(100)+",left="+(window.screen.width-400));
 
       window.clwindow.onload = function(){
-        console.log(window.clwindow.document, window.clwindow.document.getElementsByClassName('cardlist')[0]);
-        window.clwindow.document.getElementsByClassName('cardlist')[0].innerHTML = document.getElementsByClassName('cardlist')[0].innerHTML;
+        let cl = window.clwindow.document.getElementsByClassName('cardlist')[0];
+        let p = cl.parentElement;
+        let clone = document.getElementsByClassName('cardlist')[0].cloneNode(true);
+        cl.remove();
+        p.appendChild(clone);
+
+        let c = document.getElementsByClassName('card');
+        for(var i=0;i<c.length;i++){
+          let card = c[i];
+          card.draggable = true;
+        }
       }
       document.close();
     }
