@@ -1224,12 +1224,13 @@ by Johnny
     function popwindow(){
       window.clwindow = window.open("./index.html#popwindow", "Card Library", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=336,height="+(window.screen.height- 300)+",top="+(100)+",left="+(window.screen.width-400));
 
-      window.clwindow.document.body.style.background = 'red'
+      console.log(window.clwindow.document, window.clwindow.document.getElementsByClassName('cardlist')[0]);
+
+      window.clwindow.document.getElementsByClassName('cardlist')[0].innerHTML = document.getElementsByClassName('cardlist')[0].innerHTML;
       document.close();
     }
 
     function openpop(){
-
       if ( window.clwindow){
         window.clwindow.focus();
       }
