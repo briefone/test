@@ -181,7 +181,7 @@ https://briefone.github.io/test/library/
 
         #container.home #home, #container.p1 #p1,#container.p2 #p2 {display:flex;}
 
-          .list {width:232px;min-height:200px;padding:8px;border-radius:3px;flex-shrink:0;background:rgb(0 0 0 / 5%);box-sizing: border-box;display:flex;flex-direction: column;gap:4px;align-items: flex-start;user-select:none;align-self: flex-start;transition:background-color 25ms linear;}
+          .list {width:232px;min-height:200px;padding:8px;border-radius:3px;flex-shrink:0;background:rgb(235, 236, 237);box-sizing: border-box;display:flex;flex-direction: column;gap:4px;align-items: flex-start;user-select:none;align-self: flex-start;transition:background-color 25ms linear;}
           .list.hovering {background:#aa99ff71;}
           .list.draggingover {background:#aa99ff71;}
             .list.draggingover > * {pointer-events: none !important;}
@@ -340,8 +340,15 @@ https://briefone.github.io/test/library/
       <div id="subnav">
         <div class=left></div>
         <div class="right">
-          <div class="btn " data-class=boardprop>
+          <div class="btn pop" data-class=boardprop>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>
+            <div class=popover style="left:auto;right:0;">
+              <div class=popitem>Rename</div>
+              <div class=popitem>Copy</div>
+              <div class=popitem>Delete</div>
+              <hr>
+              <div class=popitem>Share</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1601,6 +1608,79 @@ https://briefone.github.io/test/library/
       this.getparent('card').classList.remove(this.dataset.class);
     }
 
+    function draglist(e){
+      if ( e.which == 3 || this.draggable ){
+        return;
+      }
+      let t = this;
+      let moved = false;
+
+      let sx = e.clientX;
+      let sl = document.getElementById('p1').scrollLeft;
+
+      let ol = t.offsetLeft;
+      let w = t.offsetWidth;
+      let g = 12;
+
+      let clone = this.cloneNode(true);
+
+      document.body.classList.add('mousegrab');
+
+      t.style.opacity = 0;
+
+      clone.style.position = 'absolute';
+      clone.style.left = ol - sl +'px';
+      clone.style.zIndex =  999999999;
+      clone.style.backgroundColor = 'rgb(213 207 252)';
+
+      t.parentElement.appendChild(clone);
+
+      function move(e){
+        let x = e.clientX;
+
+        let nx = sx - x;
+
+        clone.style.left = ol - nx - sl +'px';
+
+        let lists = document.getElementsByClassName('list');
+        let inserted = false;
+
+        for(var i=0;i<lists.length;i++){
+          let l = lists[i];
+          let lof = l.offsetLeft;
+
+          if ( ol - nx < lof ){
+            inserted = true;
+            l.parentElement.insertBefore(t,l);
+            return;
+          }
+        }
+
+        if (!inserted){
+          l.parentElement.appendChild(t);
+        }
+
+      }
+
+      function end(e){
+        document.removeEventListener('mousemove', move);
+        document.removeEventListener('mouseup', end);
+
+        document.body.classList.remove('mousegrab');
+
+        t.style.opacity = 1;
+        clone.remove();
+
+        let tars = document.elementsFromPoint(e.clientX, e.clientY);
+
+        
+        
+      }
+
+      document.addEventListener('mousemove', move);
+      document.addEventListener('mouseup', end);
+    }
+
     Attach.on('dragstart', '.card', dragStart);
 
     Attach.on('dragover', '.list, .slide', handleDragOver);
@@ -1630,6 +1710,7 @@ https://briefone.github.io/test/library/
     Attach.on('click', '.commentbtn', commentbtn);
     Attach.on('click', '.activitybtn', activitybtn);
     Attach.on('click', '.closebtn', closebtn);
+    Attach.on('mousedown', '.list', draglist);
     
     document.addEventListener('keyup', keypress);
 
