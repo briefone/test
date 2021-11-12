@@ -46,7 +46,7 @@ https://briefone.github.io/test/library/
 
 
       .menubtn {height:100%;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
-        .menubtn:hover, .menubtn.on  {background:var(--border)};
+        .menubtn:hover, .menubtn.on  {background:var(--border);}
         
 
 
@@ -86,6 +86,10 @@ https://briefone.github.io/test/library/
 
       .editmodebar {justify-content: space-between;}
         .editmodebar .left, .editmodebar .right {display:flex;gap:4px;}
+
+    .popoutwindow .filterbar, .popoutwindow .minbtn {display:none;}
+      .popoutwindow .cardlist {top:0;}
+      
 
 
     .btn {height:28px;min-width:28px;border-radius:3px;background:transparent;color:var(--secondary);font-weight:500;display: flex;align-items: center;justify-content: center;padding:0 8px;box-sizing: border-box;font-weight:500;cursor:pointer;user-select:none;font-size:12px;}
@@ -712,6 +716,7 @@ https://briefone.github.io/test/library/
 
     <div id=cardmenu class="cardmenu popover" style="min-width:80px;left:-52px;">
       <div class=popitem>Copy</div>
+      <div class="popitem popout">Popout</div>
       <div class="popitem deletecard">Delete</div>
     </div>
 
@@ -973,6 +978,7 @@ https://briefone.github.io/test/library/
         let etag = document.createElement('div');
         let ecombo = document.createElement('div');
         let etext = document.createElement('textarea');
+        let etitle = document.createElement('input');
         let euses = document.getElementById('uses').cloneNode(true);
         let ereact = document.getElementById('reactions').cloneNode(true);
         let etags = document.getElementById('tags').cloneNode(true);
@@ -1012,6 +1018,9 @@ https://briefone.github.io/test/library/
         }
 
         etext.className = 'etext';
+        etitle.className = 'etitle';
+        etitle.type = 'text';
+        etitle.placeholder = 'Title (Optional)';
 
         card.className = 'card';
         let id = 'c-' + i;
@@ -1075,6 +1084,7 @@ https://briefone.github.io/test/library/
 
         expand.appendChild(etr);
         expand.appendChild(etext);
+        expand.appendChild(etitle);
         expand.appendChild(ereact);
         expand.appendChild(etags);
         expand.appendChild(euses);
@@ -1338,6 +1348,37 @@ https://briefone.github.io/test/library/
           mr.appendChild(document.createTextNode(this.value))
         }
       }
+    }
+
+    function popout(){
+      window.popoutwindow = window.open("./index.html#popwindow", "Card Library", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=666,height="+(Math.min(window.screen.height-300, 696))+",top="+((window.screen.height /2) - 448)+",left="+((window.screen.width/2) -333));
+
+      let cid = this.getparent('card').id;
+
+      window.popoutwindow.onload = function(){
+        let cl = window.popoutwindow.document.getElementsByClassName('cardlist')[0];
+        let p = cl.parentElement;
+        let clone = document.getElementsByClassName('cardlist')[0].cloneNode(true);
+        cl.remove();
+        p.appendChild(clone);
+
+        window.popoutwindow.document.body.classList.add('popoutwindow');
+
+        let c = clone.getElementsByClassName('card');
+        for(var i=0;i<c.length;i++){
+          let card = c[i];
+          if ( card.id == cid){
+            card.draggable = true;
+            card.classList.add('expanded');
+            card.style.boxShadow = 'none';
+          } else {
+            card.style.display = 'none';
+          }
+        }
+
+        
+      }
+      document.close();
     }
 
     function popwindow(){
@@ -1674,7 +1715,6 @@ https://briefone.github.io/test/library/
         let tars = document.elementsFromPoint(e.clientX, e.clientY);
 
         
-        
       }
 
       document.addEventListener('mousemove', move);
@@ -1711,6 +1751,7 @@ https://briefone.github.io/test/library/
     Attach.on('click', '.activitybtn', activitybtn);
     Attach.on('click', '.closebtn', closebtn);
     Attach.on('mousedown', '.list', draglist);
+    Attach.on('click', '.popout', popout);
     
     document.addEventListener('keyup', keypress);
 
