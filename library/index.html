@@ -31,7 +31,7 @@ https://briefone.github.io/test/library/
     body {background:#f8f9fa;overflow:hidden;}
 
     #tabs {position:absolute;top:0;left:0;right:0;height:32px;background:#EFF1F4;display:flex;align-items: center;justify-content: space-between;user-select: none;}
-      .popwindow #tabs {display:none;}
+      .popwindow #tabs, .popwindow .popout {display:none;}
       .tab {height:100%;min-height:32px;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
         .tab.current {background:white;color:#333;}
 
@@ -141,7 +141,7 @@ https://briefone.github.io/test/library/
         
 
         .card .expand {width:100%;display:none;flex-direction: column;gap:16px;align-items: flex-start;padding:8px 0;}
-        .card.expanded {box-shadow: inset 0 0 0 2px #7a61ff;}
+        .card.expanded {box-shadow: inset 0 0 0 2px #7a61ff;background:white;}
         .expanded .expand {display:flex;}
           .expanded .tr, .expanded .mr, .expanded .br, .expanded .check {display:none;}
         
