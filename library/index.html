@@ -190,7 +190,7 @@ https://briefone.github.io/test/library/
           .list.draggingover {background:#aa99ff71;}
             .list.draggingover > * {pointer-events: none !important;}
 
-        .listtag {background:rgb(0 0 0 / 10%);color:rgb(0 0 0 / 65%);font-weight:700;text-transform:uppercase;font-size:11px;padding:0px 4px 1px;border-radius:2px;display:inline-block;flex-grow: 0;}
+        .listtag {pointer-events:none;background:rgb(0 0 0 / 10%);color:rgb(0 0 0 / 65%);font-weight:700;text-transform:uppercase;font-size:11px;padding:0px 4px 1px;border-radius:2px;display:inline-block;flex-grow: 0;}
 
 
       .logo {justify-content: center;}
@@ -1650,7 +1650,7 @@ https://briefone.github.io/test/library/
     }
 
     function draglist(e){
-      if ( e.which == 3 || this.draggable ){
+      if ( e.which == 3 || this.draggable || !e.target.classList.contains('list') ){
         return;
       }
       let t = this;
