@@ -1341,7 +1341,6 @@ https://briefone.github.io/test/library/
         let c = this.getparent('card');
         let id = c.id;
         let cards = document.querySelectorAll(`[data-id="${id}"`);
-        console.log(cards);
         for(var i=0;i<cards.length;i++){ 
           let mr = cards[i].getElementsByClassName('mr')[0];
           mr.empty();
@@ -1371,6 +1370,9 @@ https://briefone.github.io/test/library/
             card.draggable = true;
             card.classList.add('expanded');
             card.style.boxShadow = 'none';
+            card.offsetLeft;
+            card.style.border = 'none';
+            window.popoutwindow.resizeTo(666, card.offsetHeight+80);
           } else {
             card.style.display = 'none';
           }
@@ -1551,6 +1553,8 @@ https://briefone.github.io/test/library/
 
     function deleteallcards(x){
       let l = x.length;
+      let all = [];
+      let tc = 0;
       for(var i=0;i<l;i++){
         let og = x[i].getparent('card');
         let id = og.id;
@@ -1559,16 +1563,23 @@ https://briefone.github.io/test/library/
         let count = cards.length;
         for(var ii=0;ii<count;ii++){
           cards[ii].classList.add('archived');
+          tc++;
         }
         
         og.classList.add('archived');
 
-        maketoast(`Removed card in ${count + 1} locations`, 'Undo', id, unarchive);
+        all.push(`[data-id="${id}"]`);
       }
+
+      maketoast(`Removed ${l} card in ${tc} locations`, 'Undo', all, unarchive);
     }
 
     function deletecards(e){
       let c = document.querySelectorAll('input.check:checked');
+
+      if ( !c.length){
+        return;
+      }
       
       deleteallcards(c);
       document.getElementsByClassName('selectall')[0].checked = false;
@@ -1578,18 +1589,17 @@ https://briefone.github.io/test/library/
       deleteallcards([this]);
     }
 
-    function unarchive(e, id){
-      let cid = this.dataset.id;
-      console.log(cid, 'unarchive');
-
-      let query = document.querySelectorAll(`[data-id="${cid}"`);
+    function unarchive(e){
+      let all = this.dataset.all;
+      console.log(all);
+      let query = document.querySelectorAll(all);
 
       for(var i=0;i<query.length;i++){
         query[i].classList.remove('archived');
       }
     }
 
-    function maketoast(m, a, id, c){
+    function maketoast(m, a, all, c){
 
       let t = document.createElement('div');
       let w = document.createElement('div');
@@ -1599,7 +1609,7 @@ https://briefone.github.io/test/library/
 
       b.className = 'btn toastundo';
       b.onclick = c;
-      b.dataset.id = id
+      b.dataset.all = all.join(',');
       b.appendChild(document.createTextNode(a));
 
       b.addEventListener('click', function(){
@@ -1721,6 +1731,42 @@ https://briefone.github.io/test/library/
       document.addEventListener('mouseup', end);
     }
 
+    function ktitem(){
+      let kt = this.getElementsByClassName('keytag')[0];
+
+      let card = this.getparent('card');
+      let id = card.id;
+      let t = card.getElementsByClassName('tagdrop')[0];
+      let k = t.getElementsByClassName('keytag')[0];
+
+      let nk = kt.cloneNode(true);
+      
+      t.insertBefore(nk, k);
+      k.remove();
+
+      let bg = window.getComputedStyle(nk).backgroundColor;
+
+      let cards = document.querySelectorAll(`[data-id="${id}"`);
+      
+
+      for(var i=0;i<cards.length;i++){ 
+        let c = cards[i];
+
+        
+        let k = c.getElementsByClassName('keytag')[0];
+        let p = k.parentElement;
+        let kk = kt.cloneNode(true);
+        
+        p.insertBefore(kk, k);
+        k.remove();   
+
+        if ( c.classList.contains('dragcard')){
+          c.style.backgroundColor = bg;
+          kk.style.backgroundColor = 'rgba(0,0,0,0.1)';
+        }
+      }
+    }
+
     Attach.on('dragstart', '.card', dragStart);
 
     Attach.on('dragover', '.list, .slide', handleDragOver);
@@ -1730,6 +1776,7 @@ https://briefone.github.io/test/library/
     Attach.on('drop', '.list, .slide', handleDrop);
 
 
+    Attach.on('click', '.ktitem', ktitem);
     Attach.on('click', '.popcard', cardclick);
     Attach.on('click', '.deletecards', deletecards);
     Attach.on('click', '.deletecard', deletecard);
