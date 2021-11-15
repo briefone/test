@@ -72,7 +72,7 @@ https://briefone.github.io/test/library/
     * {padding:0;margin:0;}
     html {font: normal 14px var(--font-fam);color:var(--text);}
     body {background:var(--background);overflow:hidden;}
-    input, textarea, select {font: normal 14px var(--font-fam);}
+    input, textarea, select {font: normal 12px var(--font-fam);color:var(--text);}
 
     #tabs {position:absolute;top:0;left:0;right:0;height:32px;background:var(--tabs);display:flex;align-items: center;justify-content: space-between;user-select: none;}
       .popwindow #tabs, .popwindow .popout {display:none;}
@@ -271,6 +271,10 @@ https://briefone.github.io/test/library/
         .toast .btn {color:var(--toasttext);font-weight:700;text-transform: uppercase;}
           .toast .btn:hover {color:var(--toasttext);background:rgba(255, 255, 255, 0.08);}
           .toast .btn:active {color:var(--toasttext);background:rgba(255, 255, 255, 0.12);}
+
+
+    .overlay {position: fixed;top:0;left:0;bottom:0;right:0;background:rgba(0, 0, 0, 0.6);z-index: 99999999999;}
+      .modal {position:absolute;max-width:800px;width:80%;left:50%;top:50%;transform:translate(-50%, -50%);background:var(--ui1);z-index:2;}
   </style>
   <script src="../js/base.js"></script>
   <script src="../js/gator.js"></script>
@@ -1430,9 +1434,17 @@ https://briefone.github.io/test/library/
       // }
 
       //modal
-
+        let o = document.createElement('div');
       let fi = document.createElement('div');
+
+      o.className = 'overlay';
       fi.className = 'modal';
+
+      o.onclick = function(e){
+        if ( e.target.classList.contains('overlay')) {
+          this.remove();
+        }
+      }
       
       let c = document.getElementById(this.dataset.id).cloneNode(true);
       
@@ -1440,8 +1452,8 @@ https://briefone.github.io/test/library/
       c.removeAttribute('id');
       
       fi.appendChild(c);
-
-
+      o.appendChild(fi);
+      document.body.appendChild(o);
     }
 
     function ta(e){
