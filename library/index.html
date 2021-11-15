@@ -795,7 +795,7 @@ https://briefone.github.io/test/library/
       let ol = 0;
       let ot = 0;
 
-      if ( !e.target.classList.contains('card') && !e.target.classList.contains('expand')){
+      if ( !e.target.classList.contains('card') && !e.target.classList.contains('expand') && !e.target.classList.contains('dragcard')){
         return;
       }
 
@@ -951,15 +951,14 @@ https://briefone.github.io/test/library/
         if ( !moved ){
           console.log('click');
 
-          
-
+         
           if(t.classList.contains('dragcard')){
             t.classList.add('focused');
 
             if ( document.getElementsByClassName('clbtn')[0].classList.contains('on')){
               let ccc = document.getElementById(t.dataset.id);
               
-              if ( !ccc.classList.contains('expanded')){
+              if ( !ccc.classList.contains('expanded') ){
                 document.getElementsByClassName('expanded').removeclass('expanded');
                 ccc.classList.add('expanded');
                 ccc.scrollIntoViewIfNeeded(false);
@@ -972,6 +971,12 @@ https://briefone.github.io/test/library/
               
             }
           } else if ( !e.target.classList.contains('check') && !t.classList.contains('expanded') ) {
+
+            if(document.getElementById('cl').classList.contains('editmode')){
+              t.getElementsByClassName('check')[0].click();
+              return;
+            }
+
             document.getElementsByClassName('expanded').removeclass('expanded');
             t.classList.add('expanded');
             t.scrollIntoViewIfNeeded(false);
