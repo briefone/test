@@ -38,8 +38,8 @@ https://briefone.github.io/test/library/
       --border: var(--ui4);
       --secondary: var(--ui6);
       --text: var(--ui8);
-      --textactive: var(--ui9);
-      --tabactive: var(--ui1);
+      --textactive: var(--ui8);
+      --tabactive: var(--subnav);
       --tabtext: var(--ui6);
       --subnav: var(--ui1);
       --input: var(--ui1);
@@ -52,6 +52,7 @@ https://briefone.github.io/test/library/
       --ctaactive:#235e83;
 
       --borderwidth: 1px;
+      --subnavheight: 44px;
 
       --font-fam: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     }
@@ -107,7 +108,7 @@ https://briefone.github.io/test/library/
       .clopen #conwrap {right: 337px;}
       .popwindow #conwrap {display:none;}
 
-    #subnav {height:44px;position:absolute;top:0;left:0;right:0;background:var(--subnav);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 8px;    justify-content: space-between;}
+    #subnav {height:var(--subnavheight);position:absolute;top:0;left:0;right:0;background:var(--subnav);border-bottom:var(--borderwidth) solid var(--border);display:flex;align-items:center;padding:0 8px;    justify-content: space-between;}
       .right {display:flex;gap:4px;}
 
     input[type=text] {width:100%;height:28px;border:1px solid var(--border);border-radius:3px;text-indent: 8px;box-sizing: border-box;}
@@ -118,16 +119,16 @@ https://briefone.github.io/test/library/
       .combobox input {border-radius: 3px 0 0 3px;width:100%;}
       .combobox .btn {border-radius: 0 3px 3px 0;border:1px solid var(--border);margin-left:-1px;font-size:9px;background:var(--input);}
 
-    #cl {position:absolute;top:32px;right:0;bottom:0;width:336px;border-left:1px solid var(--border);background:var(--cl);transform:translateX(100%);z-index:999999;}
+    #cl {position:absolute;top:32px;right:0;bottom:0;width:336px;border-left:var(--borderwidth) solid var(--border);background:var(--cl);transform:translateX(100%);z-index:999999;}
     .popwindow #cl {top:0;left:0;width:auto;border:none;transform:translateX(0);}
     .clopen #cl {transform:translateX(0);}
-      .filterbar, .editmodebar {position:absolute;top:0;left:0;right:0;height:44px;background:var(--subnav);border-bottom:1px solid var(--border);display:flex;gap:4px;padding:0 8px;align-items: center;}
+      .filterbar, .editmodebar {position:absolute;top:0;left:0;right:0;height:44px;background:var(--subnav);border-bottom:var(--borderwidth) solid var(--border);display:flex;gap:4px;padding:0 8px;align-items: center;}
         .editmodebar, .editmode .filterbar {display:none;}
         .editmode .editmodebar {display:flex;}
         .filterbar .searchbar {width:100%;}
         .filterbar .btn {}
       .cardlist {position:absolute;top:73px;left:0;right:0;bottom:0;overflow-y:scroll;}
-        .popwindow .cardlist {bottom:0;top:45px;}
+        .popwindow .cardlist {bottom:0;top:calc(var(--subnavheight) + var(--borderwidth));}
 
       .editmodebar {justify-content: space-between;}
         .editmodebar .left, .editmodebar .right {display:flex;gap:4px;}
@@ -149,8 +150,8 @@ https://briefone.github.io/test/library/
     .btn.on {background:var(--secondary);color:var(--ui1);}
       .btn.on svg {fill:var(--ui1);}
 
-    .btn.floating {position:absolute;top:45px;left:0;right:0;border-radius:0;background:rgb(12, 90, 206);color:var(--subnav);z-index:9999;}
-      .floating.opened {background:var(--subnav);color:rgb(12, 90, 206);border-bottom:1px solid var(--border);}
+    .btn.floating {position:absolute;top:calc(var(--subnavheight) + var(--borderwidth));left:0;right:0;border-radius:0;background:rgb(12, 90, 206);color:var(--subnav);z-index:9999;}
+      .floating.opened {background:var(--subnav);color:rgb(12, 90, 206);border-bottom:var(--borderwidth) solid var(--border);}
       .popwindow .floating {display:none;}
 
       .clbtn {width:32px;padding:0;height:32px;margin:0;min-width:24px;border-radius: 0;}
@@ -226,7 +227,7 @@ https://briefone.github.io/test/library/
     .tagdrop {font-size:9px;display:flex;width:100%;padding:4px 8px 4px 4px;border-radius:3px;border:1px solid var(--border);background:white;color:var(--secondary);justify-content: space-between;align-items:center;cursor:pointer;}
 
 
-      #container {position:absolute;top:45px;left:0;right:0;bottom:0;}
+      #container {position:absolute;top:calc(var(--subnavheight) + var(--borderwidth));left:0;right:0;bottom:0;}
 
         .view {display:none;flex-direction: row;gap:12px;padding:16px;max-width:100%;overflow-y:auto;height:100%;box-sizing: border-box;}
 
@@ -759,7 +760,7 @@ https://briefone.github.io/test/library/
     </div>
 
     <div id=cardactions class=cardactions>
-      <div class="btn commentbtn">Comment</div>
+      <div class="btn commentbtn">0 Comments</div>
       <div class="btn lockbtn">Lock</div>
       <div class="btn activitybtn">Activity</div>
     </div>
@@ -1157,12 +1158,12 @@ https://briefone.github.io/test/library/
         expand.appendChild(etr);
         expand.appendChild(etext);
         expand.appendChild(etitle);
-        expand.appendChild(ereact);
         expand.appendChild(etags);
         expand.appendChild(euses);
         expand.appendChild(eas);
         expand.appendChild(est);
         expand.appendChild(ed);
+        expand.appendChild(ereact);
         expand.appendChild(ecs);
         expand.appendChild(eca);
 
@@ -1383,7 +1384,10 @@ https://briefone.github.io/test/library/
       console.log(e.keyCode);
       let k = e.keyCode;
       if ( k == 8 || k == 46){
-        document.getElementsByClassName('dragcard focused').remove();
+
+        if ( document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT' ){
+          document.getElementsByClassName('dragcard focused').remove();
+        }
       }
     }
 

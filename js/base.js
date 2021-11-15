@@ -142,6 +142,22 @@ function contrastr(a, b) { //hex
     return ratio;
 };
 
+function contrastrrgb(a, b) { //rgb
+    var l1 = luminance(a) + 0.05;
+    var l2 = luminance(b) + 0.05;
+    var ratio = l1 / l2;
+
+    if (l2 > l1) {
+      ratio = 1 / ratio;
+    }
+
+    ratio = 1 / ratio;
+
+    // ratio = Math.round(ratio, 1);
+
+    return ratio;
+};
+
 /**
  * Converts an HSL color value to RGB. Conversion formula
  * adapted from http://en.wikipedia.org/wiki/HSL_color_space.

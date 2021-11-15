@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Colors</title>
+  <link rel="icon" href="./favicon.png" sizes="128x128">
+  <style>
+    :root {
+      --ui1: #fff;
+      --ui2: #f8f9fa;
+      --ui3: #EFF1F4;
+      --ui4: #DEE2E6;
+      --ui5:;
+      --ui6:#6C757D;
+      --ui7:;
+      --ui8:#212529;
+      --ui9: black;
+
+      --background: var(--ui2);
+      --tabs: var(--ui3);
+      --border: var(--ui4);
+      --secondary: var(--ui6);
+      --text: var(--ui8);
+      --textactive: var(--ui9);
+      --tabactive: var(--subnav);
+      --tabtext: var(--ui6);
+      --subnav: var(--ui1);
+      --input: var(--ui1);
+      --cl: var(--ui1);
+      --popover: var(--ui1);
+      --toasttext: var(--ui1);
+
+      --cta: #357EAC;
+      --ctahover: #2c6c9a;
+      --ctaactive:#235e83;
+
+      --borderwidth: 1px;
+
+      --font-fam: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    }
+
+    .dark {
+      --ui1: #000;
+      --ui2: #212529;
+      --ui3: #444;
+      --ui4: #6C757D;
+      --ui5: #999;
+      --ui6:#DEE2E6;
+      --ui7: #EFF1F4;
+      --ui8:#f8f9fa;
+      --ui9: #fff;
+    }
+
+    * {padding:0;margin:0;}
+    html {font: normal 14px var(--font-fam);color:var(--text);}
+    body {background:var(--background);overflow:auto;}
+    input, textarea, select {font: normal 14px var(--font-fam);}
+
+    #lists {display:flex;gap:12px;flex-wrap:nowrap;padding:8px;}
+
+    .list {width:232px;min-height:200px;padding:8px;border-radius:3px;flex-shrink:0;background:rgb(235, 236, 237);box-sizing: border-box;display:flex;flex-direction: column;gap:4px;align-items: flex-start;user-select:none;align-self: flex-start;transition:background-color 25ms linear;}
+          .list.hovering {background:#aa99ff71;}
+          .list.draggingover {background:#aa99ff71;}
+            .list.draggingover > * {pointer-events: none !important;}
+
+        .listtag {pointer-events:none;background:rgb(0 0 0 / 10%);color:rgb(0 0 0 / 65%);font-weight:700;text-transform:uppercase;font-size:11px;padding:0px 4px 1px;border-radius:2px;display:inline-block;flex-grow: 0;}
+
+      .dragcard {z-index:9999;width:200px;padding:8px;color:white;cursor:grabbing;user-select:none;border-radius:3px;display: flex;flex-direction: column;align-items: self-start;justify-content: flex-start;}
+        .dragcard.focused {box-shadow:0 0 0 2px #7B61FF;}
+        .dragcard .mr {line-height:1.2;overflow:hidden;text-overflow: ellipsis;padding-bottom: 2px;overflow-wrap: anywhere;
+   display: -webkit-box;
+   -webkit-box-orient: vertical;-webkit-line-clamp: 4;}
+        .keytag {background:var(--border);color:var(--secondary);font-weight:600;text-transform:uppercase;font-size:11px;padding:0px 4px 1px;border-radius:2px;}
+  </style>
+  <script src="../js/base.js"></script>
+  <script src="../js/gator.js"></script>
+</head>
+<body>
+  <div id=lists>
+    <div class=list>
+      <div class=listtag>List Tag</div>
+
+    </div>
+  </div>
+  <script>
+    function generatecolors(x){
+      window.tags = [];
+      let gap = 360 / x;
+
+      for(var i=0;i<x;i++){
+        let h = i * gap;
+        let s = 100;
+        let l = 50;
+
+        let rgb = hsl2rgb(h/360, s/100, l/100);
+        let cw = contrastrrgb(rgb, [0,0,0]);
+        let cb = contrastrrgb(rgb, [255,255,255]);
+
+        let  tc = cw > cb ? 'white': 'black';
+
+        let mm = colorMixer(rgb, [0,0,0], 0.8);
+        console.log(mm);
+
+        let sat = 0.7;
+
+        var gray = rgb[0] * 0.3086 + rgb[1] * 0.6094 + rgb[2]* 0.0820;
+
+        rgb[0] = Math.round(rgb[0] * sat + gray * (1-sat));
+        rgb[1] = Math.round(rgb[1] * sat + gray * (1-sat));
+        rgb[2] = Math.round(rgb[2] * sat + gray * (1-sat));
+
+
+        tags.push({color: `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`, label: generatestring(Math.floor(Math.random()*16 + 3)), textcolor: tc});
+      }
+
+    }
+
+    function cards(x){
+      let lists = document.getElementsByClassName('list');
+      
+      for(var i=0;i<x;i++){
+        let c = document.createElement('div');
+        let tr = document.createElement('div');
+        let mr = document.createElement('div');
+
+        tr.className = 'tr';
+        mr.className = 'mr';
+
+        c.className = 'card dragcard';
+
+        let tag = window.tags.random();
+
+        c.style.backgroundColor = tag.color;
+        c.style.color = tag.textcolor;
+        
+        let kt = document.createElement('div');
+        kt.className = 'keytag';
+        kt.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+        kt.style.color = tag.textcolor;
+
+        let content = generatetext();
+
+        kt.appendChild(document.createTextNode(tag.label));
+
+        tr.appendChild(kt);
+
+        mr.appendChild(document.createTextNode(content));
+
+        c.appendChild(tr);
+        c.appendChild(mr);
+
+        let l = Math.floor(Math.random()*lists.length);
+
+        lists[l].appendChild(c);
+      }
+    }
+
+    function makelist(x){
+      let count = x || Math.floor(Math.random()*14 + 4);
+      let l = document.getElementsByClassName('list')[0];
+      let c  = document.getElementById('lists');
+
+      for(var i=0;i<count;i++){
+        let ll = l.cloneNode(true);
+        let lt = ll.getElementsByClassName('listtag')[0];
+        lt.empty();
+        lt.appendChild(document.createTextNode(generatestring(Math.floor(Math.random()*16 + 3))));
+        c.appendChild(ll);
+      }
+
+      l.remove();
+    }
+
+    function generatetext() {
+      var output = '';
+      for (var i = 0; i < (10 + Math.random() * 1000); i++) {
+          for (var j = 0; j < Math.floor(Math.random() * 13); j++) {
+              var char = 65 + (Math.random() * 26);
+              output += String.fromCharCode(char);
+          }
+          switch (Math.floor(Math.random() * 8)) {
+              default:
+                output = output.trim();
+                  output += " ";
+                  break;
+          }
+      }
+      if (output.substring(output.length - 1, output.length) == " ") {
+          output = output.slice(0, -1);
+          var l = output.substring(output.length - 1, output.length);
+          if(l == ","){
+              output = output.slice(0, -1);
+          }else if(l == "."){
+              output += "";
+          }else{
+              output += "."
+          }
+      };
+      return output.toLowerCase();
+    }
+
+    function generatestring(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+    }
+
+    //colorChannelA and colorChannelB are ints ranging from 0 to 255
+    function colorChannelMixer(colorChannelA, colorChannelB, amountToMix){
+        var channelA = colorChannelA*amountToMix;
+        var channelB = colorChannelB*(1-amountToMix);
+        return parseInt(channelA+channelB);
+    }
+    //rgbA and rgbB are arrays, amountToMix ranges from 0.0 to 1.0
+    //example (red): rgbA = [255,0,0]
+    function colorMixer(rgbA, rgbB, amountToMix){
+        var r = colorChannelMixer(rgbA[0],rgbB[0],amountToMix);
+        var g = colorChannelMixer(rgbA[1],rgbB[1],amountToMix);
+        var b = colorChannelMixer(rgbA[2],rgbB[2],amountToMix);
+        return "rgb("+r+","+g+","+b+")";
+    }
+
+    generatecolors(64);
+    makelist(14);
+    cards(88);
+  </script>
+</body>
+</html>
