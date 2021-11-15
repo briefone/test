@@ -433,7 +433,7 @@ https://briefone.github.io/test/library/
           </div>
         </div>
 
-        <div id=p1 class="view dragscroll">
+        <div id=p1 class="view dragscroll show">
           <div class=list>
             <div class=listtag>List tag</div>
           </div>
@@ -1417,17 +1417,31 @@ https://briefone.github.io/test/library/
     function carddb(e){
       console.log('db');
 
-      let clbtn = document.getElementsByClassName('clbtn')[0];
-      if ( !clbtn.classList.contains('on') ){
-        clbtn.click();
+      // let clbtn = document.getElementsByClassName('clbtn')[0];
+      // if ( !clbtn.classList.contains('on') ){
+      //   clbtn.click();
 
-        let id = this.dataset.id;
+      //   let id = this.dataset.id;
 
-        let card = document.getElementById(id);
-        card.classList.add('expanded');
+      //   let card = document.getElementById(id);
+      //   card.classList.add('expanded');
 
-        card.scrollIntoViewIfNeeded(false);
-      }
+      //   card.scrollIntoViewIfNeeded(false);
+      // }
+
+      //modal
+
+      let fi = document.createElement('div');
+      fi.className = 'modal';
+      
+      let c = document.getElementById(this.dataset.id).cloneNode(true);
+      
+      
+      c.removeAttribute('id');
+      
+      fi.appendChild(c);
+
+
     }
 
     function ta(e){
@@ -1806,7 +1820,7 @@ https://briefone.github.io/test/library/
         }
 
         if (!inserted){
-          l.parentElement.appendChild(t);
+          lists[lists.length-1].parentElement.appendChild(t);
         }
 
       }
