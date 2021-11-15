@@ -83,9 +83,11 @@ https://briefone.github.io/test/library/
 
           .left {display:flex;}
 
-        .tab.board::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236C757D' fill-rule='evenodd' d='M2 1.75a1 1 0 00-1 1v6.5a1 1 0 001 1h8a1 1 0 001-1v-6.5a1 1 0 00-1-1H2zm.25 1A.25.25 0 002 3v6c0 .138.112.25.25.25h1.5A.25.25 0 004 9V3a.25.25 0 00-.25-.25h-1.5zM5 3a.25.25 0 01.25-.25h1.5A.25.25 0 017 3v6a.25.25 0 01-.25.25h-1.5A.25.25 0 015 9V3zm3.25-.25A.25.25 0 008 3v6c0 .138.112.25.25.25h1.5A.25.25 0 0010 9V3a.25.25 0 00-.25-.25h-1.5z' clip-rule='evenodd'/%3E%3C/svg%3E");position:absolute;left:8px;top:calc(50% - 8px);transform:translateY(-50%);width:12px;height:12px;}
+          .tab::before {position:absolute;left:8px;top:calc(50% + 0.5px);transform:translateY(-50%);width:12px;height:12px;}
 
-        .tab.brief::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%236C757D' d='M22.389 2.22H1.61A.61.61 0 001 2.831v.611a.61.61 0 00.611.611h.611v10.39c0 .674.548 1.221 1.222 1.221h7.64v1.67L8.117 20.3a.611.611 0 000 .864l.432.432a.611.611 0 00.864 0L12 19.01l2.586 2.587a.611.611 0 00.865 0l.431-.433a.611.611 0 000-.864l-2.965-2.966v-1.67h7.639c.674 0 1.222-.547 1.222-1.222V4.053h.61a.611.611 0 00.612-.61V2.83a.611.611 0 00-.611-.611zm-2.445 11.611H4.056V4.053h15.888v9.778z'/%3E%3C/svg%3E");position:absolute;left:8px;top:calc(50% - 8px);transform:translateY(-50%);width:12px;height:12px;}
+        .tab.board::before {content:'';background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236C757D' fill-rule='evenodd' d='M2 1.75a1 1 0 00-1 1v6.5a1 1 0 001 1h8a1 1 0 001-1v-6.5a1 1 0 00-1-1H2zm.25 1A.25.25 0 002 3v6c0 .138.112.25.25.25h1.5A.25.25 0 004 9V3a.25.25 0 00-.25-.25h-1.5zM5 3a.25.25 0 01.25-.25h1.5A.25.25 0 017 3v6a.25.25 0 01-.25.25h-1.5A.25.25 0 015 9V3zm3.25-.25A.25.25 0 008 3v6c0 .138.112.25.25.25h1.5A.25.25 0 0010 9V3a.25.25 0 00-.25-.25h-1.5z' clip-rule='evenodd'/%3E%3C/svg%3E");}
+
+        .tab.brief::before {content:'';background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%236C757D' d='M22.389 2.22H1.61A.61.61 0 001 2.831v.611a.61.61 0 00.611.611h.611v10.39c0 .674.548 1.221 1.222 1.221h7.64v1.67L8.117 20.3a.611.611 0 000 .864l.432.432a.611.611 0 00.864 0L12 19.01l2.586 2.587a.611.611 0 00.865 0l.431-.433a.611.611 0 000-.864l-2.965-2.966v-1.67h7.639c.674 0 1.222-.547 1.222-1.222V4.053h.61a.611.611 0 00.612-.61V2.83a.611.611 0 00-.611-.611zm-2.445 11.611H4.056V4.053h15.888v9.778z'/%3E%3C/svg%3E");}
 
 
       .menubtn {height:100%;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
@@ -162,7 +164,7 @@ https://briefone.github.io/test/library/
 
             .popitem label {display:flex;gap:8px;align-items: center;}
           .pophover {position:relative;padding-right:32px;white-space: nowrap;}
-            .pophover::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath fill='%236C757D' d='M5.284 10.839c-.312-.305-.337-.73 0-1.103L7.907 7 5.284 4.264c-.337-.373-.312-.798 0-1.101.311-.306.838-.286 1.13 0 .293.284 3.152 3.286 3.152 3.286a.766.766 0 010 1.103s-2.86 3.001-3.152 3.287c-.292.285-.819.305-1.13 0z'/%3E%3C/svg%3E");position:absolute;right:8px;top:calc(50% - 3px);transform:translateY(-50%);width:14px;height:14px;}
+            .pophover::before {content:'';background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath fill='%236C757D' d='M5.284 10.839c-.312-.305-.337-.73 0-1.103L7.907 7 5.284 4.264c-.337-.373-.312-.798 0-1.101.311-.306.838-.286 1.13 0 .293.284 3.152 3.286 3.152 3.286a.766.766 0 010 1.103s-2.86 3.001-3.152 3.287c-.292.285-.819.305-1.13 0z'/%3E%3C/svg%3E");position:absolute;right:8px;top:50%;transform:translateY(-50%);width:14px;height:14px;}
 
         .popover hr {border:none;height:1px;margin:4px 0;background-color:var(--border)}
 
@@ -170,7 +172,7 @@ https://briefone.github.io/test/library/
             .pophover:hover > .hoverpop {opacity:1;pointer-events: all;}
 
     .card {cursor:grab;user-select:none;padding:6px 12px 6px 24px;position:relative;font-size:12px;display: flex;flex-direction: column;gap:4px;border-bottom:1px solid var(--border);align-items: flex-start;}
-      .card::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 10'%3E%3Crect width='2' height='2' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' y='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' y='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' y='8' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' y='8' fill='%236C757D' rx='1'/%3E%3C/svg%3E");position:absolute;left:8px;top:50%;transform:translateY(-50%);width:6px;height:10px;}
+      .card::before {content:'';background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 10'%3E%3Crect width='2' height='2' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' y='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' y='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' y='8' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' y='8' fill='%236C757D' rx='1'/%3E%3C/svg%3E");position:absolute;left:8px;top:50%;transform:translateY(-50%);width:6px;height:10px;}
       .card.hide {display:none;}
       .card.used {background:#66519114;}
       .keytag {background:var(--border);color:var(--secondary);font-weight:600;text-transform:uppercase;font-size:11px;padding:0px 4px 1px;border-radius:2px;}
@@ -298,7 +300,7 @@ https://briefone.github.io/test/library/
               </div>
             </div>
             <hr>
-            <div class="popitem pophover">Plan Conquer the World
+            <div class="popitem pophover">Plan - Conquer the World
               <div class="hoverpop popover">
                 <div class=popitem>Properties</div>
                 <div class=popitem>Share</div>
@@ -1648,7 +1650,7 @@ https://briefone.github.io/test/library/
 
     function unarchive(e){
       let all = this.dataset.all;
-      console.log(all);
+
       let query = document.querySelectorAll(all);
 
       for(var i=0;i<query.length;i++){
@@ -1845,8 +1847,6 @@ https://briefone.github.io/test/library/
 
         t.scrollLeft = sl - nx;
         t.scrollTop = st - ny;
-
-        console.log(nx);
       }
 
       function end(e){
