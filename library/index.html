@@ -878,9 +878,10 @@ https://briefone.github.io/test/library/
         let tars = document.elementsFromPoint(e.clientX, e.clientY);
 
 
-
+        let hoverlist = false;
         tars.forEach(tar => {
           if ( tar.classList.contains('list')){
+            hoverlist = true;
             if ( !tar.classList.contains('hovering')){
               let hovering = document.getElementsByClassName('list hovering');
 
@@ -898,6 +899,14 @@ https://briefone.github.io/test/library/
 
           }
         });
+
+        if ( !hoverlist ){
+          let hovering = document.getElementsByClassName('list hovering');
+          while(hovering[0]){
+            hovering[0].removeAttribute('style');
+            hovering[0].classList.remove('hovering');
+          }
+        }
       }
 
       function end(e){
@@ -969,10 +978,12 @@ https://briefone.github.io/test/library/
               }              
             } else if ( window.clwindow){
               let id = t.dataset.id;
-              window.clwindow.focus();
-              window.clwindow.document.getElementsByClassName('expanded').removeclass('expanded');
-              window.clwindow.document.getElementById(id).classList.add('expanded');
-              window.clwindow.document.getElementById(id).scrollIntoViewIfNeeded(false);
+              let clw = window.clwindow;
+              clw.focus();
+              let cccc = clw.document.getElementById(id);
+              clw.document.getElementsByClassName('expanded').removeclass('expanded');
+              cccc.classList.add('expanded');
+              cccc.scrollIntoViewIfNeeded(false);
             }
           } else if ( !e.target.classList.contains('check') && !t.classList.contains('expanded') ) {
 
