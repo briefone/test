@@ -951,8 +951,6 @@ https://briefone.github.io/test/library/
         }
 
         if ( !moved ){
-          console.log('click');
-
          
           if(t.classList.contains('dragcard')){
             t.classList.add('focused');
@@ -968,9 +966,13 @@ https://briefone.github.io/test/library/
                 let txa = ccc.getElementsByTagName('textarea')[0];
                 ta.call(txa);
                 txa.focus();
-              }
-
-              
+              }              
+            } else if ( window.clwindow){
+              let id = t.dataset.id;
+              window.clwindow.focus();
+              window.clwindow.document.getElementsByClassName('expanded').removeclass('expanded');
+              window.clwindow.document.getElementById(id).classList.add('expanded');
+              window.clwindow.document.getElementById(id).scrollIntoViewIfNeeded(false);
             }
           } else if ( !e.target.classList.contains('check') && !t.classList.contains('expanded') ) {
 
