@@ -23,17 +23,60 @@ https://briefone.github.io/test/library/
   <link rel="icon" href="./favicon.png" sizes="128x128">
   <style>
     :root {
-      --border: #DEE2E6;
-      --secondary: #6C757D;
-    }
-    * {padding:0;margin:0;}
-    html {font: normal 14px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";color:#333;}
-    body {background:#f8f9fa;overflow:hidden;}
+      --ui1: #fff;
+      --ui2: #f8f9fa;
+      --ui3: #EFF1F4;
+      --ui4: #DEE2E6;
+      --ui5:;
+      --ui6:#6C757D;
+      --ui7:;
+      --ui8:#212529;
+      --ui9: black;
 
-    #tabs {position:absolute;top:0;left:0;right:0;height:32px;background:#EFF1F4;display:flex;align-items: center;justify-content: space-between;user-select: none;}
+      --background: var(--ui2);
+      --tabs: var(--ui3);
+      --border: var(--ui4);
+      --secondary: var(--ui6);
+      --text: var(--ui8);
+      --textactive: var(--ui9);
+      --tabactive: var(--ui1);
+      --tabtext: var(--ui6);
+      --subnav: var(--ui1);
+      --input: var(--ui1);
+      --cl: var(--ui1);
+      --popover: var(--ui1);
+      --toasttext: var(--ui1);
+
+      --cta: #357EAC;
+      --ctahover: #2c6c9;
+      --ctaactive:#235e83;
+
+      --borderwidth: 1px;
+
+      --font-fam: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    }
+
+    .dark {
+      --ui1: #000;
+      --ui2: #212529;
+      --ui3: #444;
+      --ui4: #6C757D;
+      --ui5: #999;
+      --ui6:#DEE2E6;
+      --ui7: #EFF1F4;
+      --ui8:#f8f9fa;
+      --ui9: #fff;
+    }
+
+    * {padding:0;margin:0;}
+    html {font: normal 14px var(--font-fam);color:var(--text);}
+    body {background:var(--background);overflow:hidden;}
+    input, textarea, select {font: normal 14px var(--font-fam);}
+
+    #tabs {position:absolute;top:0;left:0;right:0;height:32px;background:var(--tabs);display:flex;align-items: center;justify-content: space-between;user-select: none;}
       .popwindow #tabs, .popwindow .popout {display:none;}
-      .tab {height:100%;min-height:32px;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
-        .tab.current {background:white;color:#333;}
+      .tab {height:100%;min-height:32px;font-size:11px;padding: 0 12px;color:var(--tabtext);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
+        .tab.current {background:var(--tabactive);color:var(--textactive);}
 
         .tab.closeable {position:relative;padding-left:24px;gap:8px;padding-right:8px;}
           .tab .btn.xbtn {width:16px;height:16px;border-radius:50%;padding:0;min-width:0;}
@@ -62,7 +105,7 @@ https://briefone.github.io/test/library/
       .clopen #conwrap {right: 337px;}
       .popwindow #conwrap {display:none;}
 
-    #subnav {height:44px;position:absolute;top:0;left:0;right:0;background:white;border-bottom:1px solid #eee;display:flex;align-items:center;padding:0 8px;    justify-content: space-between;}
+    #subnav {height:44px;position:absolute;top:0;left:0;right:0;background:var(--subnav);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 8px;    justify-content: space-between;}
       .right {display:flex;gap:4px;}
 
     input[type=text] {width:100%;height:28px;border:1px solid var(--border);border-radius:3px;text-indent: 8px;box-sizing: border-box;}
@@ -71,12 +114,12 @@ https://briefone.github.io/test/library/
 
     .combobox {display:flex;}
       .combobox input {border-radius: 3px 0 0 3px;width:100%;}
-      .combobox .btn {border-radius: 0 3px 3px 0;border:1px solid var(--border);margin-left:-1px;font-size:9px;background:white;}
+      .combobox .btn {border-radius: 0 3px 3px 0;border:1px solid var(--border);margin-left:-1px;font-size:9px;background:var(--input);}
 
-    #cl {position:absolute;top:32px;right:0;bottom:0;width:336px;border-left:1px solid #eee;background:white;transform:translateX(100%);z-index:999999;}
+    #cl {position:absolute;top:32px;right:0;bottom:0;width:336px;border-left:1px solid var(--border);background:var(--cl);transform:translateX(100%);z-index:999999;}
     .popwindow #cl {top:0;left:0;width:auto;border:none;transform:translateX(0);}
     .clopen #cl {transform:translateX(0);}
-      .filterbar, .editmodebar {position:absolute;top:0;left:0;right:0;height:44px;background:white;border-bottom:1px solid #eee;display:flex;gap:4px;padding:0 8px;align-items: center;}
+      .filterbar, .editmodebar {position:absolute;top:0;left:0;right:0;height:44px;background:var(--subnav);border-bottom:1px solid var(--border);display:flex;gap:4px;padding:0 8px;align-items: center;}
         .editmodebar, .editmode .filterbar {display:none;}
         .editmode .editmodebar {display:flex;}
         .filterbar .searchbar {width:100%;}
@@ -97,24 +140,24 @@ https://briefone.github.io/test/library/
         .btn:hover {background:var(--border);}
         .btn:active {background:#ccc;}
 
-      .btn.cta {background:#357EAC;color:white;}
-        .btn.cta:hover {background:#2c6c94;}
-        .btn.cta:active {background:#235e83;}
+      .btn.cta {background:var(--cta);color:white;}
+        .btn.cta:hover {background:var(--ctahover);}
+        .btn.cta:active {background:var(--ctaactive);}
 
-    .btn.on {background:var(--secondary);color:white;}
-      .btn.on svg {fill:white;}
+    .btn.on {background:var(--secondary);color:var(--ui1);}
+      .btn.on svg {fill:var(--ui1);}
 
-    .btn.floating {position:absolute;top:45px;left:0;right:0;border-radius:0;background:rgb(12, 90, 206);color:white;z-index:9999;}
-      .floating.opened {background:white;color:rgb(12, 90, 206);border-bottom:1px solid var(--border);}
+    .btn.floating {position:absolute;top:45px;left:0;right:0;border-radius:0;background:rgb(12, 90, 206);color:var(--subnav);z-index:9999;}
+      .floating.opened {background:var(--subnav);color:rgb(12, 90, 206);border-bottom:1px solid var(--border);}
       .popwindow .floating {display:none;}
 
       .clbtn {width:32px;padding:0;height:32px;margin:0;min-width:24px;border-radius: 0;}
 
     .pop {position:relative;}
-      .popover {opacity:0;pointer-events: none;position:absolute;top:calc(100% + 4px);left:-40px;background:white;z-index:999999999999999;padding:4px 0;box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05), 0px 3px 6px rgba(0, 0, 0, 0.08), 0px 8px 24px rgba(0, 0, 0, 0.15);border-radius:3px;min-width:160px;user-select:none;}
+      .popover {opacity:0;pointer-events: none;position:absolute;top:calc(100% + 4px);left:-40px;background:var(--popover);z-index:999999999999999;padding:4px 0;box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05), 0px 3px 6px rgba(0, 0, 0, 0.08), 0px 8px 24px rgba(0, 0, 0, 0.15);border-radius:3px;min-width:160px;user-select:none;}
       .on > .popover {opacity:1;pointer-events: all;}
         .popover h6 {font-size:10px;font-weight:700;color:var(--secondary);text-transform: uppercase;padding:8px 12px 4px;line-height:1;}
-        .popitem {padding:0 12px;line-height:28px;color:#222;}
+        .popitem {padding:0 12px;line-height:28px;color:var(--text);}
           .popitem:hover {background:var(--border);}
 
             .popitem label {display:flex;gap:8px;align-items: center;}
@@ -130,31 +173,33 @@ https://briefone.github.io/test/library/
       .card::before {content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 10'%3E%3Crect width='2' height='2' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' y='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' y='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' y='8' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' y='8' fill='%236C757D' rx='1'/%3E%3C/svg%3E");position:absolute;left:8px;top:50%;transform:translateY(-50%);width:6px;height:10px;}
       .card.hide {display:none;}
       .card.used {background:#66519114;}
-      .keytag {background:#eee;color:#888;font-weight:600;text-transform:uppercase;font-size:11px;padding:0px 4px 1px;border-radius:2px;}
+      .keytag {background:var(--border);color:var(--secondary);font-weight:600;text-transform:uppercase;font-size:11px;padding:0px 4px 1px;border-radius:2px;}
       .mr {line-height:1.2;overflow:hidden;text-overflow: ellipsis;padding-bottom: 2px;overflow-wrap: anywhere;
    display: -webkit-box;
    -webkit-box-orient: vertical;
    -webkit-line-clamp: 2;}
+
+   .mr, .tr, .br {pointer-events: none;}
 
    .card.archived, .dragcard.archived {display:none !important;}
 
         
 
         .card .expand {width:100%;display:none;flex-direction: column;gap:16px;align-items: flex-start;padding:8px 0;}
-        .card.expanded {box-shadow: inset 0 0 0 2px #7a61ff;background:white;}
+        .card.expanded {box-shadow: inset 0 0 0 2px #7a61ff;background:transparent;}
         .expanded .expand {display:flex;}
           .expanded .tr, .expanded .mr, .expanded .br, .expanded .check {display:none;}
         
           .card.locked {box-shadow:inset 0 0 0 3px var(--secondary);}
-            .card.locked .lockbtn {background:var(--secondary);color:white;}
+            .card.locked .lockbtn {background:var(--secondary);color:var(--ui1);}
 
-        .activities, .comments {position: absolute;top:0;left:0;right:0;bottom:0;z-index:4;display:none;background:white;}
+        .activities, .comments {position: absolute;top:0;left:0;right:0;bottom:0;z-index:4;display:none;background:var(--cl);}
           .aactive .activities, .cactive .comments {display:block;}
 
           .etr {display:flex;justify-content: space-between;width: 100%;gap:4px;}
             .etr .right {display:flex;}
 
-          textarea {width:100%;height:120px;overflow:hidden;background:white;border:1px solid var(--border);border-radius:3px;padding:8px;box-sizing:border-box;font:normal 12px sans-serif;resize:none;}
+          textarea {width:100%;height:120px;overflow:hidden;background:var(--input);border:1px solid var(--border);border-radius:3px;padding:8px;box-sizing:border-box;font:normal 12px sans-serif;resize:none;}
 
             .btnrow {display:flex;}
             .label {font-size:12px;color:var(--secondary);margin-bottom:2px;}
@@ -167,7 +212,7 @@ https://briefone.github.io/test/library/
       .br {display:flex;gap:4px 12px;flex-wrap: wrap;}
 
       .meta {display:flex;font-size:10px;color:var(--secondary);gap:4px;font-weight:600;}
-        .meta .icon, .meta svg {width:12px;height:12px;fill:#777;}
+        .meta .icon, .meta svg {width:12px;height:12px;fill:var(--secondary);}
         .meta .data {text-transform:uppercase;}
 
       .mousegrab  * {cursor:grabbing !important;}
@@ -181,7 +226,10 @@ https://briefone.github.io/test/library/
 
       #container {position:absolute;top:45px;left:0;right:0;bottom:0;}
 
-        .view {display:none;flex-direction: row;gap:12px;padding:16px;max-width:100%;overflow-y:scroll;height:100%;box-sizing: border-box;}
+        .view {display:none;flex-direction: row;gap:12px;padding:16px;max-width:100%;overflow-y:auto;height:100%;box-sizing: border-box;}
+
+          .dragscroll {cursor: grab;}
+            .dragscroll:active {cursor:grabbing}
 
         #container.home #home, #container.p1 #p1,#container.p2 #p2 {display:flex;}
 
@@ -215,10 +263,10 @@ https://briefone.github.io/test/library/
           .starttime .row label {display:flex;align-items: center;gap:4px;}
 
 
-    .toast {position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#E83F45;color:#fff;padding:8px 12px ;border-radius: 8px;z-index:9999999999999999;display:flex;gap:12px;align-items: center;font-size:12px; font-weight: 500;}
-        .toast .btn {color:white;font-weight:700;text-transform: uppercase;}
-          .toast .btn:hover {color:white;background:rgba(255, 255, 255, 0.08);}
-          .toast .btn:active {color:white;background:rgba(255, 255, 255, 0.12);}
+    .toast {position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#E83F45;color:var(--toasttext);padding:8px 12px ;border-radius: 8px;z-index:9999999999999999;display:flex;gap:12px;align-items: center;font-size:12px; font-weight: 500;}
+        .toast .btn {color:var(--toasttext);font-weight:700;text-transform: uppercase;}
+          .toast .btn:hover {color:var(--toasttext);background:rgba(255, 255, 255, 0.08);}
+          .toast .btn:active {color:var(--toasttext);background:rgba(255, 255, 255, 0.12);}
   </style>
   <script src="../js/base.js"></script>
   <script src="../js/gator.js"></script>
@@ -368,7 +416,7 @@ https://briefone.github.io/test/library/
           </div>
         </div>
 
-        <div id=p1 class=view>
+        <div id=p1 class="view dragscroll">
           <div class=list>
             <div class=listtag>List tag</div>
           </div>
@@ -746,6 +794,10 @@ https://briefone.github.io/test/library/
 
       let ol = 0;
       let ot = 0;
+
+      if ( !e.target.classList.contains('card') && !e.target.classList.contains('expand')){
+        return;
+      }
 
       let text = this.getElementsByClassName('mr')[0].cloneNode(true);
       let keytag = this.getElementsByClassName('keytag')[0];
@@ -1767,6 +1819,40 @@ https://briefone.github.io/test/library/
       }
     }
 
+    function dragscroll(e){
+      let sl = this.scrollLeft;
+      let st = this.scrollTop;
+
+      let sx = e.clientX;
+      let sy = e.clientY;
+
+      let t = this;
+
+      if(!e.target.classList.contains('dragscroll')){
+        return;
+      }
+
+      function move(e){
+        let x = e.clientX;
+        let y = e.clientY;
+        let nx = x - sx;
+        let ny = y - sy;
+
+        t.scrollLeft = sl - nx;
+        t.scrollTop = st - ny;
+
+        console.log(nx);
+      }
+
+      function end(e){
+        document.removeEventListener('mousemove', move);
+        document.removeEventListener('mouseup', end);
+      }
+
+      document.addEventListener('mousemove', move);
+      document.addEventListener('mouseup', end);
+    }
+
     Attach.on('dragstart', '.card', dragStart);
 
     Attach.on('dragover', '.list, .slide', handleDragOver);
@@ -1799,6 +1885,7 @@ https://briefone.github.io/test/library/
     Attach.on('click', '.closebtn', closebtn);
     Attach.on('mousedown', '.list', draglist);
     Attach.on('click', '.popout', popout);
+    Attach.on('mousedown', '.dragscroll', dragscroll);
     
     document.addEventListener('keyup', keypress);
 
