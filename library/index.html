@@ -933,13 +933,12 @@ https://briefone.github.io/test/library/
 
             if ( slide ){
               cc.style.position = 'absolute';
-              cc.style.top = e.clientY -77 + ot + 'px';
-              cc.style.left = e.clientX +ol+ 'px';
-              tar.parentElement.appendChild(cc);
-            } else {
-              tar.appendChild(cc);
-            }
+              cc.style.top = e.clientY + ot - tar.getBoundingClientRect().y + 'px';
+              cc.style.left = e.clientX + ol - tar.getBoundingClientRect().x + 'px';
+             
+            } 
 
+            tar.appendChild(cc);
             
             used = true;
           }
@@ -1579,12 +1578,11 @@ https://briefone.github.io/test/library/
 
       if ( slide ){
         dragcard.style.position = 'absolute';
-        dragcard.style.top = e.clientY -77 + 'px';
-        dragcard.style.left = e.clientX + 'px';
-        this.parentElement.appendChild(dragcard);
-      } else {
-        this.appendChild(dragcard);
+        dragcard.style.top = e.clientY - this.getBoundingClientRect().y + 'px';
+        dragcard.style.left = e.clientX - this.getBoundingClientRect().x + 'px';
       }
+      
+      this.appendChild(dragcard);
 
       this.classList.remove('draggingover');
       if ( window.clwindow){
