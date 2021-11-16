@@ -75,8 +75,12 @@ https://briefone.github.io/test/library/
     input, textarea, select {font: normal 12px var(--font-fam);color:var(--text);}
 
     #tabs {position:absolute;top:0;left:0;right:0;height:32px;background:var(--tabs);display:flex;align-items: center;justify-content: space-between;user-select: none;}
+      #tabs .left {width:calc(100% - 32px);}
+      #tabwrap {display:flex;width:100%;}
+        #tabwrap::-webkit-scrollbar {display: none;}
       .popwindow #tabs, .popwindow .popout {display:none;}
-      .tab {height:100%;min-height:32px;font-size:11px;padding: 0 12px;color:var(--tabtext);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
+      .tab {height:100%;min-height:32px;font-size:11px;padding: 0 12px;color:var(--tabtext);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;white-space:nowrap;}
+        .tab:hover {background:var(--border);}
         .tab.current {background:var(--tabactive);color:var(--textactive);}
 
         .tab.closeable {position:relative;padding-left:24px;gap:8px;padding-right:8px;}
@@ -91,7 +95,7 @@ https://briefone.github.io/test/library/
         .tab.brief::before {content:'';background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%236C757D' d='M22.389 2.22H1.61A.61.61 0 001 2.831v.611a.61.61 0 00.611.611h.611v10.39c0 .674.548 1.221 1.222 1.221h7.64v1.67L8.117 20.3a.611.611 0 000 .864l.432.432a.611.611 0 00.864 0L12 19.01l2.586 2.587a.611.611 0 00.865 0l.431-.433a.611.611 0 000-.864l-2.965-2.966v-1.67h7.639c.674 0 1.222-.547 1.222-1.222V4.053h.61a.611.611 0 00.612-.61V2.83a.611.611 0 00-.611-.611zm-2.445 11.611H4.056V4.053h15.888v9.778z'/%3E%3C/svg%3E");}
 
 
-      .menubtn {height:100%;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;}
+      .menubtn {height:100%;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;white-space:nowrap;}
         .menubtn:hover, .menubtn.on  {background:var(--border);}
         
 
@@ -133,7 +137,7 @@ https://briefone.github.io/test/library/
       .editmodebar {justify-content: space-between;}
         .editmodebar .left, .editmodebar .right {display:flex;gap:4px;}
 
-    .popoutwindow .filterbar, .popoutwindow .minbtn {display:none;}
+    .popoutwindow .filterbar, .popoutwindow .minbtn, .modal .minbtn {display:none;}
       .popoutwindow .cardlist {top:0;}
       
 
@@ -275,6 +279,8 @@ https://briefone.github.io/test/library/
 
     .overlay {position: fixed;top:0;left:0;bottom:0;right:0;background:rgba(0, 0, 0, 0.6);z-index: 99999999999;}
       .modal {position:absolute;max-width:800px;width:80%;left:50%;top:50%;transform:translate(-50%, -50%);background:var(--ui1);z-index:2;}
+
+    .cardactivity {display:flex;justify-content: space-between;width:100%;}
   </style>
   <script src="../js/base.js"></script>
   <script src="../js/gator.js"></script>
@@ -383,19 +389,21 @@ https://briefone.github.io/test/library/
             <div class=popitem>Help</div>
           </div>
         </div>
-        <div class="tab board closeable current" data-view=p1>
-          Phase I
-          <div class="btn xbtn">
+        <div id=tabwrap>
+          <div class="tab board closeable current" data-view=p1>
+            Phase I
+            <div class="btn xbtn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M14.87 12.002l4.3-4.3a1.352 1.352 0 000-1.91l-.956-.956a1.352 1.352 0 00-1.912 0l-4.3 4.3-4.3-4.3a1.352 1.352 0 00-1.91 0l-.956.955a1.352 1.352 0 000 1.912l4.3 4.3-4.3 4.3a1.352 1.352 0 000 1.91l.955.956a1.352 1.352 0 001.912 0l4.3-4.3 4.3 4.3a1.352 1.352 0 001.91 0l.956-.955a1.352 1.352 0 000-1.912l-4.3-4.3z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="tab brief closeable" data-view=p2>Mission Brief<div class="btn xbtn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M14.87 12.002l4.3-4.3a1.352 1.352 0 000-1.91l-.956-.956a1.352 1.352 0 00-1.912 0l-4.3 4.3-4.3-4.3a1.352 1.352 0 00-1.91 0l-.956.955a1.352 1.352 0 000 1.912l4.3 4.3-4.3 4.3a1.352 1.352 0 000 1.91l.955.956a1.352 1.352 0 001.912 0l4.3-4.3 4.3 4.3a1.352 1.352 0 001.91 0l.956-.955a1.352 1.352 0 000-1.912l-4.3-4.3z"/>
             </svg>
-          </div>
+          </div></div>
         </div>
-        <div class="tab brief closeable" data-view=p2>Mission Brief<div class="btn xbtn">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M14.87 12.002l4.3-4.3a1.352 1.352 0 000-1.91l-.956-.956a1.352 1.352 0 00-1.912 0l-4.3 4.3-4.3-4.3a1.352 1.352 0 00-1.91 0l-.956.955a1.352 1.352 0 000 1.912l4.3 4.3-4.3 4.3a1.352 1.352 0 000 1.91l.955.956a1.352 1.352 0 001.912 0l4.3-4.3 4.3 4.3a1.352 1.352 0 001.91 0l.956-.955a1.352 1.352 0 000-1.912l-4.3-4.3z"/>
-          </svg>
-        </div></div>
       </div>
       <div class="right">
         <div class="btn toggle clbtn on" data-class=clopen>
@@ -412,7 +420,7 @@ https://briefone.github.io/test/library/
         <div class="right">
           <div class="btn pop" data-class=boardprop>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>
-            <div class=popover style="left:auto;right:0;">
+            <div class=popover id=tabpop style="left:auto;right:0;">
               <div class=popitem>Rename</div>
               <div class=popitem>Copy</div>
               <div class=popitem>Delete</div>
@@ -774,7 +782,8 @@ https://briefone.github.io/test/library/
     </div>
 
     <div id=cardactivity class=cardactivity>
-      Updated <u>5 minutes ago</u>
+      <div class=left>Updated&nbsp;<u>5 minutes ago</u></div>
+      <div class=right>Created <u>11/01/21</u></div>
     </div>
 
     <div id=cardactions class=cardactions>
@@ -1284,9 +1293,34 @@ https://briefone.github.io/test/library/
       }
     }
 
+    function closetab(e){
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
     function tab(){
+      if ( this.classList.contains('current')){
+        
+        if ( this.classList.contains('pop')){
+          
+        } else {
+          let p = document.getElementById('tabpop').cloneNode(true);
+          p.removeAttribute('id');
+          p.style.left = '50%';
+          p.style.transform = 'translateX(-50%)';
+          this.appendChild(p);
+          this.classList.add('pop', 'on');
+        }
+
+        return;
+      }
+
+
+
       document.getElementsByClassName('tab current').removeclass('current');
       this.classList.add('current');
+
+      this.classList.remove('on');
 
       let v = this.dataset.view;
 
@@ -1446,7 +1480,10 @@ https://briefone.github.io/test/library/
         }
       }
       
-      let c = document.getElementById(this.dataset.id).cloneNode(true);
+      let a = document.getElementById(this.dataset.id);
+      a.classList.add('expanded');
+      
+      let c = a.cloneNode(true);
       
       
       c.removeAttribute('id');
@@ -1477,7 +1514,7 @@ https://briefone.github.io/test/library/
     function popout(){
       window.popoutwindow = window.open("./index.html#popwindow", "Card Library", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=666,height="+(Math.min(window.screen.height-300, 696))+",top="+((window.screen.height /2) - 448)+",left="+((window.screen.width/2) -333));
 
-      let cid = this.getparent('card').id;
+      let cid = this.getparent('card').dataset.id;
 
       window.popoutwindow.onload = function(){
         let cl = window.popoutwindow.document.getElementsByClassName('cardlist')[0];
@@ -1681,9 +1718,9 @@ https://briefone.github.io/test/library/
       let tc = 0;
       for(var i=0;i<l;i++){
         let og = x[i].getparent('card');
-        let id = og.id;
+        let id = og.dataset.id;
 
-        let cards = document.querySelectorAll(`.dragcard[data-id="${id}"]`);
+        let cards = document.querySelectorAll(`[data-id="${id}"]`);
         let count = cards.length;
         for(var ii=0;ii<count;ii++){
           cards[ii].classList.add('archived');
@@ -1694,6 +1731,8 @@ https://briefone.github.io/test/library/
 
         all.push(`[data-id="${id}"]`);
       }
+
+      document.getElementsByClassName('overlay').remove();
 
       maketoast(`Removed ${l} card in ${tc} locations`, 'Undo', all, unarchive);
     }
@@ -1859,7 +1898,7 @@ https://briefone.github.io/test/library/
       let kt = this.getElementsByClassName('keytag')[0];
 
       let card = this.getparent('card');
-      let id = card.id;
+      let id = card.dataset.id;
       let t = card.getElementsByClassName('tagdrop')[0];
       let k = t.getElementsByClassName('keytag')[0];
 
@@ -1961,19 +2000,31 @@ https://briefone.github.io/test/library/
     }
 
     function newtimeline(){
-      
+      let x = document.createElement('div');
+     
+      let v = newview('dragscroll', x);
+      newtab('Untitled timeline', 'timeline', v);
     }
 
     function newce(){
-      
+      let x = document.createElement('div');
+     
+      let v = newview('dragscroll', x);
+      newtab('Untitled cause & effect', 'ce', v);
     }
 
     function newbrief(){
-      
+      let x = document.createElement('div');
+     
+      let v = newview('dragscroll', x);
+      newtab('Untitled brief', 'brief', v);
     }
 
     function neworders(){
-      
+      let x = document.createElement('div');
+     
+      let v = newview('dragscroll', x);
+      newtab('Untitled orders', 'orders', v);
     }
 
     function newtab(x, c, v){
@@ -1982,16 +2033,23 @@ https://briefone.github.io/test/library/
       t.dataset.view = v;
       t.appendChild(document.createTextNode(x));
 
-      let tabs = document.getElementById('tabs');
-      let l = tabs.getElementsByClassName('left')[0];
+      let tabs = document.getElementById('tabwrap');
 
-      t.innerHTML += `<div class="btn xbtn">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M14.87 12.002l4.3-4.3a1.352 1.352 0 000-1.91l-.956-.956a1.352 1.352 0 00-1.912 0l-4.3 4.3-4.3-4.3a1.352 1.352 0 00-1.91 0l-.956.955a1.352 1.352 0 000 1.912l4.3 4.3-4.3 4.3a1.352 1.352 0 000 1.91l.955.956a1.352 1.352 0 001.912 0l4.3-4.3 4.3 4.3a1.352 1.352 0 001.91 0l.956-.955a1.352 1.352 0 000-1.912l-4.3-4.3z"></path>
-          </svg>
-        </div>`;
+      let b = document.createElement('div');
+      b.className = 'btn xbtn';
 
-      l.appendChild(t);
+      let s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      let path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+
+      s.setAttribute('viewBox', '0 0 24 24');
+      path.setAttribute('d', 'M14.87 12.002l4.3-4.3a1.352 1.352 0 000-1.91l-.956-.956a1.352 1.352 0 00-1.912 0l-4.3 4.3-4.3-4.3a1.352 1.352 0 00-1.91 0l-.956.955a1.352 1.352 0 000 1.912l4.3 4.3-4.3 4.3a1.352 1.352 0 000 1.91l.955.956a1.352 1.352 0 001.912 0l4.3-4.3 4.3 4.3a1.352 1.352 0 001.91 0l.956-.955a1.352 1.352 0 000-1.912l-4.3-4.3z');
+
+      s.appendChild(path);
+      b.appendChild(s);
+
+      t.appendChild(b);
+
+      tabs.appendChild(t);
 
       t.click();
     }
@@ -2004,7 +2062,7 @@ https://briefone.github.io/test/library/
     Attach.on('dragend', '.list, .slide', handleDragEnd);
     Attach.on('drop', '.list, .slide', handleDrop);
 
-
+    Attach.on('click', '.xbtn', closetab);
     Attach.on('click', '.ktitem', ktitem);
     Attach.on('click', '.popcard', cardclick);
     Attach.on('click', '.deletecards', deletecards);
