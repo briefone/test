@@ -1044,13 +1044,16 @@ https://briefone.github.io/test/library/
                 ta.call(txa);
                 txa.focus();
               }              
-            } else if ( window.clwindow){
+            } else if ( window.clwindow ){
               let id = t.dataset.id;
               let clw = window.clwindow;
               clw.focus();
               let cccc = clw.document.getElementById(id);
               clw.document.getElementsByClassName('expanded').removeclass('expanded');
               cccc.classList.add('expanded');
+              let txa = cccc.getElementsByTagName('textarea')[0];
+              ta.call(txa);
+              txa.focus();
               cccc.scrollIntoViewIfNeeded(false);
             }
           } else if ( !e.target.classList.contains('check') && !t.classList.contains('expanded') ) {
@@ -1532,6 +1535,10 @@ https://briefone.github.io/test/library/
       fi.appendChild(c);
       o.appendChild(fi);
       document.body.appendChild(o);
+
+      let txa = o.getElementsByTagName('textarea')[0];
+                ta.call(txa);
+                txa.focus();
     }
 
     function ta(e){
@@ -1746,6 +1753,9 @@ https://briefone.github.io/test/library/
     function cardclick(e){
       document.getElementsByClassName('expanded').removeclass('expanded');
       this.classList.add('expanded');
+      let txa = this.getElementsByTagName('textarea')[0];
+                ta.call(txa);
+                txa.focus();
       this.scrollIntoViewIfNeeded(false);
     }
 
