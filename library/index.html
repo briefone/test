@@ -525,7 +525,7 @@ https://briefone.github.io/test/library/
     </div>
 
     <div id=cl class="">
-      <div class="btn floating" onclick="openpop();this.classList.add('opened')">Open in new window</div>
+      <div class="btn floating" id=openpopwindow onclick="openpop();this.classList.add('opened');localStorage.opennew = true">Open in new window</div>
       <div class=editmodebar>
         <div class=left>
           <input type=checkbox class=selectall style="margin-left:-2px" />
@@ -2193,6 +2193,10 @@ https://briefone.github.io/test/library/
     makecards(40);
     restorecustom();
     popcorn();
+
+    if ( localStorage.opennew){
+      document.getElementById('openpopwindow').classList.add('opened');
+    }
   </script>
 </body>
 </html>
