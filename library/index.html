@@ -110,6 +110,7 @@ https://briefone.github.io/test/library/
 
     #conwrap {position:absolute;top:32px;left:0;right:0;bottom:0;}
       .clopen #conwrap {right: calc(336px + var(--borderwidth));}
+      body:not(.clopen) #conwrap {right:0 !important;}
       .popwindow #conwrap {display:none;}
 
     #subnav {height:var(--subnavheight);position:absolute;top:0;left:0;right:0;background:var(--subnav);border-bottom:var(--borderwidth) solid var(--border);display:flex;align-items:center;padding:0 8px;    justify-content: space-between;}
@@ -1674,7 +1675,7 @@ https://briefone.github.io/test/library/
 
       e.dataTransfer.effectAllowed = 'copy';
   
-      e.dataTransfer.setData("application/my-app", e.target.id);
+      e.dataTransfer.setData("text/plain", e.target.id);
       e.dataTransfer.setDragImage(dragcard, 0, 0);
 
       let t = this;
@@ -1697,7 +1698,7 @@ https://briefone.github.io/test/library/
       e.preventDefault();
       e.stopPropagation();
 
-      let id = e.dataTransfer.getData('application/my-app');
+      let id = e.dataTransfer.getData('text/plain');
       console.log(id , 'dsfsdf');
 
       document.getElementsByClassName('dragcard focused').removeclass('focused');
