@@ -286,6 +286,7 @@ https://briefone.github.io/test/library/
         .dashitem h5 {padding:8px 12px 8px;}
         .dashrow {display:flex;gap:12px;padding:8px 12px;border-top:1px solid var(--border);}
 
+        #resizecl {position:absolute;top:0;right:0;width:4px;bottom:0;cursor:col-resize;z-index:999999;}
   </style>
   <script src="../js/base.js"></script>
   <script src="../js/gator.js"></script>
@@ -430,6 +431,7 @@ https://briefone.github.io/test/library/
       </div>
     </div>
     <div id=conwrap>
+      <div id=resizecl></div>
       <div id="subnav">
         <div class=left></div>
         <div class="right">
@@ -2114,6 +2116,34 @@ https://briefone.github.io/test/library/
       t.click();
     }
 
+    function resizecl(e){
+      e.preventDefault();
+      e.stopPropagation();
+
+      let sx = e.clientX;
+      let cl = document.getElementById('cl');
+      let cw = document.getElementById('conwrap');
+      let w = cl.offsetWidth;
+
+      function move(e){
+        let x = e.clientX;
+
+        let nx = sx - x;
+
+        cl.style.width = w + nx + 'px';
+
+        cw.style.right = w + nx + 'px';
+      }
+
+      function end(e){
+        document.removeEventListener('mousemove', move);
+        document.removeEventListener('mouseup', end);
+      }
+
+      document.addEventListener('mousemove', move);
+        document.addEventListener('mouseup', end);
+    }
+
     Attach.on('dragstart', '.card', dragStart);
 
     Attach.on('dragover', '.list, .slide', handleDragOver);
@@ -2154,6 +2184,8 @@ https://briefone.github.io/test/library/
     Attach.on('click', '.newcebtn', newce);
     Attach.on('click', '.newbriefbtn', newbrief);
     Attach.on('click', '.newordersbtn', neworders);
+    Attach.on('mousedown', '#resizecl', resizecl);
+    
     
     document.addEventListener('keyup', keypress);
 
