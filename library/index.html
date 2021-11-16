@@ -109,7 +109,7 @@ https://briefone.github.io/test/library/
     .tag {background:rgb(0 0 0 / 10%);color:rgb(0 0 0 / 65%);font-weight:600;text-transform:uppercase;font-size:11px;padding:0px 4px 1px;border-radius:2px;display:inline-block;}
 
     #conwrap {position:absolute;top:32px;left:0;right:0;bottom:0;}
-      .clopen #conwrap {right: 337px;}
+      .clopen #conwrap {right: calc(336px + var(--borderwidth));}
       .popwindow #conwrap {display:none;}
 
     #subnav {height:var(--subnavheight);position:absolute;top:0;left:0;right:0;background:var(--subnav);border-bottom:var(--borderwidth) solid var(--border);display:flex;align-items:center;padding:0 8px;    justify-content: space-between;}
@@ -171,7 +171,7 @@ https://briefone.github.io/test/library/
           .pophover {position:relative;padding-right:32px;white-space: nowrap;}
             .pophover::before {content:'';background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath fill='%236C757D' d='M5.284 10.839c-.312-.305-.337-.73 0-1.103L7.907 7 5.284 4.264c-.337-.373-.312-.798 0-1.101.311-.306.838-.286 1.13 0 .293.284 3.152 3.286 3.152 3.286a.766.766 0 010 1.103s-2.86 3.001-3.152 3.287c-.292.285-.819.305-1.13 0z'/%3E%3C/svg%3E");position:absolute;right:8px;top:50%;transform:translateY(-50%);width:14px;height:14px;}
 
-        .popover hr {border:none;height:1px;margin:4px 0;background-color:var(--border)}
+        .popover hr {border:none;height:0.5pt;margin:4px 0;background-color:var(--border)}
 
           .hoverpop {position:absolute;opacity:0;pointer-events: none;left:100%;top:-4px;}
             .pophover:hover > .hoverpop {opacity:1;pointer-events: all;}
@@ -281,6 +281,11 @@ https://briefone.github.io/test/library/
       .modal {position:absolute;max-width:800px;width:80%;left:50%;top:50%;transform:translate(-50%, -50%);background:var(--ui1);z-index:2;}
 
     .cardactivity {display:flex;justify-content: space-between;width:100%;}
+
+    .dashitem {background:var(--ui1);display:flex;flex-direction: column;border:1px solid var(--border);border-radius:3px;}
+        .dashitem h5 {padding:8px 12px 8px;}
+        .dashrow {display:flex;gap:12px;padding:8px 12px;border-top:1px solid var(--border);}
+
   </style>
   <script src="../js/base.js"></script>
   <script src="../js/gator.js"></script>
@@ -303,6 +308,7 @@ https://briefone.github.io/test/library/
           <div class=popover style="left:0;">
             <div class="popitem pophover">Plan - Conquer the World
               <div class="hoverpop popover">
+                <div class=popitem>Overview</div>
                 <div class=popitem>Properties</div>
                 <div class=popitem>Share</div>
                 <div class=popitem>Duplicate</div>
@@ -316,6 +322,15 @@ https://briefone.github.io/test/library/
                 <div class=popitem>Brief XYZ</div>
                 <div class=popitem>Orders XYZ</div>
                 <div class=popitem>Timeline XYZ</div>
+              </div>
+            </div>
+            <hr>
+            <div class="popitem pophover">Recent updates
+              <div class="hoverpop popover">
+                <div class=popitem>Board 123</div>
+                <div class=popitem>Brief 123</div>
+                <div class=popitem>Orders 123</div>
+                <div class=popitem>Timeline 123</div>
               </div>
             </div>
             <hr>
@@ -433,7 +448,33 @@ https://briefone.github.io/test/library/
 
       <div id=container class=p1>
 
-        <div id=p0 class=view>
+        <div id=p0 class=view style="    flex-direction: column;">
+
+          <div class=dashitem>
+            <h5>Plan B</h5>
+            <div class=dashrow>
+              <div>Board 2</div><div>2 mins ago</div>
+            </div>
+            <div class=dashrow>
+              <div>Board 3</div><div>1 hr ago</div>
+            </div>
+            <div class=dashrow>
+              <div>Board 1</div><div>2 days ago</div>
+            </div>
+          </div>
+
+          <div class=dashitem>
+            <h5>Plan A</h5>
+            <div class=dashrow>
+              <div>Board 2</div><div>52 mins ago</div>
+            </div>
+            <div class=dashrow>
+              <div>Board 3</div><div>1 hr ago</div>
+            </div>
+            <div class=dashrow>
+              <div>Board 1</div><div>2 days ago</div>
+            </div>
+          </div>
         </div>
 
         <div id=p2 class=view>
