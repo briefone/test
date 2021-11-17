@@ -47,6 +47,8 @@ https://briefone.github.io/test/library/
       --toasttext: var(--ui1);
       --input: var(--ui2);
       --inputborder: var(--ui6);
+      --tacolor: var(--ui9);
+      --textarea: #e5e5e5;
 
       --cta: #357EAC;
       --ctahover: #2c6c9a;
@@ -74,7 +76,7 @@ https://briefone.github.io/test/library/
     html {font: normal 14px var(--font-fam);color:var(--text);}
     body {background:var(--background);overflow:hidden;}
     input, textarea, select {font: normal 12px var(--font-fam);color:var(--text);outline:none;}
-    input:focus, textarea:focus {outline: 2px solid #000;outline-offset:-2px;}
+    input:focus, textarea:focus {outline: 2px solid #0063FF;outline-offset:-2px;}
 
     #tabs {position:absolute;top:0;left:0;right:0;height:32px;background:var(--tabs);display:flex;align-items: center;justify-content: space-between;user-select: none;}
       #tabs .left {width:calc(100% - 32px);}
@@ -209,7 +211,7 @@ https://briefone.github.io/test/library/
           .etr {display:flex;justify-content: space-between;width: 100%;gap:4px;}
             .etr .right {display:flex;}
 
-          textarea {width:100%;height:120px;overflow:hidden;background:var(--input);border:none;border-bottom:1px solid var(--inputborder);border-radius:0;padding:8px;box-sizing:border-box;resize:none;}
+          textarea {width:100%;height:120px;overflow:hidden;background:var(--textarea);border:none;border-bottom:1px solid var(--inputborder);border-radius:0;padding:8px;box-sizing:border-box;resize:none;font-size:14px;color:var(--tacolor);}
 
             .btnrow {display:flex;}
             .label {font-size:12px;color:var(--secondary);margin-bottom:2px;}
@@ -264,7 +266,7 @@ https://briefone.github.io/test/library/
 
 
         .deck {position:absolute;top:1px;left:0;bottom:0;width:180px;background:white;border-right:1px solid var(--border);}
-          .deck .minislide {width:calc(100% - 24px);margin:12px;aspect-ratio: 16/9;border:1px solid var(--border);border-radius:4px;}
+          .deck .minislide {width:calc(100% - 24px);margin:12px;aspect-ratio: 16/9;border:1px solid var(--border);border-radius:4px;background-size:cover;}
           .slide {width:calc(100vw - 600px);aspect-ratio: 16/9;max-height:calc(100vh - 120px);background-color: white;position:absolute;top:50%;left:calc(50%);transform:translate(calc(-50% + 90px), -50%);border:1px solid var(--border);}
 
       .cardactivity {color:var(--secondary);}
@@ -294,6 +296,7 @@ https://briefone.github.io/test/library/
   </style>
   <script src="../js/base.js"></script>
   <script src="../js/gator.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
 </head>
 
 <body class="clopen">
@@ -800,7 +803,7 @@ https://briefone.github.io/test/library/
     </div>
 
     <div id=uses class="uses">
-      <div class=label>Uses</div>
+      <div class=label>Used in</div>
       <div class="row wrap">
         <div class=tag>Phase I</div>
         <div class=tag>Phase II</div>
@@ -821,6 +824,12 @@ https://briefone.github.io/test/library/
           <input type=text />
         </div>
       </div>
+    </div>
+
+    <div id=customfield class="customfield">
+      <div class=row>
+        <div class="btn cfbtn">Add a custom field</div>
+        </div>
     </div>
 
     <div id=starttime class="starttime">
@@ -862,6 +871,11 @@ https://briefone.github.io/test/library/
     <div id=activities class=activities>
       <div class="btn closebtn" data-class="aactive">Close Activity</div>
       Card history
+    </div>
+
+    <div id=cardtitle class=cardtitle style="width:100%;">
+      <div class=label>Title (Optional)</div>
+      <input class="etitle" type="text" />
     </div>
 
   </div>
@@ -1024,6 +1038,19 @@ https://briefone.github.io/test/library/
             tar.appendChild(cc);
             
             used = true;
+
+            if ( slide ){
+           
+              domtoimage.toPng(tar, {style: {transform: 'translate(calc(-100% + 300px), -100%)', top:'0', border: 'none'}}).then(function (dataUrl) {
+                tar.removeAttribute('style');
+                  document.getElementsByClassName('minislide')[0].style.backgroundImage = `url(${dataUrl})`;
+                }).catch(function (error) {
+                    console.error('oops, something went wrong!', error);
+                });
+
+                
+            }
+            return;
           }
         });
 
@@ -1141,10 +1168,12 @@ https://briefone.github.io/test/library/
         let ereact = document.getElementById('reactions').cloneNode(true);
         let etags = document.getElementById('tags').cloneNode(true);
         let eas = document.getElementById('actorsource').cloneNode(true);
+        let cfb = document.getElementById('customfield').cloneNode(true);
         let est = document.getElementById('starttime').cloneNode(true);
         let ed = document.getElementById('duration').cloneNode(true);
         let ecs = document.getElementById('cardactivity').cloneNode(true);
         let eca = document.getElementById('cardactions').cloneNode(true);
+        let ect = document.getElementById('cardtitle').cloneNode(true);
 
         let menupop = document.getElementById('cardmenu').cloneNode(true);
         let com = document.getElementById('comments').cloneNode(true);
@@ -1168,6 +1197,8 @@ https://briefone.github.io/test/library/
         menupop.removeAttribute('id');
         com.removeAttribute('id');
         act.removeAttribute('id');
+        cfb.removeAttribute('id');
+        ect.removeAttribute('id');
 
         let rad = est.querySelectorAll('input[name=st]');
         let nn = 'st-' + Date.now() + Math.floor(Math.random() * 1000);
@@ -1176,9 +1207,6 @@ https://briefone.github.io/test/library/
         }
 
         etext.className = 'etext';
-        etitle.className = 'etitle';
-        etitle.type = 'text';
-        etitle.placeholder = 'Title (Optional)';
 
         card.className = 'card';
         let id = 'c-' + i;
@@ -1242,13 +1270,14 @@ https://briefone.github.io/test/library/
 
         expand.appendChild(etr);
         expand.appendChild(etext);
-        expand.appendChild(etitle);
+        expand.appendChild(ect);
         expand.appendChild(etags);
         expand.appendChild(euses);
-        expand.appendChild(eas);
+        // expand.appendChild(eas);
         expand.appendChild(est);
         expand.appendChild(ed);
         expand.appendChild(ereact);
+        expand.appendChild(cfb);
         expand.appendChild(ecs);
         expand.appendChild(eca);
 
