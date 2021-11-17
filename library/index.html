@@ -1040,15 +1040,12 @@ https://briefone.github.io/test/library/
             used = true;
 
             if ( slide ){
-           
-              domtoimage.toPng(tar, {style: {transform: 'translate(calc(-100% + 300px), -100%)', top:'0', border: 'none'}}).then(function (dataUrl) {
+              domtoimage.toPng(tar, {style: {transform: 'none', top:'0', left: '0', border: 'none', position: 'static'}}).then(function (dataUrl) {
                 tar.removeAttribute('style');
-                  document.getElementsByClassName('minislide')[0].style.backgroundImage = `url(${dataUrl})`;
-                }).catch(function (error) {
-                    console.error('oops, something went wrong!', error);
-                });
-
-                
+                document.getElementsByClassName('minislide')[0].style.backgroundImage = `url(${dataUrl})`;
+              }).catch(function (error) {
+                  console.error('oops, something went wrong!', error);
+              });
             }
             return;
           }
