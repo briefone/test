@@ -1589,7 +1589,7 @@ https://briefone.github.io/test/library/
 
       if ( this.classList.contains('etext')){
         let c = this.getparent('card');
-        let id = c.id;
+        let id = c.dataset.id;
         let cards = document.querySelectorAll(`[data-id="${id}"`);
         for(var i=0;i<cards.length;i++){ 
           let mr = cards[i].getElementsByClassName('mr')[0];
@@ -1616,7 +1616,7 @@ https://briefone.github.io/test/library/
         let c = clone.getElementsByClassName('card');
         for(var i=0;i<c.length;i++){
           let card = c[i];
-          if ( card.id == cid){
+          if ( card.dataset.id == cid){
             card.draggable = true;
             card.classList.add('expanded');
             card.style.boxShadow = 'none';
@@ -1703,7 +1703,7 @@ https://briefone.github.io/test/library/
 
       e.dataTransfer.effectAllowed = 'copy';
   
-      e.dataTransfer.setData("text/plain", e.target.id);
+      e.dataTransfer.setData("text/plain", e.target.dataset.id);
       e.dataTransfer.setDragImage(dragcard, 0, 0);
 
       let t = this;
@@ -2000,23 +2000,29 @@ https://briefone.github.io/test/library/
 
       let bg = window.getComputedStyle(nk).backgroundColor;
 
-      let cards = document.querySelectorAll(`[data-id="${id}"`);
-      
+      let cards = document.querySelectorAll(`[data-id="${id}"]`);
 
       for(var i=0;i<cards.length;i++){ 
         let c = cards[i];
-
         
-        let k = c.getElementsByClassName('keytag')[0];
-        let p = k.parentElement;
-        let kk = kt.cloneNode(true);
-        
-        p.insertBefore(kk, k);
-        k.remove();   
+        let ks = c.getElementsByClassName('keytag');
 
-        if ( c.classList.contains('dragcard')){
-          c.style.backgroundColor = bg;
-          kk.style.backgroundColor = 'rgba(0,0,0,0.1)';
+        for(var ii=0;ii<ks.length;ii++){
+          let k = ks[ii];
+
+          if ( k.getparent('popover')){
+            continue;
+          }
+          let p = k.parentElement;
+          let kk = kt.cloneNode(true);
+          
+          p.insertBefore(kk, k);
+          k.remove();   
+
+          if ( c.classList.contains('dragcard')){
+            c.style.backgroundColor = bg;
+            kk.style.backgroundColor = 'rgba(0,0,0,0.1)';
+          }
         }
       }
     }
