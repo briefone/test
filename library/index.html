@@ -48,7 +48,7 @@ https://briefone.github.io/test/library/
       --input: var(--ui2);
       --inputborder: var(--ui6);
       --tacolor: var(--ui9);
-      --textarea: #e5e5e5;
+      --textarea: #eaedef;
 
       --cta: #357EAC;
       --ctahover: #2c6c9a;
@@ -76,7 +76,7 @@ https://briefone.github.io/test/library/
     html {font: normal 14px var(--font-fam);color:var(--text);}
     body {background:var(--background);overflow:hidden;}
     input, textarea, select {font: normal 12px var(--font-fam);color:var(--text);outline:none;}
-    input:focus, textarea:focus {outline: 2px solid #0063FF;outline-offset:-2px;}
+    input:focus, textarea:focus {outline: 2px solid #0063FF;outline-offset:-2px;background-color:#0062ff17 !important;}
 
     #tabs {position:absolute;top:0;left:0;right:0;height:32px;background:var(--tabs);display:flex;align-items: center;justify-content: space-between;user-select: none;}
       #tabs .left {width:calc(100% - 32px);}
@@ -211,9 +211,9 @@ https://briefone.github.io/test/library/
           .etr {display:flex;justify-content: space-between;width: 100%;gap:4px;}
             .etr .right {display:flex;}
 
-          textarea {width:100%;height:120px;overflow:hidden;background:var(--textarea);border:none;border-bottom:1px solid var(--inputborder);border-radius:0;padding:8px;box-sizing:border-box;resize:none;font-size:14px;color:var(--tacolor);}
+          textarea {width:100%;height:120px;overflow:hidden;background:var(--textarea);border:none;border-bottom:1px solid var(--inputborder);border-radius:0;padding:8px;box-sizing:border-box;resize:none;font-size:14px;color:var(--tacolor);font-weight:500;}
 
-            .btnrow {display:flex;}
+            .btnrow {display:flex;gap:2px;}
             .label {font-size:12px;color:var(--secondary);margin-bottom:2px;}
 
         .card .check {display:none;position:absolute;left:6px;top:50%;transform:translateY(-50%);}
@@ -284,7 +284,9 @@ https://briefone.github.io/test/library/
 
 
     .overlay {position: fixed;top:0;left:0;bottom:0;right:0;background:rgba(0, 0, 0, 0.6);z-index: 99999999999;}
-      .modal {position:absolute;max-width:800px;width:80%;max-height:80%;overflow-y:auto;left:50%;top:50%;transform:translate(-50%, -50%);background:var(--ui1);z-index:2;}
+      .modal {position:absolute;max-width:800px;width:80%;max-height:80%;overflow-y:auto;left:50%;top:50%;transform:translate(-50%, -50%);background:var(--ui1);z-index:2;    border-radius: 3px;box-shadow: rgb(9 30 66 / 8%) 0px 0px 0px 1px, rgb(9 30 66 / 8%) 0px 2px 1px, rgb(9 30 66 / 31%) 0px 0px 20px -6px;}
+        .modal .card {box-shadow:none;padding:12px 16px;}
+          .modal .card::before {content:none;}
 
     .cardactivity {display:flex;justify-content: space-between;width:100%;}
 
@@ -293,6 +295,10 @@ https://briefone.github.io/test/library/
         .dashrow {display:flex;gap:12px;padding:8px 12px;border-top:1px solid var(--border);}
 
         #resizecl {position:absolute;top:0;right:0;width:4px;bottom:0;cursor:col-resize;z-index:999999;}
+
+
+    .editorbar {display:flex;gap:2px;margin: 0 2px -30px;position:relative;z-index: 2;}
+        .editorbar .btn {border-radius: 0;color:var(--ui9);font-weight:700;}
   </style>
   <script src="../js/base.js"></script>
   <script src="../js/gator.js"></script>
@@ -497,7 +503,7 @@ https://briefone.github.io/test/library/
 
         <div id=p1 class="view dragscroll show">
           <div class=list>
-            <div class=listtag>List tag</div>
+            <div class=listtag>Uncategorized</div>
           </div>
           <div class=list>
             <div class=listtag>List tag</div>
@@ -508,24 +514,7 @@ https://briefone.github.io/test/library/
           <div class=list>
             <div class=listtag>List tag</div>
           </div>
-          <div class=list>
-            <div class=listtag>List tag</div>
-          </div>
-          <div class=list>
-            <div class=listtag>List tag</div>
-          </div>
-          <div class=list>
-            <div class=listtag>List tag</div>
-          </div>
-          <div class=list>
-            <div class=listtag>List tag</div>
-          </div>
-          <div class=list>
-            <div class=listtag>List tag</div>
-          </div>
-          <div class=list>
-            <div class=listtag>List tag</div>
-          </div>
+
         </div>
       </div>
     </div>
@@ -878,6 +867,14 @@ https://briefone.github.io/test/library/
       <input class="etitle" type="text" />
     </div>
 
+    <div id=etext class=etext style="width:100%;">
+      <div class=label style="margin-bottom:4px;">Description</div>
+      <div class=editorbar>
+        <div class=btn>H</div><div class=btn>B</div>
+      </div>
+      <textarea class="ta" style="padding-top:36px;"></textarea>
+    </div>
+
   </div>
   <script>
     function carddrag(e){
@@ -1159,7 +1156,6 @@ https://briefone.github.io/test/library/
         let expand = document.createElement('div');
         let etag = document.createElement('div');
         let ecombo = document.createElement('div');
-        let etext = document.createElement('textarea');
         let etitle = document.createElement('input');
         let euses = document.getElementById('uses').cloneNode(true);
         let ereact = document.getElementById('reactions').cloneNode(true);
@@ -1171,6 +1167,7 @@ https://briefone.github.io/test/library/
         let ecs = document.getElementById('cardactivity').cloneNode(true);
         let eca = document.getElementById('cardactions').cloneNode(true);
         let ect = document.getElementById('cardtitle').cloneNode(true);
+        let etext = document.getElementById('etext').cloneNode(true);
 
         let menupop = document.getElementById('cardmenu').cloneNode(true);
         let com = document.getElementById('comments').cloneNode(true);
@@ -1203,7 +1200,7 @@ https://briefone.github.io/test/library/
           rad[ii].name = nn;
         }
 
-        etext.className = 'etext';
+        // etext.className = 'etext';
 
         card.className = 'card';
         let id = 'c-' + i;
@@ -1250,7 +1247,7 @@ https://briefone.github.io/test/library/
 
         mr.appendChild(document.createTextNode(content));
 
-        etext.value = content;
+        etext.getElementsByTagName('textarea')[0].value = content;
 
         let meta = makemeta(i);
 
@@ -2088,7 +2085,7 @@ https://briefone.github.io/test/library/
       let t = document.createElement('div');
 
       x.className = 'list';
-      t.appendChild(document.createTextNode('list tag'));
+      t.appendChild(document.createTextNode('Uncategorized'));
       t.className = 'listtag';
 
       x.appendChild(t);
