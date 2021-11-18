@@ -27,12 +27,13 @@ https://briefone.github.io/test/library/
       --ui2: #f8f9fa;
       --ui3: #EFF1F4;
       --ui4: #DEE2E6;
-      --ui5:;
-      --ui6:#6C757D;
-      --ui7:;
+      --ui5: #d6dbe0;
+      --ui6:#637383;
+      --ui7:#233853;
       --ui8:#212529;
       --ui9: black;
 
+      --shadow: var(--ui5);
       --background: var(--ui2);
       --tabs: var(--ui3);
       --border: var(--ui4);
@@ -40,7 +41,7 @@ https://briefone.github.io/test/library/
       --text: var(--ui8);
       --textactive: var(--ui8);
       --tabactive: var(--subnav);
-      --tabtext: var(--ui6);
+      --tabtext: var(--ui7);
       --subnav: var(--ui1);
       --cl: var(--ui1);
       --popover: var(--ui1);
@@ -150,20 +151,22 @@ https://briefone.github.io/test/library/
     .btn {height:28px;min-width:28px;border-radius:3px;background:transparent;color:var(--secondary);font-weight:500;display: flex;align-items: center;justify-content: center;padding:0 8px;box-sizing: border-box;font-weight:500;cursor:pointer;user-select:none;font-size:12px;}
       .btn svg {fill:var(--secondary);width:12px;height:12px;}
         .btn:hover {background:var(--border);}
-        .btn:active {background:#ccc;}
+        .btn:active {background:var(--shadow);}
 
       .btn.cta {background:var(--cta);color:white;}
         .btn.cta:hover {background:var(--ctahover);}
         .btn.cta:active {background:var(--ctaactive);}
 
-    .btn.on {background:var(--secondary);color:var(--ui1);}
+    .btn.on {background:var(--ui7);color:var(--ui1);}
       .btn.on svg {fill:var(--ui1);}
+
+    .btn.outline {border:1px solid var(--border);}
 
     .btn.floating {position:absolute;top:calc(var(--subnavheight) + var(--borderwidth));left:0;right:0;border-radius:0;background:rgb(12, 90, 206);color:var(--subnav);z-index:9999;}
       .floating.opened {background:var(--subnav);color:rgb(12, 90, 206);border-bottom:var(--borderwidth) solid var(--border);}
       .popwindow .floating {display:none;}
 
-      .clbtn {width:32px;padding:0;height:32px;margin:0;min-width:24px;border-radius: 0;}
+      #tabs .right .btn {min-width:32px;padding:0;height:32px;margin:0;border-radius: 0;}
 
     .pop {position:relative;}
       .popover {opacity:0;pointer-events: none;position:absolute;top:calc(100% + 4px);left:-40px;background:var(--popover);z-index:999999999999999;padding:4px 0;box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05), 0px 3px 6px rgba(0, 0, 0, 0.08), 0px 8px 24px rgba(0, 0, 0, 0.15);border-radius:3px;min-width:160px;user-select:none;}
@@ -198,9 +201,10 @@ https://briefone.github.io/test/library/
         
 
         .card .expand {width:100%;display:none;flex-direction: column;gap:16px;align-items: flex-start;padding:8px 0;}
+          .popoveredit #cl .card .expand {position:fixed;left:0;top:50%;transform:translate(-102%, -50%);background:var(--ui1);padding:12px 16px;border:1px solid var(--border);max-height:80%;overflow-y:auto;}
         .card.expanded {box-shadow: inset 0 0 0 2px #7a61ff;background:transparent;}
         .expanded .expand {display:flex;}
-          .expanded .tr, .expanded .mr, .expanded .br, .expanded .check {display:none;}
+          body:not(.popoveredit) #cl .expanded .tr, body:not(.popoveredit) #cl .expanded .mr, body:not(.popoveredit) #cl .expanded .br, body:not(.popoveredit) #cl .expanded .check,.modal .expanded .tr,.modal .expanded .mr, .modal .expanded .br, .modal .expanded .check {display:none;}
         
           .card.locked {box-shadow:inset 0 0 0 3px var(--secondary);}
             .card.locked .lockbtn {background:var(--secondary);color:var(--ui1);}
@@ -299,6 +303,8 @@ https://briefone.github.io/test/library/
 
     .editorbar {display:flex;gap:2px;margin: 0 2px -30px;position:relative;z-index: 2;}
         .editorbar .btn {border-radius: 0;color:var(--ui9);font-weight:700;}
+
+    .link {text-decoration:underline;cursor: pointer;}
   </style>
   <script src="../js/base.js"></script>
   <script src="../js/gator.js"></script>
@@ -435,6 +441,12 @@ https://briefone.github.io/test/library/
         </div>
       </div>
       <div class="right">
+        <div class="btn toggle popoverbtn" data-class=popoveredit>
+          popover
+        </div>
+        <!-- <div class="btn toggle tablebtn" data-class=tableview>
+          Table view
+        </div> -->
         <div class="btn toggle clbtn on" data-class=clopen>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
             <path fill-rule="evenodd" d="M3.162 1.714a.839.839 0 00-.841.837v5.017c0 .462.376.836.84.836h7.57c.464 0 .84-.374.84-.836V2.55a.839.839 0 00-.84-.837H3.16zm.105 1.255a.105.105 0 00-.105.104V3.7c0 .058.047.105.105.105h2.312a.105.105 0 00.106-.105v-.627a.105.105 0 00-.106-.104H3.267zm-.105 1.777c0-.058.047-.105.105-.105h7.358c.058 0 .105.047.105.105v.627a.105.105 0 01-.105.104H3.267a.105.105 0 01-.105-.104v-.627zm.105 1.568a.105.105 0 00-.105.104v.627c0 .058.047.105.105.105h6.517a.105.105 0 00.105-.105v-.627a.105.105 0 00-.105-.104H3.267z" clip-rule="evenodd"/>
@@ -618,7 +630,7 @@ https://briefone.github.io/test/library/
               </div>
             </div>
             <div class="popitem pophover">
-              Use
+              Used in
               <div class="hoverpop popover" style="left:-156px;top:-4px;">
                 <div class="popitem pophover">
                   Board
@@ -794,11 +806,11 @@ https://briefone.github.io/test/library/
     <div id=uses class="uses">
       <div class=label>Used in</div>
       <div class="row wrap">
-        <div class=tag>Phase I</div>
-        <div class=tag>Phase II</div>
-        <div class=tag>Phase III</div>
-        <div class=tag>Warno</div>
-        <div class=tag>Brief I</div>
+        <div class=link>Phase I</div>
+        <div class=link>Phase II</div>
+        <div class=link>Phase III</div>
+        <div class=link>Warno</div>
+        <div class=link>Brief I</div>
       </div>
     </div>
 
@@ -817,7 +829,7 @@ https://briefone.github.io/test/library/
 
     <div id=customfield class="customfield">
       <div class=row>
-        <div class="btn cfbtn">Add a custom field</div>
+        <div class="btn cfbtn outline">Add a custom field</div>
         </div>
     </div>
 
@@ -841,9 +853,9 @@ https://briefone.github.io/test/library/
     </div>
 
     <div id=cardactions class=cardactions>
-      <div class="btn commentbtn">0 Comments</div>
-      <div class="btn lockbtn">Lock</div>
-      <div class="btn activitybtn">Activity</div>
+      <div class="btn commentbtn outline">0 Comments</div>
+      <div class="btn lockbtn outline">Lock</div>
+      <div class="btn activitybtn outline">Activity</div>
     </div>
 
     <div id=cardmenu class="cardmenu popover" style="min-width:80px;left:-52px;">
@@ -1068,19 +1080,23 @@ https://briefone.github.io/test/library/
           if(t.classList.contains('dragcard')){
             t.classList.add('focused');
 
-            if ( document.getElementsByClassName('clbtn')[0].classList.contains('on')){
-              let ccc = document.getElementById(t.dataset.id);
+            let ccc = document.getElementById(t.dataset.id);
+            
+            if ( !ccc.classList.contains('expanded') ){
+              document.getElementsByClassName('expanded').removeclass('expanded');
+              ccc.classList.add('expanded');
               
-              if ( !ccc.classList.contains('expanded') ){
-                document.getElementsByClassName('expanded').removeclass('expanded');
-                ccc.classList.add('expanded');
-                ccc.scrollIntoViewIfNeeded(false);
 
-                let txa = ccc.getElementsByTagName('textarea')[0];
-                ta.call(txa);
+              let txa = ccc.getElementsByTagName('textarea')[0];
+              ta.call(txa);
+
+              if ( document.getElementsByClassName('clbtn')[0].classList.contains('on')){
+                ccc.scrollIntoViewIfNeeded(false);
                 txa.focus();
-              }              
-            } else if ( window.clwindow ){
+              }
+            }              
+            
+            if ( window.clwindow ){
               let id = t.dataset.id;
               let clw = window.clwindow;
               clw.focus();
@@ -1363,7 +1379,7 @@ https://briefone.github.io/test/library/
         document.body.classList.remove(c);
 
       } else {
-        document.getElementsByClassName('toggle on').removeclass('on');
+        // document.getElementsByClassName('toggle on').removeclass('on');
         this.classList.add('on');
         document.body.classList.add(c);
 
@@ -1385,7 +1401,7 @@ https://briefone.github.io/test/library/
         
         if ( this.classList.contains('pop')){
           
-        } else {
+        } else if ( !this.classList.contains('logo')){
           let p = document.getElementById('tabpop').cloneNode(true);
           p.removeAttribute('id');
           p.style.left = '50%';
@@ -1584,10 +1600,10 @@ https://briefone.github.io/test/library/
 
       this.style.height = sh + 4 + 'px';
 
-      if ( this.classList.contains('etext')){
+      if ( this.classList.contains('ta')){
         let c = this.getparent('card');
         let id = c.dataset.id;
-        let cards = document.querySelectorAll(`[data-id="${id}"`);
+        let cards = document.querySelectorAll(`[data-id="${id}"]`);
         for(var i=0;i<cards.length;i++){ 
           let mr = cards[i].getElementsByClassName('mr')[0];
           mr.empty();
@@ -1597,7 +1613,7 @@ https://briefone.github.io/test/library/
     }
 
     function popout(){
-      window.popoutwindow = window.open("./index.html#popwindow", "Card Library", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=666,height="+(Math.min(window.screen.height-300, 696))+",top="+((window.screen.height /2) - 448)+",left="+((window.screen.width/2) -333));
+      window.popoutwindow = window.open("./index.html#popwindow", "Card Popover", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=666,height="+(Math.min(window.screen.height-300, 696))+",top="+((window.screen.height /2) - 448)+",left="+((window.screen.width/2) -333));
 
       let cid = this.getparent('card').dataset.id;
 
@@ -1627,7 +1643,7 @@ https://briefone.github.io/test/library/
 
         
       }
-      document.close();
+      // document.close();
     }
 
     function popwindow(){
