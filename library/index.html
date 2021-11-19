@@ -33,7 +33,7 @@ https://briefone.github.io/test/library/
       --ui8:#212529;
       --ui9: black;
 
-      --shadow: var(--ui5);
+      --hover: var(--ui5);
       --background: var(--ui2);
       --tabs: var(--ui3);
       --border: var(--ui4);
@@ -57,6 +57,9 @@ https://briefone.github.io/test/library/
 
       --borderwidth: 1px;
       --subnavheight: 44px;
+
+      --shadow: rgb(9 30 66 / 25%) 0px 4px 8px -2px, rgb(9 30 66 / 31%) 0px 0px 1px;
+      --shadow-lg: 0px 0px 0px 1px rgba(0, 0, 0, 0.05), 0px 3px 6px rgba(0, 0, 0, 0.08), 0px 8px 24px rgba(0, 0, 0, 0.15);
 
       --font-fam: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     }
@@ -151,7 +154,7 @@ https://briefone.github.io/test/library/
     .btn {height:28px;min-width:28px;border-radius:3px;background:transparent;color:var(--secondary);font-weight:500;display: flex;align-items: center;justify-content: center;padding:0 8px;box-sizing: border-box;font-weight:500;cursor:pointer;user-select:none;font-size:12px;}
       .btn svg {fill:var(--secondary);width:12px;height:12px;}
         .btn:hover {background:var(--border);}
-        .btn:active {background:var(--shadow);}
+        .btn:active {background:var(--hover);}
 
       .btn.cta {background:var(--cta);color:white;}
         .btn.cta:hover {background:var(--ctahover);}
@@ -169,7 +172,7 @@ https://briefone.github.io/test/library/
       #tabs .right .btn {min-width:32px;padding:0;height:32px;margin:0;border-radius: 0;}
 
     .pop {position:relative;}
-      .popover {opacity:0;pointer-events: none;position:absolute;top:calc(100% + 4px);left:-40px;background:var(--popover);z-index:999999999999999;padding:4px 0;box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05), 0px 3px 6px rgba(0, 0, 0, 0.08), 0px 8px 24px rgba(0, 0, 0, 0.15);border-radius:3px;min-width:160px;user-select:none;}
+      .popover {opacity:0;pointer-events: none;position:absolute;top:calc(100% + 4px);left:-40px;background:var(--popover);z-index:999999999999999;padding:4px 0;box-shadow: var(--shadow);border-radius:3px;min-width:160px;user-select:none;}
       .on > .popover {opacity:1;pointer-events: all;}
         .popover h6 {font-size:10px;font-weight:700;color:var(--secondary);text-transform: uppercase;padding:8px 12px 4px;line-height:1;}
         .popitem {padding:0 12px;line-height:28px;color:var(--text);}
@@ -194,7 +197,12 @@ https://briefone.github.io/test/library/
    -webkit-box-orient: vertical;
    -webkit-line-clamp: 2;}
 
-   .mr, .tr, .br {pointer-events: none;}
+   .dragcard.editing {background:white !important;color:black;transform:scale(1.1);z-index:9999999 !important;    transform-origin: top center;}
+        .dragcard.editing .keytag {box-shadow: none;}
+    .dragcard.editing .mr {-webkit-line-clamp:unset;outline-offset:4px;outline:none;cursor:text;}
+        
+
+   .mr, .tr, .br {}
 
    .card.archived, .dragcard.archived {display:none !important;}
 
@@ -203,6 +211,7 @@ https://briefone.github.io/test/library/
         .card .expand {width:100%;display:none;flex-direction: column;gap:16px;align-items: flex-start;padding:8px 0;}
           .popoveredit #cl .card .expand {position:fixed;left:0;top:50%;transform:translate(-102%, -50%);background:var(--ui1);padding:12px 16px;border:1px solid var(--border);max-height:80%;overflow-y:auto;}
         .card.expanded {box-shadow: inset 0 0 0 2px #7a61ff;background:transparent;}
+          
         .expanded .expand {display:flex;}
           body:not(.popoveredit) #cl .expanded .tr, body:not(.popoveredit) #cl .expanded .mr, body:not(.popoveredit) #cl .expanded .br, body:not(.popoveredit) #cl .expanded .check,.modal .expanded .tr,.modal .expanded .mr, .modal .expanded .br, .modal .expanded .check {display:none;}
         
@@ -234,9 +243,11 @@ https://briefone.github.io/test/library/
       .mousegrab  * {cursor:grabbing !important;}
 
       .dragcard {position:absolute;z-index:9999;width:200px;padding:8px;color:white;cursor:grabbing;user-select:none;border-radius:3px;display: flex;flex-direction: column;align-items: self-start;justify-content: flex-start;}
-        .dragcard.focused {box-shadow:0 0 0 2px #7B61FF;}
+        .dragcard.focused, .dragcard:focus-within {box-shadow:0 0 0 2px #7B61FF;}
         .dragcard .mr {-webkit-line-clamp: 4;}
           .slide .dragcard .mr {-webkit-line-clamp: 8;}
+
+          .dragcard .keytag {box-shadow:inset 0 0 0 12px rgba(0, 0, 0, 0.1);}
 
     .tagdrop {font-size:9px;display:flex;width:100%;padding:4px 8px 4px 4px;border-radius:0px;background:var(--input);border-bottom:1px solid var(--inputborder);color:var(--secondary);justify-content: space-between;align-items:center;cursor:pointer;}
 
@@ -789,10 +800,7 @@ https://briefone.github.io/test/library/
 
     <div id=tags class="tags">
       <div class=label>Tags</div>
-      <div class=combobox>
-        <input type=text /><div class="btn">▼</div>
-      </div>
-      <div class="row wrap" style="margin-top:4px;">
+      <div class="row wrap taginput" style="margin-top:4px;">
         <div class=tag>Enemy</div>
         <div class=tag>Operations</div>
         <div class=tag style="background-color: rgb(102, 81, 145); color: white;">CCIR</div>
@@ -904,7 +912,7 @@ https://briefone.github.io/test/library/
       let ol = 0;
       let ot = 0;
 
-      if ( !e.target.classList.contains('card') && !e.target.classList.contains('expand') && !e.target.classList.contains('dragcard')){
+      if ( !e.target.classList.contains('card') && !e.target.classList.contains('expand') && !e.target.classList.contains('dragcard') && !e.target.classList.contains('ignore')){
         return;
       }
 
@@ -927,7 +935,7 @@ https://briefone.github.io/test/library/
         dragcard.className = 'dragcard';
         dragcard.style.backgroundColor = bg;
         let kt = keytag.cloneNode(true);
-        kt.style.backgroundColor = 'rgba(0,0,0,0.1)';
+        // kt.style.backgroundColor = 'rgba(0,0,0,0.1)';
         dragcard.style.opacity = 0;
         dragcard.style.zIndex = 999999999999;
         dragcard.dataset.id = this.dataset.id;
@@ -1076,9 +1084,21 @@ https://briefone.github.io/test/library/
         }
 
         if ( !moved ){
-         
           if(t.classList.contains('dragcard')){
             t.classList.add('focused');
+
+            let tt = e.target;
+            if (tt.classList.contains('mr')){
+              tt.contentEditable = true;
+              tt.focus();
+              tt.getparent('dragcard').classList.add('editing');
+              tt.classList.remove('ignore');
+              tt.onblur = function(){
+                tt.getparent('dragcard').classList.remove('editing');
+                tt.contentEditable = false;
+                tt.classList.add('ignore');
+              }
+            }
 
             let ccc = document.getElementById(t.dataset.id);
             
@@ -1090,9 +1110,9 @@ https://briefone.github.io/test/library/
               let txa = ccc.getElementsByTagName('textarea')[0];
               ta.call(txa);
 
-              if ( document.getElementsByClassName('clbtn')[0].classList.contains('on')){
+              if ( document.getElementsByClassName('clbtn')[0].classList.contains('on') ){
                 ccc.scrollIntoViewIfNeeded(false);
-                txa.focus();
+                //txa.focus();
               }
             }              
             
@@ -1223,8 +1243,8 @@ https://briefone.github.io/test/library/
         card.dataset.id = id;
         card.id = id;
 
-        tr.className = 'tr';
-        mr.className = 'mr';
+        tr.className = 'tr ignore';
+        mr.className = 'mr ignore';
 
         expand.className = 'expand';
 
@@ -1301,7 +1321,7 @@ https://briefone.github.io/test/library/
 
     function makemeta(id){
       let wrap = document.createElement('div');
-      wrap.className = 'br';
+      wrap.className = 'br ignore';
 
       let metas = [{class: 'metatag', label:[1,2,3,4,5,6,7,8,9,0], path: 'M1 11.833v-8.77C1 1.923 1.923 1 3.063 1h8.77c.547 0 1.072.217 1.459.604l9.104 9.104a2.063 2.063 0 010 2.917l-8.77 8.77a2.063 2.063 0 01-2.918 0l-9.104-9.103A2.062 2.062 0 011 11.833zM5.813 3.75a2.062 2.062 0 100 4.125 2.062 2.062 0 000-4.125z'}, {class: 'metaeditor', label:['Dave B', 'Luke S', 'Mike J', 'Tony J', 'Ashley S', 'Fred B'], path: 'M16.377 5.394l3.445 3.445a.373.373 0 010 .527l-8.341 8.342-3.545.393a.743.743 0 01-.821-.821l.393-3.544 8.342-8.342a.373.373 0 01.527 0zm6.188-.875L20.7 2.655a1.494 1.494 0 00-2.109 0L17.24 4.007a.373.373 0 000 .528l3.445 3.445a.373.373 0 00.527 0l1.353-1.352c.58-.585.58-1.528 0-2.109zm-6.898 10.92v3.888H3.444V7.105h8.777a.47.47 0 00.325-.134l1.528-1.527a.458.458 0 00-.325-.783H2.833A1.834 1.834 0 001 6.494v13.444c0 1.013.821 1.834 1.833 1.834h13.445a1.834 1.834 0 001.833-1.834v-6.027a.46.46 0 00-.783-.324L15.8 15.114a.47.47 0 00-.133.325z'}, {class: 'metaupdated', label:['1D', '2W', '4D', '5D', '1M', '6M', '2M', '4D', '2D', '6D', '1W', '1H', '2H', '8H'], path: 'M12 1C5.923 1 1 5.923 1 12s4.923 11 11 11 11-4.923 11-11S18.077 1 12 1zm4.102 13.883l-.887 1.109a.71.71 0 01-.997.11l-2.972-2.204a1.773 1.773 0 01-.665-1.386v-6.9a.71.71 0 01.71-.709h1.419a.71.71 0 01.71.71V12l2.572 1.885a.708.708 0 01.11.998z'}, {class: 'metacreator', label:['Dave B', 'Luke S', 'Mike J', 'Tony J', 'Ashley S', 'Fred B'], path: 'M17.625 1l-2.75 1.375L12.125 1l-2.75 1.375L6.625 1v4.125h11V1zm-1.65 13.063h-.718a7.504 7.504 0 01-3.132.687 7.504 7.504 0 01-3.132-.688h-.718A5.775 5.775 0 002.5 19.837v1.1c0 1.14.923 2.063 2.063 2.063h15.125c1.139 0 2.062-.923 2.062-2.063v-1.1a5.775 5.775 0 00-5.775-5.774zm-3.85-1.376a5.5 5.5 0 005.5-5.5V6.5h-11v.688a5.5 5.5 0 005.5 5.5z'}, {class: 'metacreated', label:['1D', '2W', '4D', '5D', '1M', '6M', '2M', '4D', '2D', '6D', '1W'], path: 'M17.719 7.875H12.76l1.83-5.577A1.035 1.035 0 0013.595 1H7.406c-.515 0-.954.382-1.022.894L5.009 12.206c-.082.619.4 1.169 1.022 1.169h5.1l-1.98 8.357a1.03 1.03 0 001.895.752l7.562-13.062a1.03 1.03 0 00-.89-1.547z'}, {class: 'metareactions', label:['reacts'], path: 'M12 1.5C6.2 1.5 1.5 6.2 1.5 12S6.2 22.5 12 22.5 22.5 17.8 22.5 12 17.8 1.5 12 1.5zm5.987 16.487A8.41 8.41 0 0112 20.467a8.41 8.41 0 01-5.987-2.48A8.41 8.41 0 013.533 12c0-2.26.88-4.386 2.48-5.987A8.41 8.41 0 0112 3.533c2.26 0 4.386.88 5.987 2.48A8.41 8.41 0 0120.467 12a8.41 8.41 0 01-2.48 5.987zm-2.6-7.342c.75 0 1.355-.605 1.355-1.355s-.605-1.355-1.355-1.355-1.355.606-1.355 1.355c0 .75.606 1.355 1.355 1.355zm-6.774 0c.75 0 1.355-.605 1.355-1.355s-.606-1.355-1.355-1.355c-.75 0-1.355.606-1.355 1.355 0 .75.606 1.355 1.355 1.355zm8.23 2.71H7.156a.568.568 0 00-.571.635c.317 2.506 2.494 4.446 5.127 4.446h.576c2.633 0 4.81-1.94 5.127-4.446a.568.568 0 00-.572-.635z'}, {class: 'metacomments', label:[1 , 2 ,3 ,4 , 5,6,7,8,9], path: 'M19.778 2H4.222C2.99 2 2 2.9 2 4v14c0 1.1.989 2 2.222 2h4.445l3.166 2.85a.25.25 0 00.334 0L15.333 20h4.445C21 20 22 19.1 22 18V4c0-1.1-1-2-2.222-2zM8 8.65h2.256c.05-.94.683-1.548 1.64-1.548.949 0 1.582.575 1.582 1.366 0 .79-.325 1.198-1.399 1.84-1.149.674-1.607 1.423-1.498 2.73l.016.483h2.206v-.441c0-.816.308-1.224 1.415-1.865C15.393 10.524 16 9.65 16 8.393c0-1.898-1.573-3.222-3.954-3.222-2.556 0-4.004 1.432-4.046 3.48zm3.73 8.85c.757 0 1.365-.574 1.365-1.307s-.608-1.307-1.366-1.307c-.749 0-1.356.575-1.356 1.307 0 .733.607 1.307 1.356 1.307z'}, {class: 'metaactor', label:['Russia', 'China', 'Foreign', 'Domestic', 'Pacific', 'Kangaroos'], path: 'M5.813 9.6h-.825a.55.55 0 00-.55.55v3.3a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-3.3a.55.55 0 00-.55-.55zm-3.3 1.1h-.825a.55.55 0 00-.55.55v1.1a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-1.1a.55.55 0 00-.55-.55zm6.6-4.4h-.825a.55.55 0 00-.55.55v9.9a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-9.9a.55.55 0 00-.55-.55zm13.2 4.4h-.825a.55.55 0 00-.55.55v1.1a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-1.1a.55.55 0 00-.55-.55zm-3.3-5.5h-.826a.55.55 0 00-.55.55v12.1a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55V5.75a.55.55 0 00-.55-.55zm-3.3 2.2h-.825a.55.55 0 00-.55.55v7.7a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55v-7.7a.55.55 0 00-.55-.55zm-3.3-4.4h-.825a.55.55 0 00-.55.55v16.5a.55.55 0 00.55.55h.825a.55.55 0 00.55-.55V3.55a.55.55 0 00-.55-.55z'}, {class: 'metasource', label:['Intel', 'Wiki', 'Internal', 'Warno', 'XXX'], path: 'M12 1C5.923 1 1 5.923 1 12s4.923 11 11 11 11-4.923 11-11S18.077 1 12 1zm0 4.258a3.903 3.903 0 110 7.807 3.903 3.903 0 010-7.807zm0 15.258a8.5 8.5 0 01-6.498-3.025c.834-1.57 2.466-2.652 4.369-2.652.106 0 .213.018.315.048.576.187 1.18.306 1.814.306a5.85 5.85 0 001.814-.306c.102-.03.209-.048.315-.048 1.903 0 3.535 1.082 4.369 2.652A8.5 8.5 0 0112 20.516z'}, {class: 'metaid'}, {class: 'metauses', label: [1,2,3,4,5,6,7,8,9,0], path: 'M17.7188 7.875H12.7602L14.5907 2.29766C14.7626 1.64453 14.2684 1 13.5938 1H7.40634C6.89071 1 6.45243 1.38242 6.38368 1.89375L5.00868 12.2062C4.92704 12.825 5.40829 13.375 6.03134 13.375H11.1317L9.15087 21.7324C8.99618 22.3855 9.49462 23 10.152 23C10.513 23 10.8567 22.8109 11.0458 22.4844L18.6083 9.42188C19.0079 8.73867 18.5138 7.875 17.7188 7.875Z'} ];
 
@@ -1537,6 +1557,12 @@ https://briefone.github.io/test/library/
       if (localStorage.c2l == 'true' || localStorage.c2l === undefined ) document.getElementById('c2l').click();
       if (localStorage.c4l == 'true' ) document.getElementById('c4l').click();
     }
+
+    function blurmr(e){
+        this.getparent('dragcard').classList.remove('editing');
+        this.contentEditable = false;
+        this.classList.add('ignore');
+      }
 
     function keypress(e){
       console.log(e.keyCode);
@@ -2034,7 +2060,7 @@ https://briefone.github.io/test/library/
 
           if ( c.classList.contains('dragcard')){
             c.style.backgroundColor = bg;
-            kk.style.backgroundColor = 'rgba(0,0,0,0.1)';
+            // kk.style.backgroundColor = 'rgba(0,0,0,0.1)';
           }
         }
       }
@@ -2233,6 +2259,7 @@ https://briefone.github.io/test/library/
     Attach.on('click', '.newbriefbtn', newbrief);
     Attach.on('click', '.newordersbtn', neworders);
     Attach.on('mousedown', '#resizecl', resizecl);
+    Attach.on('blur', '.mr', blurmr);
     
     
     document.addEventListener('keyup', keypress);

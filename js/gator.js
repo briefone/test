@@ -56,7 +56,7 @@
         // then you will get them
         var useCapture = type == 'blur' || type == 'focus';
         
-        gator.element.addEventListener(type, callback, supportsPassiveOption ? { passive : false } : useCapture);
+        gator.element.addEventListener(type, callback, useCapture ? true : supportsPassiveOption ? { passive : false } : false );
     }
 
     function _cancel(e) {
