@@ -256,9 +256,9 @@ https://briefone.github.io/test/library/
     .tagdrop {font-size:9px;display:flex;width:100%;padding:4px 8px 4px 4px;border-radius:0px;background:var(--input);border-bottom:1px solid var(--inputborder);color:var(--secondary);justify-content: space-between;align-items:center;cursor:pointer;}
 
 
-      #container {position:absolute;top:calc(var(--subnavheight) + var(--borderwidth));left:0;right:0;bottom:0;}
+      #container {position:absolute;top:calc(var(--subnavheight) + var(--borderwidth));left:0;right:0;bottom:0;overflow:auto;}
 
-        .view {display:none;padding:16px;max-width:100%;overflow-y:auto;height:100%;box-sizing: border-box;}
+        .view {display:none;padding:16px;max-width:100%;min-height:100%;box-sizing: border-box;}
           .view.show {display:flex;}
 
           .dragscroll {cursor: grab;}
@@ -364,6 +364,9 @@ https://briefone.github.io/test/library/
         .color25 {background:#6E31CA;}
         .color26 {background:#A01951;}
         .color27 {background:#505468;}
+
+
+    .spacer {width:16px;flex-shrink: 0;}
 
   </style>
   <script src="../js/base.js"></script>
@@ -533,7 +536,7 @@ https://briefone.github.io/test/library/
         </div>
       </div>
 
-      <div id=container class=p1>
+      <div id=container class=dragscroll>
 
         <div id=p0 class=view style="    flex-direction: column;">
 
@@ -2404,6 +2407,7 @@ https://briefone.github.io/test/library/
       let x = document.createElement('div');
       let t = document.createElement('div');
       let b = document.createElement('div');
+      let r = document.createElement('div');
 
       s.style.display = 'flex';
       
@@ -2414,6 +2418,8 @@ https://briefone.github.io/test/library/
       t.className = 'listtag pop';
       t.dataset.tag = a;
 
+      r.className = 'spacer';
+
       b.className = 'btn listbtn addlist';
       b.appendChild(document.createTextNode('Add list'));
 
@@ -2421,6 +2427,7 @@ https://briefone.github.io/test/library/
       c.appendChild(x);
       s.appendChild(c);
       s.appendChild(b);
+      s.appendChild(r);
       let v = newview('dragscroll', s);
       newtab('Phase ' + romanize(Number(document.getElementsByClassName('tab board').length) + 1), 'board', v);
     }
