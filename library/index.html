@@ -249,7 +249,7 @@ https://briefone.github.io/test/library/
       .dragcard {position:absolute;z-index:9999;background:var(--ui7);width:200px;padding:8px;color:white;cursor:grabbing;user-select:none;border-radius:3px;display: flex;flex-direction: column;align-items: self-start;justify-content: flex-start;}
         .dragcard.focused, .dragcard:focus-within {box-shadow:0 0 0 2px #7B61FF;}
         .dragcard .mr {-webkit-line-clamp: 4;width:100%;}
-          .slide .dragcard .mr {-webkit-line-clamp: 8;}
+          .slide .dragcard:not(.editing) .mr {-webkit-line-clamp: 8;}
 
           .dragcard .keytag {box-shadow:inset 0 0 0 12px rgba(0, 0, 0, 0.1);}
 
@@ -1030,6 +1030,7 @@ https://briefone.github.io/test/library/
         dragcard.style.opacity = 0;
         dragcard.style.zIndex = 999999999999;
         dragcard.dataset.id = this.dataset.id;
+        // dragcard.style.pointerEvents = 'none';
         dragcard.appendChild(kt);
         dragcard.appendChild(text);
         document.body.appendChild(dragcard);
@@ -1038,11 +1039,11 @@ https://briefone.github.io/test/library/
         document.body.appendChild(c);
         dragcard = c;
         bg = window.getComputedStyle(c).backgroundColor;
-
+        // dragcard.style.pointerEvents = 'none';
         ol = this.offset().x - sx;
         ot = this.offset().y - sy;
 
-        this.style.opacity = 0;
+        dragcard.style.opacity = 0;
       }
 
       let x = e.clientX + ol;
@@ -1065,6 +1066,9 @@ https://briefone.github.io/test/library/
         let ny = Math.abs(sy - y);
 
         if ( !dragged && Math.max(nx, ny) > 5 ){
+          if ( t.classList.contains('dragcard')){
+            t.style.opacity = 0;
+          }
           dragcard.style.opacity = 1;
           dragged = true;
           t.classList.add('used');
@@ -1135,6 +1139,7 @@ https://briefone.github.io/test/library/
             cc.style.cursor = 'grab';
             cc.style.zIndex = 9999;
             cc.classList.add('focused');
+            cc.style.opacity = 1;
 
             if ( slide ){
               cc.style.position = 'absolute';
@@ -1180,6 +1185,12 @@ https://briefone.github.io/test/library/
 
             let tt = e.target;
             if (tt.classList.contains('mr')){
+              let slide = document.getElementsByClassName('view show')[0].getElementsByClassName('slide')[0];
+              if ( slide ){
+                console.log('slide')
+                tt = slide.getElementsByClassName('dragcard focused')[0].getElementsByClassName('mr')[0];
+              }
+
               tt.contentEditable = true;
               tt.focus();
               tt.getparent('dragcard').classList.add('editing');
@@ -1677,6 +1688,7 @@ https://briefone.github.io/test/library/
     }
 
     function blurmr(e){
+      console.log('blurup')
         let dc = this.getparent('dragcard');
         dc.classList.remove('editing');
         this.contentEditable = false;
@@ -2237,7 +2249,7 @@ https://briefone.github.io/test/library/
       clone.style.position = 'absolute';
       clone.style.left = ol - sl +'px';
       clone.style.zIndex =  999999999;
-      clone.style.backgroundColor = '#b3d8f0';
+      // clone.style.backgroundColor = '#b3d8f0';
 
       t.parentElement.appendChild(clone);
 
@@ -2579,6 +2591,7 @@ https://briefone.github.io/test/library/
     }
 
     function mrup(e){
+      
       let t = this.innerText;
 
       let c = this.getparent('dragcard');
