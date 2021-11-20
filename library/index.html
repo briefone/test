@@ -485,14 +485,14 @@ https://briefone.github.io/test/library/
           </div>
         </div>
         <div id=tabwrap>
-          <div class="tab board closeable current" data-view=p1>
+          <!-- <div class="tab board closeable current" data-view=p1>
             Phase I
             <div class="btn xbtn">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="M14.87 12.002l4.3-4.3a1.352 1.352 0 000-1.91l-.956-.956a1.352 1.352 0 00-1.912 0l-4.3 4.3-4.3-4.3a1.352 1.352 0 00-1.91 0l-.956.955a1.352 1.352 0 000 1.912l4.3 4.3-4.3 4.3a1.352 1.352 0 000 1.91l.955.956a1.352 1.352 0 001.912 0l4.3-4.3 4.3 4.3a1.352 1.352 0 001.91 0l.956-.955a1.352 1.352 0 000-1.912l-4.3-4.3z"/>
               </svg>
             </div>
-          </div>
+          </div> -->
           <div class="tab brief closeable" data-view=p2>Mission Brief<div class="btn xbtn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M14.87 12.002l4.3-4.3a1.352 1.352 0 000-1.91l-.956-.956a1.352 1.352 0 00-1.912 0l-4.3 4.3-4.3-4.3a1.352 1.352 0 00-1.91 0l-.956.955a1.352 1.352 0 000 1.912l4.3 4.3-4.3 4.3a1.352 1.352 0 000 1.91l.955.956a1.352 1.352 0 001.912 0l4.3-4.3 4.3 4.3a1.352 1.352 0 001.91 0l.956-.955a1.352 1.352 0 000-1.912l-4.3-4.3z"/>
@@ -2210,6 +2210,88 @@ https://briefone.github.io/test/library/
       document.addEventListener('mouseup', end);
     }
 
+    function dragtab(e){
+      if ( e.which == 3 || this.draggable || !e.target.classList.contains('tab') && !e.target.classList.contains('listtag') ){
+        return;
+      }
+      let t = this;
+      let et = e.target;
+      let moved = false;
+
+      let sx = e.clientX;
+      let sl = 0;//document.getElementById('p1').scrollLeft;
+
+      let ol = t.offsetLeft;
+      let w = t.offsetWidth;
+      let g = 12;
+
+      let clone = this.cloneNode(true);
+
+      document.body.classList.add('mousegrab');
+
+      t.style.opacity = 0;
+
+      clone.style.position = 'absolute';
+      clone.style.left = ol - sl +'px';
+      clone.style.zIndex =  999999999;
+      clone.style.backgroundColor = '#b3d8f0';
+
+      t.parentElement.appendChild(clone);
+
+      function move(e){
+        let x = e.clientX;
+
+        let nx = sx - x;
+
+        if ( !moved && Math.abs(nx) < 5 ){
+          return;
+        }
+
+        moved = true;
+
+        clone.style.left = ol - nx - sl +'px';
+
+        let lists = document.getElementsByClassName('tab closeable');
+        let inserted = false;
+
+        for(var i=0;i<lists.length;i++){
+          let l = lists[i];
+          let lof = l.offsetLeft;
+
+          if ( ol - nx < lof ){
+            inserted = true;
+            l.parentElement.insertBefore(t,l);
+            return;
+          }
+        }
+
+        if (!inserted){
+          lists[lists.length-1].parentElement.appendChild(t);
+        }
+
+      }
+
+      function end(e){
+        document.removeEventListener('mousemove', move);
+        document.removeEventListener('mouseup', end);
+
+        document.body.classList.remove('mousegrab');
+
+        t.style.opacity = 1;
+        clone.remove();
+
+        let tars = document.elementsFromPoint(e.clientX, e.clientY);
+
+        if ( !moved ){
+          tab.call(t, e);
+
+        }
+      }
+
+      document.addEventListener('mousemove', move);
+      document.addEventListener('mouseup', end);
+    }
+
     function ktitem(){
       let kt = this.getElementsByClassName('keytag')[0];
 
@@ -2340,7 +2422,21 @@ https://briefone.github.io/test/library/
       s.appendChild(c);
       s.appendChild(b);
       let v = newview('dragscroll', s);
-      newtab('Phase ' + Number(document.getElementsByClassName('tab board').length) + 1, 'board', v);
+      newtab('Phase ' + romanize(Number(document.getElementsByClassName('tab board').length) + 1), 'board', v);
+    }
+
+    function romanize(num) {
+      if (isNaN(num))
+          return NaN;
+      var digits = String(+num).split(""),
+          key = ["","C","CC","CCC","CD","D","DC","DCC","DCCC","CM",
+                "","X","XX","XXX","XL","L","LX","LXX","LXXX","XC",
+                "","I","II","III","IV","V","VI","VII","VIII","IX"],
+          roman = "",
+          i = 3;
+      while (i--)
+          roman = (key[+digits.pop() + (i * 10)] || "") + roman;
+      return Array(+digits.join("") + 1).join("M") + roman;
     }
 
     function newtimeline(){
@@ -2638,6 +2734,7 @@ https://briefone.github.io/test/library/
     Attach.on('click', '.activitybtn', activitybtn);
     Attach.on('click', '.closebtn', closebtn);
     Attach.on('mousedown', '.list', draglist);
+    Attach.on('mousedown', '.tab', dragtab);
     Attach.on('click', '.popout', popout);
     Attach.on('mousedown', '.dragscroll', dragscroll);
     Attach.on('click', '.planswapbtn', planswap);
