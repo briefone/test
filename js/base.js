@@ -132,10 +132,10 @@ function contrastr(a, b) { //hex
     var ratio = l1 / l2;
 
     if (l2 > l1) {
-    //ratio = 1 / ratio;
+    ratio = 1 / ratio;
     }
 
-    ratio = 1 / ratio;
+    // ratio = 1 / ratio;
 
     // ratio = Math.round(ratio, 1);
 
@@ -151,7 +151,7 @@ function contrastrrgb(a, b) { //rgb
       ratio = 1 / ratio;
     }
 
-    ratio = 1 / ratio;
+    // ratio = 1 / ratio;
 
     // ratio = Math.round(ratio, 1);
 
