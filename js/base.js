@@ -37,6 +37,10 @@ String.prototype.stripslashes = function(){
     return this.replace(/\\(.)/mg, "$1");
 };
 
+Element.prototype.insertAfter = function (element) {
+    element.parentNode.insertBefore(this, element.nextSibling);
+},false;
+
 HTMLElement.prototype.getparent = function(c) { //class, tag, or id
     var a = this;
     var x = false;

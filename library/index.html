@@ -104,6 +104,11 @@ https://briefone.github.io/test/library/
 
         .tab.brief::before {content:'';background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%236C757D' d='M22.389 2.22H1.61A.61.61 0 001 2.831v.611a.61.61 0 00.611.611h.611v10.39c0 .674.548 1.221 1.222 1.221h7.64v1.67L8.117 20.3a.611.611 0 000 .864l.432.432a.611.611 0 00.864 0L12 19.01l2.586 2.587a.611.611 0 00.865 0l.431-.433a.611.611 0 000-.864l-2.965-2.966v-1.67h7.639c.674 0 1.222-.547 1.222-1.222V4.053h.61a.611.611 0 00.612-.61V2.83a.611.611 0 00-.611-.611zm-2.445 11.611H4.056V4.053h15.888v9.778z'/%3E%3C/svg%3E");}
 
+        .tab.ce::before {content:'';background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236C757D' fill-rule='evenodd' d='M2 1.75a1 1 0 00-1 1v6.5a1 1 0 001 1h8a1 1 0 001-1v-6.5a1 1 0 00-1-1H2zm.25 1A.25.25 0 002 3v6c0 .138.112.25.25.25h1.5A.25.25 0 004 9V3a.25.25 0 00-.25-.25h-1.5zM5 3a.25.25 0 01.25-.25h1.5A.25.25 0 017 3v6a.25.25 0 01-.25.25h-1.5A.25.25 0 015 9V3zm3.25-.25A.25.25 0 008 3v6c0 .138.112.25.25.25h1.5A.25.25 0 0010 9V3a.25.25 0 00-.25-.25h-1.5z' clip-rule='evenodd'/%3E%3C/svg%3E");}
+
+        .tab.timeline::before {content:'';background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236C757D' fill-rule='evenodd' d='M2 1.75a1 1 0 00-1 1v6.5a1 1 0 001 1h8a1 1 0 001-1v-6.5a1 1 0 00-1-1H2zm.25 1A.25.25 0 002 3v6c0 .138.112.25.25.25h1.5A.25.25 0 004 9V3a.25.25 0 00-.25-.25h-1.5zM5 3a.25.25 0 01.25-.25h1.5A.25.25 0 017 3v6a.25.25 0 01-.25.25h-1.5A.25.25 0 015 9V3zm3.25-.25A.25.25 0 008 3v6c0 .138.112.25.25.25h1.5A.25.25 0 0010 9V3a.25.25 0 00-.25-.25h-1.5z' clip-rule='evenodd'/%3E%3C/svg%3E");}
+
+        .tab.orders::before {content:'';background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236C757D' fill-rule='evenodd' d='M2 1.75a1 1 0 00-1 1v6.5a1 1 0 001 1h8a1 1 0 001-1v-6.5a1 1 0 00-1-1H2zm.25 1A.25.25 0 002 3v6c0 .138.112.25.25.25h1.5A.25.25 0 004 9V3a.25.25 0 00-.25-.25h-1.5zM5 3a.25.25 0 01.25-.25h1.5A.25.25 0 017 3v6a.25.25 0 01-.25.25h-1.5A.25.25 0 015 9V3zm3.25-.25A.25.25 0 008 3v6c0 .138.112.25.25.25h1.5A.25.25 0 0010 9V3a.25.25 0 00-.25-.25h-1.5z' clip-rule='evenodd'/%3E%3C/svg%3E");}
 
       .menubtn {height:100%;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;white-space:nowrap;}
         .menubtn:hover, .menubtn.on  {background:var(--border);}
@@ -124,7 +129,7 @@ https://briefone.github.io/test/library/
       .popwindow #conwrap {display:none;}
 
     #subnav {height:var(--subnavheight);position:absolute;top:0;left:0;right:0;background:var(--subnav);border-bottom:var(--borderwidth) solid var(--border);display:flex;align-items:center;padding:0 8px;    justify-content: space-between;}
-      .right {display:flex;gap:4px;}
+      .right {display:flex;gap:4px;flex-shrink: 0;}
 
     input[type=text] {width:100%;height:28px;border:none;background:var(--input);border-bottom:1px solid var(--inputborder);border-radius:0;text-indent: 8px;box-sizing: border-box;}
 
@@ -247,11 +252,14 @@ https://briefone.github.io/test/library/
       .mousegrab  * {cursor:grabbing !important;}
 
       .dragcard {position:absolute;z-index:9999;background:var(--ui7);width:200px;padding:8px;color:white;cursor:grabbing;user-select:none;border-radius:3px;display: flex;flex-direction: column;align-items: self-start;justify-content: flex-start;}
-        .dragcard.focused, .dragcard:focus-within {box-shadow:0 0 0 2px #7B61FF;}
+        .dragcard.focused, .dragcard:focus-within {box-shadow:0 0 0 2px #7B61FF !important;}
         .dragcard .mr {-webkit-line-clamp: 4;width:100%;}
           .slide .dragcard:not(.editing) .mr {-webkit-line-clamp: 8;}
 
           .dragcard .keytag {box-shadow:inset 0 0 0 12px rgba(0, 0, 0, 0.1);}
+
+    .whitecards .dragcard {background-color:white !important;color:var(--text) !important;box-shadow: rgb(23 43 77 / 10%) 0px 1px 1px, rgb(23 43 77 / 20%) 0px 0px 1px;}
+        .whitecards .dragcard .keytag {box-shadow:none;}
 
     .tagdrop {font-size:9px;display:flex;width:100%;padding:4px 8px 4px 4px;border-radius:0px;background:var(--input);border-bottom:1px solid var(--inputborder);color:var(--secondary);justify-content: space-between;align-items:center;cursor:pointer;}
 
@@ -504,6 +512,9 @@ https://briefone.github.io/test/library/
         </div>
       </div>
       <div class="right">
+        <div class="btn toggle whitebtn" data-class=whitecards>
+          White cards
+        </div>
         <div class="btn toggle popoverbtn" data-class=popoveredit>
           popover
         </div>
@@ -576,7 +587,7 @@ https://briefone.github.io/test/library/
           </div>
         </div>
 
-        <div id=p1 class="view dragscroll show">
+        <div id=p1 class="view show">
           <div class=listcontainer>
             <div class=list>
               <div class=listtag>Uncategorized</div>
@@ -1011,20 +1022,22 @@ https://briefone.github.io/test/library/
 
       let used = t.classList.contains('used') ? true : false;
 
+      let inserted2 = false;
+
       document.body.classList.add('mousegrab');
       console.log(keytag.innerText.toLowerCase());
       let foundIndex = KEYTAGS.findIndex(x => x.text == keytag.innerText.toLowerCase());
-        let KT = KEYTAGS[foundIndex];
-        let bg = KT.color;
-        let cc = KT.tcolor;
+      let KT = KEYTAGS[foundIndex];
+      let bg = KT.color;
+      let kc = KT.tcolor;
+
+      let cc = this;
 
       if ( !this.classList.contains('dragcard')){
-       
-
         dragcard = document.createElement('div');
         dragcard.className = 'dragcard';
         dragcard.style.backgroundColor = bg;
-        dragcard.style.color = cc;
+        dragcard.style.color = kc;
         let kt = keytag.cloneNode(true);
         // kt.style.backgroundColor = 'rgba(0,0,0,0.1)';
         dragcard.style.opacity = 0;
@@ -1034,17 +1047,24 @@ https://briefone.github.io/test/library/
         dragcard.appendChild(kt);
         dragcard.appendChild(text);
         document.body.appendChild(dragcard);
+
+        cc = dragcard.cloneNode(true);
+        cc.style.position = 'static';
+        cc.style.pointerEvents = 'all';
+        cc.style.cursor = 'grab';
+        cc.style.zIndex = 9999;
       } else {
         let c = this.cloneNode(true);
         document.body.appendChild(c);
         dragcard = c;
-        bg = window.getComputedStyle(c).backgroundColor;
+        bg = window.getComputedStyle(c.getElementsByClassName('keytag')[0]).backgroundColor;
         // dragcard.style.pointerEvents = 'none';
         ol = this.offset().x - sx;
         ot = this.offset().y - sy;
 
         dragcard.style.opacity = 0;
       }
+
 
       let x = e.clientX + ol;
       let y = e.clientY + ot;
@@ -1055,6 +1075,8 @@ https://briefone.github.io/test/library/
 
       dragcard.style.left = x +'px';
       dragcard.style.top = y +'px';
+
+      
 
       function move(e){
         // if ( t.classList.contains('expanded')){
@@ -1071,7 +1093,7 @@ https://briefone.github.io/test/library/
           }
           dragcard.style.opacity = 1;
           dragged = true;
-          t.classList.add('used');
+          // t.classList.add('used');
         } else if (!dragged ){
           return;
         }
@@ -1103,10 +1125,32 @@ https://briefone.github.io/test/library/
 
               if ( bg.indexOf('rgb') >= 0 ){
                 let rgb = bg.replace('rgb(', '').replace(')', '').split(',');
+
+                if ( rgb[0] != '255' || rgb[1] != '255' || rgb[2] != '255') {
+                  tar.style.backgroundColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ', 0.3)';
+                }
+              } else if (bg.indexOf('#') >= 0 ){
+                let rgb = hex2rgb(bg);
                 tar.style.backgroundColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ', 0.3)';
               }
             }
+            let lists = tar.getElementsByClassName('dragcard');
+            let inserted = false;
 
+            for(var i=0;i<lists.length;i++){
+              let l = lists[i];
+              let lof = l.getBoundingClientRect().y;
+
+              if (  y + ot  < lof ){
+                inserted = true;
+                  l.parentElement.insertBefore(cc,l);
+                  break;
+              }
+            }
+
+            if (!inserted){
+              tar.appendChild(cc);
+            }
           }
         });
 
@@ -1133,11 +1177,7 @@ https://briefone.github.io/test/library/
             if (tar == t.getparent('list')){
               return;
             }
-            let cc = dragcard.cloneNode(true);
-            cc.style.position = 'static';
-            cc.style.pointerEvents = 'all';
-            cc.style.cursor = 'grab';
-            cc.style.zIndex = 9999;
+
             cc.classList.add('focused');
             cc.style.opacity = 1;
 
@@ -1145,12 +1185,12 @@ https://briefone.github.io/test/library/
               cc.style.position = 'absolute';
               cc.style.top = e.clientY + ot - tar.getBoundingClientRect().y - 1 + 'px';
               cc.style.left = e.clientX + ol - tar.getBoundingClientRect().x - 1 + 'px';
+              tar.appendChild(cc);
              
             } 
 
-            tar.appendChild(cc);
-            
             used = true;
+            inserted2 = true;
 
             if ( slide ){
               domtoimage.toPng(tar, {style: {transform: 'none', top:'0', left: '0', border: 'none', position: 'static'}}).then(function (dataUrl) {
@@ -1175,8 +1215,13 @@ https://briefone.github.io/test/library/
         if ( !used ){
           t.classList.remove('used');
           t.style.opacity = 1;
+          // t.style.display = 'flex';
         } else if ( t.classList.contains('dragcard')){
-          t.remove();
+          //t.remove();
+        }
+
+        if ( !inserted2 && !t.classList.contains('dragcard') ){
+          cc.remove();
         }
 
         if ( !moved ){
@@ -1699,7 +1744,11 @@ https://briefone.github.io/test/library/
           dc.remove();
 
           document.getElementById(id).remove();
+
+          return;
         }
+
+        makeeditcard.call(dc, e);
       }
 
     function keypress(e){
@@ -2099,6 +2148,7 @@ https://briefone.github.io/test/library/
         return;
       }
       let t = this;
+      let lc = this.getparent('listcontainer');
       let et = e.target;
       let moved = false;
 
@@ -2119,6 +2169,7 @@ https://briefone.github.io/test/library/
       clone.style.left = ol - sl +'px';
       clone.style.zIndex =  999999999;
       clone.style.backgroundColor = 'rgb(213 207 252)';
+      clone.classList.add('clone');
 
       t.parentElement.appendChild(clone);
 
@@ -2135,24 +2186,29 @@ https://briefone.github.io/test/library/
 
         clone.style.left = ol - nx - sl +'px';
 
-        let lists = document.getElementsByClassName('list');
+        let lists = lc.getElementsByClassName('list');
         let inserted = false;
 
         for(var i=0;i<lists.length;i++){
           let l = lists[i];
           let lof = l.offsetLeft;
 
+          if (l.classList.contains('clone')){
+            continue;
+          }
+
           if ( ol - nx < lof ){
             inserted = true;
-            l.parentElement.insertBefore(t,l);
-            return;
+            if ( t !== l ){
+              l.parentElement.insertBefore(t,l);
+              return;
+            }
           }
         }
 
         if (!inserted){
-          lists[lists.length-1].parentElement.appendChild(t);
+          lc.appendChild(t);
         }
-
       }
 
       function end(e){
@@ -2184,6 +2240,9 @@ https://briefone.github.io/test/library/
             return;
           }
 
+          let ff = document.getElementsByClassName('dragcard focused');
+          ff.removeclass('focused');
+
           let list = t.getparent('list');
           let lt = list.getElementsByClassName('listtag')[0];
           let tagg = lt ? lt.dataset.tag.toLowerCase() : 'uncategorized';
@@ -2214,7 +2273,28 @@ https://briefone.github.io/test/library/
           kt.appendChild(document.createTextNode(tagg));
           dragcard.appendChild(kt);
           dragcard.appendChild(mr);
-          t.appendChild(dragcard);
+
+          let y = e.clientY;
+
+          let lists = t.getElementsByClassName('dragcard');
+          let inserted = false;
+
+          for(var i=0;i<lists.length;i++){
+            let l = lists[i];
+            let lof = l.getBoundingClientRect().y;
+
+            if ( y < lof ){
+              inserted = true;
+              l.parentElement.insertBefore(dragcard,l);
+              break;
+            }
+          }
+
+          if (!inserted){
+            t.appendChild(dragcard);
+          }
+
+          // t.appendChild(dragcard);
 
           mr.focus();
 
@@ -2223,6 +2303,46 @@ https://briefone.github.io/test/library/
 
       document.addEventListener('mousemove', move);
       document.addEventListener('mouseup', end);
+    }
+
+    function makeeditcard(e){
+      document.getElementsByClassName('focused').removeclass('focused');
+      
+      let list = this.getparent('list');
+      let lt = list.getElementsByClassName('listtag')[0];
+      let tagg = lt ? lt.dataset.tag.toLowerCase() : 'uncategorized';
+      var foundIndex = KEYTAGS.findIndex(x => x.text == tagg);
+      console.log(foundIndex, KEYTAGS[foundIndex], 'fffffff');
+
+      let KT = KEYTAGS[foundIndex];
+      let kc = KT.color;
+      let kx = KT.tcolor;
+
+      let cid = makecards(1, true, KT);
+      dragcard = document.createElement('div');
+      dragcard.className = 'dragcard editing';
+      let kt = document.createElement('div');
+      let mr = document.createElement('div');
+      dragcard.style.position = 'static';
+      dragcard.style.pointerEvents = 'all';
+      dragcard.style.cursor = 'grab';
+      dragcard.style.background = kc;
+      dragcard.style.color = kx;
+      dragcard.dataset.blank = true;
+      mr.className = 'mr';
+      mr.contentEditable = true;
+      dragcard.dataset.id = cid;
+      kt.className = 'keytag ignore';
+      kt.style.backgroundColor = kc;
+      kt.style.color = kx;
+      kt.appendChild(document.createTextNode(tagg));
+      dragcard.appendChild(kt);
+      dragcard.appendChild(mr);
+     
+      dragcard.insertAfter(this);
+
+
+      mr.focus();
     }
 
     function dragtab(e){
@@ -2365,8 +2485,7 @@ https://briefone.github.io/test/library/
       let sy = e.clientY;
 
       let t = this;
-
-      if(!e.target.classList.contains('dragscroll') && !e.target.classList.contains('listcontainer')){
+      if(!e.target.classList.contains('dragscroll') || !e.target.classList.contains('xxx') || !e.target.classList.contains('listcontainer')){
         return;
       }
 
@@ -2440,7 +2559,7 @@ https://briefone.github.io/test/library/
       s.appendChild(c);
       s.appendChild(b);
       s.appendChild(r);
-      let v = newview('dragscroll', s);
+      let v = newview('xxx', s);
       newtab('Phase ' + romanize(Number(document.getElementsByClassName('tab board').length) + 1), 'board', v);
     }
 
