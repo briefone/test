@@ -176,7 +176,7 @@ https://briefone.github.io/test/library/
       .floating.opened {background:var(--subnav);color:rgb(12, 90, 206);border-bottom:var(--borderwidth) solid var(--border);}
       .popwindow .floating {display:none;}
 
-      #tabs .right .btn {min-width:32px;padding:0;height:32px;margin:0;border-radius: 0;}
+      #tabs .right .btn {min-width:32px;padding:0 8px;height:32px;margin:0;border-radius: 0;}
 
     .pop {position:relative;}
       .popover {opacity:0;pointer-events: none;position:absolute;top:calc(100% + 4px);left:-40px;background:var(--popover);z-index:999999999999999;padding:4px 0;box-shadow: var(--shadow);border-radius:3px;min-width:160px;user-select:none;}
@@ -218,7 +218,7 @@ https://briefone.github.io/test/library/
         
 
         .card .expand {width:100%;display:none;flex-direction: column;gap:16px;align-items: flex-start;padding:8px 0;}
-          .popoveredit #cl .card .expand {position:fixed;left:0;top:50%;transform:translate(-102%, -50%);background:var(--ui1);padding:12px 16px;border:1px solid var(--border);max-height:80%;overflow-y:auto;}
+          .popoveredit #cl .card .expand {position:fixed;left:0;top:50%;transform:translate(-102%, -50%);background:var(--ui1);padding:12px 16px;border:1px solid var(--border);max-height:80%;overflow-y:auto;box-shadow: 0 0 0 2px #7a61ff;border-radius:3px;}
         .card.expanded {box-shadow: inset 0 0 0 2px #7a61ff;background:transparent;}
           
         .expanded .expand {display:flex;}
@@ -372,6 +372,15 @@ https://briefone.github.io/test/library/
         .color25 {background:#6E31CA;}
         .color26 {background:#A01951;}
         .color27 {background:#505468;}
+        .color37 {background:#851319;}
+        .color38 {background:#883900;}
+        .color39 {background:#997802;}
+        .color40 {background:#0c441d;}
+        .color41 {background:#004849;}
+        .color42 {background:#003c70;}
+        .color43 {background:#53249b;}
+        .color44 {background:#7e1340;}
+        .color45 {background:#323441;}
 
 
     .spacer {width:16px;flex-shrink: 0;}
@@ -988,6 +997,15 @@ https://briefone.github.io/test/library/
       <div class="coloritem color25"></div>
       <div class="coloritem color26"></div>
       <div class="coloritem color27"></div>
+      <div class="coloritem color37"></div>
+      <div class="coloritem color38"></div>
+      <div class="coloritem color39"></div>
+      <div class="coloritem color40"></div>
+      <div class="coloritem color41"></div>
+      <div class="coloritem color42"></div>
+      <div class="coloritem color43"></div>
+      <div class="coloritem color44"></div>
+      <div class="coloritem color45"></div>
     </div>
 
   </div>
@@ -1027,7 +1045,7 @@ https://briefone.github.io/test/library/
       document.body.classList.add('mousegrab');
       console.log(keytag.innerText.toLowerCase());
       let foundIndex = KEYTAGS.findIndex(x => x.text == keytag.innerText.toLowerCase());
-      let KT = KEYTAGS[foundIndex];
+      let KT = KEYTAGS[foundIndex] || {color: 'rgb(221, 221, 221)', tcolor: 'black',  text: keytag.innerText.toLowerCase()};
       let bg = KT.color;
       let kc = KT.tcolor;
 
@@ -1333,6 +1351,7 @@ https://briefone.github.io/test/library/
         pi.style.alignItems = 'center';
         pi.style.justifyContent = 'start';
         kt.className = 'keytag ignore';
+        kt.dataset.tag = t.text;
         kt.style.backgroundColor = t.color;
         kt.style.color = t.tcolor;
         kt.dataset.text = t.text.toLowerCase();
@@ -1423,6 +1442,7 @@ https://briefone.github.io/test/library/
         let kt = document.createElement('div');
         kt.className = 'keytag ignore';
         let tag = !keytag ? KEYTAGS.random() : keytag;
+        kt.dataset.tag = tag.text;
         kt.style.backgroundColor = tag.color;
         kt.style.color = tag.tcolor;
 
@@ -1747,8 +1767,6 @@ https://briefone.github.io/test/library/
 
           return;
         }
-
-        makeeditcard.call(dc, e);
       }
 
     function keypress(e){
@@ -1936,6 +1954,8 @@ https://briefone.github.io/test/library/
       document.addEventListener('mousemove', dragMove);
       document.addEventListener('mouseup', dragEnd);
 
+      window.dropcardheight = dragcard.offsetHeight + 'px';
+
       function dragMove(e) {
      
       }
@@ -1951,11 +1971,12 @@ https://briefone.github.io/test/library/
       e.preventDefault();
       e.stopPropagation();
 
+      console.log(e.clientY, 'clienty')
+
       let id = e.dataTransfer.getData('text/plain');
       console.log(id , 'dsfsdf');
 
       document.getElementsByClassName('dragcard focused').removeclass('focused');
-
 
       let card = document.getElementById(id);
       let text = card.getElementsByClassName('mr')[0].cloneNode(true);
@@ -1973,7 +1994,7 @@ https://briefone.github.io/test/library/
       dragcard.style.backgroundColor = bg;
       dragcard.style.color = cc;
       let kt = keytag.cloneNode(true);
-      kt.style.backgroundColor = 'rgba(0,0,0,0.1)';
+      kt.style.backgroundColor = bg;//'rgba(0,0,0,0.1)';
       dragcard.dataset.id = id;
       dragcard.style.position = 'static';
       dragcard.appendChild(kt);
@@ -1987,7 +2008,29 @@ https://briefone.github.io/test/library/
         dragcard.style.left = e.clientX - this.getBoundingClientRect().x + 'px';
       }
       
-      this.appendChild(dragcard);
+      // this.appendChild(dragcard);
+
+      let y = e.clientY;
+
+      let lists = this.getElementsByClassName('dragcard');
+      let inserted = false;
+
+      for(var i=0;i<lists.length;i++){
+        let l = lists[i];
+        let lof = l.getBoundingClientRect().y;
+
+        if ( y < lof ){
+          inserted = true;
+          l.parentElement.insertBefore(dragcard,l);
+          break;
+        }
+      }
+
+      document.getElementsByClassName('cardspacer').remove();
+
+      if (!inserted){
+        this.appendChild(dragcard);
+      }
 
       this.classList.remove('draggingover');
       if ( window.clwindow){
@@ -1999,18 +2042,50 @@ https://briefone.github.io/test/library/
       e.preventDefault();
       
       e.dataTransfer.dropEffect = 'copy';
+
+      let s = this.getElementsByClassName('cardspacer')[0];
+
+      let y = e.clientY;
+
+      let lists = this.getElementsByClassName('dragcard');
+      let inserted = false;
+
+      for(var i=0;i<lists.length;i++){
+        let l = lists[i];
+        let lof = l.getBoundingClientRect().y;
+
+        if ( y < lof ){
+          inserted = true;
+          l.parentElement.insertBefore(s,l);
+          break;
+        }
+      }
+
+      if (!inserted){
+        this.appendChild(s);
+      }
+
     }
 
     function handleDragEnter(e) {
       this.classList.add('draggingover');
+
+      let spacer = document.createElement('div');
+      spacer.className = 'cardspacer';
+      spacer.style.height = window.clwindow ? window.clwindow.dropcardheight : '100px';
+
+      this.appendChild(spacer);
     }
 
     function handleDragLeave(e) {
       this.classList.remove('draggingover');
+
+      document.getElementsByClassName('cardspacer').remove();
     }
 
     function handleDragEnd(e) {
       this.classList.remove('draggingover');
+      document.getElementsByClassName('cardspacer').remove();
     }
 
     function someFunctionToCallWhenPopUpCloses(){
@@ -2236,7 +2311,6 @@ https://briefone.github.io/test/library/
 
             et.classList.add('on');
 
-
             return;
           }
 
@@ -2244,12 +2318,14 @@ https://briefone.github.io/test/library/
           ff.removeclass('focused');
 
           let list = t.getparent('list');
-          let lt = list.getElementsByClassName('listtag')[0];
-          let tagg = lt ? lt.dataset.tag.toLowerCase() : 'uncategorized';
+          let lt = list.getElementsByClassName('listtag');
+          let tagg = lt.length ? lt[0].dataset.tag.toLowerCase() : list.getElementsByClassName('taginput')[0].dataset.tag;
+
           var foundIndex = KEYTAGS.findIndex(x => x.text == tagg);
           console.log(foundIndex, KEYTAGS[foundIndex], 'fff');
 
-          let KT = KEYTAGS[foundIndex];
+
+          let KT = KEYTAGS[foundIndex] || {color: 'rgb(221, 221, 221)', tcolor: 'black', text: tagg};
           let kc = KT.color;
           let kx = KT.tcolor;
 
@@ -2268,6 +2344,7 @@ https://briefone.github.io/test/library/
           mr.contentEditable = true;
           dragcard.dataset.id = cid;
           kt.className = 'keytag ignore';
+          kt.dataset.tag = tagg;
           kt.style.backgroundColor = kc;
           kt.style.color = kx;
           kt.appendChild(document.createTextNode(tagg));
@@ -2307,14 +2384,14 @@ https://briefone.github.io/test/library/
 
     function makeeditcard(e){
       document.getElementsByClassName('focused').removeclass('focused');
-      
+
       let list = this.getparent('list');
-      let lt = list.getElementsByClassName('listtag')[0];
-      let tagg = lt ? lt.dataset.tag.toLowerCase() : 'uncategorized';
+      let lt = list.getElementsByClassName('listtag');
+      let tagg = lt.length ? lt[0].dataset.tag.toLowerCase() : list.getElementsByClassName('taginput')[0].dataset.tag;
       var foundIndex = KEYTAGS.findIndex(x => x.text == tagg);
       console.log(foundIndex, KEYTAGS[foundIndex], 'fffffff');
 
-      let KT = KEYTAGS[foundIndex];
+      let KT = KEYTAGS[foundIndex] || {color: 'rgb(221, 221, 221)', tcolor: 'black', text: tagg};
       let kc = KT.color;
       let kx = KT.tcolor;
 
@@ -2333,6 +2410,7 @@ https://briefone.github.io/test/library/
       mr.contentEditable = true;
       dragcard.dataset.id = cid;
       kt.className = 'keytag ignore';
+      kt.dataset.tag = tagg;
       kt.style.backgroundColor = kc;
       kt.style.color = kx;
       kt.appendChild(document.createTextNode(tagg));
@@ -2702,7 +2780,12 @@ https://briefone.github.io/test/library/
       if (!allowedKeys) {
           e.preventDefault();
         if ( keycode == 13 || keycode == 27 ){ // enter && esc
+          let text = this.innerText;
           document.activeElement.blur();
+
+          if ( text !== ''){
+            makeeditcard.call(this.getparent('dragcard'), e);
+          }
         }
       } else {
         this.getparent('dragcard').dataset.blank = false;
@@ -2737,6 +2820,7 @@ https://briefone.github.io/test/library/
       t.type = 'text';
       t.className = 'taginput';
       t.placeholder = 'Enter tag...';
+      t.dataset.tag = 'unlabeled' + document.getElementsByClassName('list').length;
 
       t.onkeydown = function(e){
         if ( e.keyCode == 13){
@@ -2754,8 +2838,19 @@ https://briefone.github.io/test/library/
 
           this.remove();
 
+          let ot = this.dataset.tag;
 
-          KEYTAGS.push({color: '#ddd', tcolor: '#000', text: tt})
+          let oldtags = document.querySelectorAll('.keytag[data-tag="' + ot +'"]');
+          console.log(oldtags);
+
+          for(var i=0;i<oldtags.length;i++){
+            let to = oldtags[i];
+            to.empty();
+            to.appendChild(document.createTextNode(tt));
+            to.dataset.tag = tt;
+          }
+
+          KEYTAGS.push({color: '#ddd', tcolor: '#000', text: tt});
         } else if ( e.keyCode == 27 ){
           this.getparent('list').remove();
         }
