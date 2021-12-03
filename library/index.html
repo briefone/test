@@ -294,7 +294,7 @@ https://briefone.github.io/test/library/
           .list.draggingover {background:#aa99ff71;}
             .list.draggingover > * {pointer-events: none !important;}
 
-            .list::after {content:'Add card';font-size: 12px;position:absolute;bottom:6px;left:8px;cursor: pointer;}
+            /* .list::after {content:'Add card';font-size: 12px;position:absolute;bottom:6px;left:8px;cursor: pointer;} */
             .list::before {content:'Insert card';font-size: 12px;position:absolute;bottom:6px;right:8px;display:block;z-index:3;cursor: pointer;}
 
         .listmenu {position:absolute;top:2px;right:2px;}
@@ -537,8 +537,8 @@ https://briefone.github.io/test/library/
               <div class=popitem>Phase III</div>
               <div class=popitem>RFI</div>
             </div></div>
-            <div class="popitem pophover">1 Axis Scratch<div class="hoverpop popover">
-              <div class="popitem newscratchbtn">Create new</div>
+            <div class="popitem pophover">Scratch pad<div class="hoverpop popover">
+              <div class="popitem newscratchbtn">Create new pad</div>
               <hr>
               <div class=popitem>Phase I</div>
               <div class=popitem>Phase II</div>
@@ -1898,6 +1898,7 @@ https://briefone.github.io/test/library/
       window.removefloat = setTimeout(function(){
         document.getElementsByClassName('floatinglib').remove();
       }, 55);
+
         let dc = this.getparent('dragcard');
         dc.classList.remove('editing');
         this.contentEditable = false;
@@ -1907,7 +1908,10 @@ https://briefone.github.io/test/library/
           let id = dc.dataset.id;
           dc.remove();
 
-          document.getElementById(id).remove();
+          let og = document.getElementById(id);
+          if ( og){
+            og.remove();
+          }
 
           return;
         }
