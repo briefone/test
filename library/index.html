@@ -1893,7 +1893,11 @@ https://briefone.github.io/test/library/
 
     function blurmr(e){
       console.log('blurup');
-      document.getElementsByClassName('floatinglib').remove();
+      console.log(document.activeElement, e.target);
+
+      window.removefloat = setTimeout(function(){
+        document.getElementsByClassName('floatinglib').remove();
+      }, 55);
         let dc = this.getparent('dragcard');
         dc.classList.remove('editing');
         this.contentEditable = false;
@@ -2560,6 +2564,8 @@ https://briefone.github.io/test/library/
 
       dragcard.appendChild(kt);
       dragcard.appendChild(mr);
+
+      this.parentElement.appendChild(dragcard);
      
       mr.focus();
     }
@@ -2966,7 +2972,7 @@ https://briefone.github.io/test/library/
         if ( keycode == 13 || keycode == 27 ){ // enter && esc
           let text = this.innerText;
           document.activeElement.blur();
-
+          console.log(text, 'text');
           if ( text !== ''){
             makeeditcard.call(this.getparent('dragcard'), e);
           }
@@ -2977,7 +2983,6 @@ https://briefone.github.io/test/library/
     }
 
     function mrup(e){
-      
       let t = this.innerText;
 
       let c = this.getparent('dragcard');
@@ -2992,15 +2997,11 @@ https://briefone.github.io/test/library/
       mr.empty();
       mr.appendChild(document.createTextNode(t));
 
-
-
       findcards.call(c, t);
     }
 
     function findcards(x){
       let v = x.toLowerCase().trim();
-
-      console.log(v);
 
       let cards = document.getElementById('cl').getElementsByClassName('card');
 
@@ -3038,10 +3039,51 @@ https://briefone.github.io/test/library/
       float.style.left = this.offsetLeft + 'px';
       float.style.top = this.offsetHeight + this.getBoundingClientRect().y + 12 + 'px';
 
+      let tt = this;
+
       for(var i=0;i<Math.min(arr.length, 5);i++){
         let a = arr[i];
 
         let c = a.cloneNode(true);
+        c.removeAttribute('id');
+        c.classList.remove('expanded');
+
+        c.onmousedown = function(e){
+          e.preventDefault();
+
+          let text = this.getElementsByClassName('mr')[0].cloneNode(true);
+          let keytag = this.getElementsByClassName('keytag')[0];
+
+          let foundIndex = KEYTAGS.findIndex(x => x.text == keytag.innerText.toLowerCase());
+          let KT = KEYTAGS[foundIndex] || {color: 'rgb(221, 221, 221)', tcolor: 'black',  text: keytag.innerText.toLowerCase()};
+          let bg = KT.color;
+          let kc = KT.tcolor;
+
+          let dragcard = document.createElement('div');
+          dragcard.className = 'dragcard';
+          dragcard.style.backgroundColor = bg;
+          dragcard.style.color = kc;
+          let kt = keytag.cloneNode(true);
+          dragcard.dataset.id = this.dataset.id;
+          dragcard.appendChild(kt);
+          dragcard.appendChild(text);
+          dragcard.style.position = 'static';
+          dragcard.style.pointerEvents = 'all';
+          dragcard.style.cursor = 'grab';
+          dragcard.style.zIndex = 9999;
+
+          tt.parentNode.appendChild(dragcard);
+
+          let id = tt.dataset.id;
+
+          if ( tt && tt.getElementsByClassName('mr')[0].innerText != '' ){
+            tt.parentNode.removeChild(tt);
+          }
+
+          let oc = document.querySelector('.card[data-id="' + id +'"]');
+          oc.remove();
+        }
+      
         float.appendChild(c);
       }
 
@@ -3093,7 +3135,7 @@ https://briefone.github.io/test/library/
 
           let ot = this.dataset.tag;
 
-          let oldtags = document.querySelectorAll('.keytag[data-tag="' + ot +'"]');
+          let oldtags = document.querySelectorAll('.keytag[data-tag="' + ot + '"]');
           console.log(oldtags);
 
           for(var i=0;i<oldtags.length;i++){
