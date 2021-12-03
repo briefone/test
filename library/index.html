@@ -64,6 +64,21 @@ https://briefone.github.io/test/library/
       --shadow-lg: 0px 0px 0px 1px rgba(0, 0, 0, 0.05), 0px 3px 6px rgba(0, 0, 0, 0.08), 0px 8px 24px rgba(0, 0, 0, 0.15);
 
       --font-fam: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+
+
+      
+      --select: #49A2DA;
+
+
+      --handlegap: -4px;
+      --handlecolor: var(--select);
+      --handlesize: 8px;
+
+     
+
+      --selectgap: 0px;
+      --selectwidth: 2px;
+
     }
 
     .dark {
@@ -279,7 +294,12 @@ https://briefone.github.io/test/library/
           .list.draggingover {background:#aa99ff71;}
             .list.draggingover > * {pointer-events: none !important;}
 
-            .list::after {content:'Add card';font-size: 12px;position:absolute;bottom:6px;left:8px;}
+            .list::after {content:'Add card';font-size: 12px;position:absolute;bottom:6px;left:8px;cursor: pointer;}
+            .list::before {content:'Insert card';font-size: 12px;position:absolute;bottom:6px;right:8px;display:block;z-index:3;cursor: pointer;}
+
+        .listmenu {position:absolute;top:2px;right:2px;}
+
+        input + .listmenu {display:none;}
 
         .listtag {background:rgb(0 0 0 / 10%);color:rgb(0 0 0 / 65%);font-weight:700;text-transform:uppercase;font-size:11px;padding:0px 4px 1px;border-radius:2px;display:inline-block;flex-grow: 0;position: relative;}
 
@@ -297,8 +317,10 @@ https://briefone.github.io/test/library/
 
 
         .deck {position:absolute;top:1px;left:0;bottom:0;width:180px;background:white;border-right:1px solid var(--border);}
-          .deck .minislide {width:calc(100% - 24px);margin:12px;aspect-ratio: 16/9;border:1px solid var(--border);border-radius:4px;background-size:cover;}
-          .slide {width:calc(100vw - 600px);aspect-ratio: 16/9;max-height:calc(100vh - 120px);background-color: white;position:absolute;top:50%;left:calc(50%);transform:translate(calc(-50% + 90px), -50%);border:1px solid var(--border);}
+          .deck .minislide {width:calc(100% - 24px);margin:12px;aspect-ratio: 16/9;border:2px solid var(--border);border-radius:4px;background-size:cover;}
+          .slidecanvas {overflow:auto;    position: absolute;    left: 181px;    top: 0;    right: 0;    bottom: 0;}
+            .slide {width:calc(100vw - 240px);aspect-ratio: 16/9;max-height:calc(100vh - 120px);background-color: white;position:absolute;top:50%;left:calc(50%);transform:translate(-50%, -50%);border:1px solid var(--border);}
+              .clopen .slide {width:calc(100vw - 580px);}
 
       .cardactivity {color:var(--secondary);}
       .cardactions {display:flex;gap:4px;}
@@ -384,6 +406,44 @@ https://briefone.github.io/test/library/
 
 
     .spacer {width:16px;flex-shrink: 0;}
+
+    #subnav .left {gap:4px;}
+      .subnavnav {padding:0 8px;}
+
+    .scratchpad {background:var(--ui1);position:absolute;top:0;left:0;right:0;bottom:0;overflow-y:scroll;}
+
+
+
+    .boundingbox {box-shadow: 0 0 0 var(--selectwidth) var(--select);pointer-events:none;
+                padding:var(--selectgap);margin:calc(var(--selectgap) * -1) 0 0  calc(var(--selectgap) * -1);}
+
+    .selectwhite .boundingbox {box-shadow: 0 0 0 var(--selectwidth) var(--select), inset 0 0 0 1px white;}
+    .selectblack .boundingbox {box-shadow: 0 0 0 var(--selectwidth) var(--select), inset 0 0 0 1px black;}
+
+
+        .bhandle {border-radius:2px;position:absolute;background:white;box-shadow:inset 0 0 0 2px var(--handlecolor);width:var(--handlesize);height:var(--handlesize);transition:box-shadow 125ms ease-in-out, transform 125ms ease-in-out, opacity 125ms ease-in-out;pointer-events:all;display:none;}
+            .bhandle:hover, .bhandle.active {box-shadow:inset 0 0 0 2px var(--handlecolor), inset 0 0 0 12px var(--handlecolor);}
+
+            .bhandle::after {content:'';position:absolute;width:48px;height:48px;top:50%;left:50%;transform:translate(-50%, -50%);}
+
+        .boundingbox .bhandle:nth-child(1) {top:calc(var(--handlegap) - (var(--selectwidth) / 2) );left:calc(var(--handlegap) - (var(--selectwidth) / 2) );cursor:nwse-resize;}
+        .boundingbox .bhandle:nth-child(2) {top:calc(var(--handlegap) - (var(--selectwidth) / 2) );right:calc(var(--handlegap) - (var(--selectwidth) / 2) );cursor:nesw-resize;}
+        .boundingbox .bhandle:nth-child(3) {bottom:calc(var(--handlegap) - (var(--selectwidth) / 2) );left:calc(var(--handlegap) - (var(--selectwidth) / 2) );cursor:nesw-resize;}
+        .boundingbox .bhandle:nth-child(4) {bottom:calc(var(--handlegap) - (var(--selectwidth) / 2) );right:calc(var(--handlegap) - (var(--selectwidth) / 2) );cursor:nwse-resize;}
+
+
+        .boundingbox .bhandle:nth-child(5) {top:calc(var(--handlegap) - (var(--selectwidth) / 2) );left:50%;cursor:ns-resize;transform:translateX(-50%);}
+        .boundingbox .bhandle:nth-child(6) {top:50%;right:calc(var(--handlegap) - (var(--selectwidth) / 2) );cursor:ew-resize;transform:translateY(-50%);}
+        .boundingbox .bhandle:nth-child(7) {bottom:calc(var(--handlegap) - (var(--selectwidth) / 2) );left:50%;cursor:ns-resize;transform:translateX(-50%);}
+        .boundingbox .bhandle:nth-child(8) {top:50%;left:calc(var(--handlegap) - (var(--selectwidth) / 2) );cursor:ew-resize;transform:translateY(-50%);}
+
+        .boundingbox.minwidth .bhandle:nth-child(5), .boundingbox.minwidth .bhandle:nth-child(7)  {opacity:0;pointer-events:none;transform:translateX(-50%) scale(0);}
+        .boundingbox.minheight  .bhandle:nth-child(6), .boundingbox.minheight .bhandle:nth-child(8)  {opacity:0;pointer-events:none;transform:translateY(-50%) scale(0);}
+    
+            .boundingbox.minwidth .bhandle::after, .boundingbox.minheight .bhandle::after  {width:24px;height:24px;}
+
+
+      .floatinglib {position:absolute;z-index:999999;background:white;width:240px;border-radius:3px;box-shadow:var(--shadow);}
 
   </style>
   <script src="../js/base.js"></script>
@@ -477,6 +537,14 @@ https://briefone.github.io/test/library/
               <div class=popitem>Phase III</div>
               <div class=popitem>RFI</div>
             </div></div>
+            <div class="popitem pophover">1 Axis Scratch<div class="hoverpop popover">
+              <div class="popitem newscratchbtn">Create new</div>
+              <hr>
+              <div class=popitem>Phase I</div>
+              <div class=popitem>Phase II</div>
+              <div class=popitem>Phase III</div>
+              <div class=popitem>RFI</div>
+            </div></div>
             <hr>
             <div class="popitem pophover">Plans
 
@@ -522,7 +590,7 @@ https://briefone.github.io/test/library/
       </div>
       <div class="right">
         <div class="btn toggle whitebtn" data-class=whitecards>
-          White cards
+          white cards
         </div>
         <div class="btn toggle popoverbtn" data-class=popoveredit>
           popover
@@ -541,7 +609,28 @@ https://briefone.github.io/test/library/
     <div id=conwrap>
       <div id=resizecl></div>
       <div id="subnav">
-        <div class=left></div>
+        <div class=left>
+          <div class="subnavnav btn pop">File
+            <div class=popover style="left:0;">
+              <div class=popitem>Download</div>
+              <div class=popitem>New</div>
+              <div class=popitem>Print</div>
+              <div class=popitem>XYZ</div>
+            </div>
+          </div>
+          <div class="subnavnav btn">View</div>
+          <div class="subnavnav btn pop">Insert
+            <div class=popover style="left:0;">
+              <div class="popitem insertboard">Board</div>
+              <div class="popitem inserttimeline">Timeline</div>
+              <div class="popitem insertce">Cause & effect</div>
+              <div class="popitem inserttext">Text</div>
+              <div class="popitem inserttable">Table</div>
+              <div class="popitem insertlist">List</div>
+              <div class="popitem insertimg">Image</div>
+            </div>
+          </div>
+        </div>
         <div class="right">
           <div class="btn pop" data-class=boardprop>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>
@@ -558,7 +647,7 @@ https://briefone.github.io/test/library/
 
       <div id=container class=dragscroll>
 
-        <div id=p0 class=view style="    flex-direction: column;">
+        <div id=p0 class=view style="flex-direction: column;">
 
           <div class=dashitem>
             <h5>Plan B</h5>
@@ -591,8 +680,10 @@ https://briefone.github.io/test/library/
           <div class=deck>
             <div class=minislide></div>
           </div>
-          <div class=slide>
+          <div class=slidecanvas>
+            <div class=slide>
 
+            </div>
           </div>
         </div>
 
@@ -604,6 +695,19 @@ https://briefone.github.io/test/library/
           </div>
           <div class="btn listbtn addlist shadowbtn">Add list</div>
         </div>
+
+        <div id=p3 class=view>
+          <div class=timeline>
+            <div class=timelength>
+              length
+            </div>
+            <div class=timecanvas>
+              canvas
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
 
@@ -1014,6 +1118,7 @@ https://briefone.github.io/test/library/
       if ( e.which == 3 || this.draggable ){
         return;
       }
+      let sp = this.getparent('scratchpad');
       let t = this;
       let dragcard = false;
       let dragged = false;
@@ -1094,7 +1199,8 @@ https://briefone.github.io/test/library/
       dragcard.style.left = x +'px';
       dragcard.style.top = y +'px';
 
-      
+      let lx = e.clientX;
+      let ly = e.clientY;
 
       function move(e){
         // if ( t.classList.contains('expanded')){
@@ -1123,10 +1229,30 @@ https://briefone.github.io/test/library/
         dragcard.style.left = x + ol +'px';
         dragcard.style.top = y + ot +'px';
 
-        
+        if ( t.classList.contains('selected')){
+          if ( sp ){
+            let xxx = sp.getElementsByClassName('dragcard selected');
+
+            for(var i=0;i<xxx.length;i++){
+              let xxxx = xxx[i];
+
+              xxxx.style.left = xxxx.offsetLeft +(x- lx)  +'px';
+              xxxx.style.top = xxxx.offsetTop + (y-ly) +'px';
+            }
+          }
+
+          let bb = document.getElementsByClassName('boundingbox');
+
+          if ( bb.length ){
+            bb[0].style.left = bb[0].offsetLeft +(x- lx)  +'px';
+            bb[0].style.top = bb[0].offsetTop + (y-ly) +'px';
+          }
+        }
+
+        lx = x;
+        ly = y;
 
         let tars = document.elementsFromPoint(e.clientX, e.clientY);
-
 
         let hoverlist = false;
         tars.forEach(tar => {
@@ -1144,12 +1270,14 @@ https://briefone.github.io/test/library/
               if ( bg.indexOf('rgb') >= 0 ){
                 let rgb = bg.replace('rgb(', '').replace(')', '').split(',');
 
-                if ( rgb[0] != '255' || rgb[1] != '255' || rgb[2] != '255') {
+                if ( Number(rgb[0]) < 200 || Number(rgb[1]) < 200 || Number(rgb[2]) < 200) {
                   tar.style.backgroundColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ', 0.3)';
                 }
               } else if (bg.indexOf('#') >= 0 ){
                 let rgb = hex2rgb(bg);
-                tar.style.backgroundColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ', 0.3)';
+                if ( Number(rgb[0]) < 200 || Number(rgb[1]) < 200 || Number(rgb[2]) < 200) {
+                  tar.style.backgroundColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ', 0.3)';
+                }
               }
             }
             let lists = tar.getElementsByClassName('dragcard');
@@ -1178,6 +1306,10 @@ https://briefone.github.io/test/library/
             hovering[0].removeAttribute('style');
             hovering[0].classList.remove('hovering');
           }
+
+          if ( cc.parentNode ){
+            cc.parentNode.removeChild(cc);
+          }
         }
       }
 
@@ -1191,7 +1323,9 @@ https://briefone.github.io/test/library/
 
         tars.forEach(tar => {
           let slide = tar.classList.contains('slide');
-          if ( tar.classList.contains('list') || slide){
+          let scratch = tar.classList.contains('scratchpad');
+          let list = tar.classList.contains('list');
+          if ( list || slide || scratch){
             if (tar == t.getparent('list')){
               return;
             }
@@ -1199,19 +1333,18 @@ https://briefone.github.io/test/library/
             cc.classList.add('focused');
             cc.style.opacity = 1;
 
-            if ( slide ){
+            if ( slide || scratch && !e.target.getparent('listcontainer') ){
               cc.style.position = 'absolute';
-              cc.style.top = e.clientY + ot - tar.getBoundingClientRect().y - 1 + 'px';
-              cc.style.left = e.clientX + ol - tar.getBoundingClientRect().x - 1 + 'px';
+              cc.style.top = e.clientY + ot + tar.scrollTop - tar.getBoundingClientRect().y - (slide ? 1 : 0) + 'px';
+              cc.style.left = e.clientX + ol + tar.scrollLeft - tar.getBoundingClientRect().x - (slide ? 1 : 0) + 'px';
               tar.appendChild(cc);
-             
             } 
 
             used = true;
             inserted2 = true;
 
             if ( slide ){
-              domtoimage.toPng(tar, {style: {transform: 'none', top:'0', left: '0', border: 'none', position: 'static'}}).then(function (dataUrl) {
+              domtoimage.toPng(tar, {style: {transform: 'none', top:'0', left: '0', border: 'none', position: 'static', overflow: 'hidden'}}).then(function (dataUrl) {
                 tar.removeAttribute('style');
                 document.getElementsByClassName('minislide')[0].style.backgroundImage = `url(${dataUrl})`;
               }).catch(function (error) {
@@ -1268,7 +1401,7 @@ https://briefone.github.io/test/library/
             console.log(t, t.dataset.id)
             let ccc = document.getElementById(t.dataset.id);
             
-            if ( !ccc.classList.contains('expanded') ){
+            if ( ccc && !ccc.classList.contains('expanded') ){
               document.getElementsByClassName('expanded').removeclass('expanded');
               ccc.classList.add('expanded');
               
@@ -1611,28 +1744,34 @@ https://briefone.github.io/test/library/
     }
 
     function tab(){
-      if ( this.classList.contains('current')){
+      // if ( this.classList.contains('current')){
         
-        if ( this.classList.contains('pop')){
-          
-        } else if ( !this.classList.contains('logo')){
+        if ( !this.classList.contains('logo') && !this.classList.contains('pop2')){
           let p = document.getElementById('tabpop').cloneNode(true);
           p.removeAttribute('id');
           p.style.left = '50%';
           p.style.transform = 'translateX(-50%)';
           this.appendChild(p);
-          this.classList.add('pop', 'on');
+          this.classList.add('pop2');
+
         }
 
-        return;
+        // return;
+      // }
+
+      if ( this.classList.contains('current') ){
+        this.classList.toggle('on');
+      } else {
+        document.getElementsByClassName('tab current').removeclass('current');
+        document.getElementsByClassName('tab on').removeclass('on');
+        this.classList.add('current');
       }
+      
 
 
+      
 
-      document.getElementsByClassName('tab current').removeclass('current');
-      this.classList.add('current');
-
-      this.classList.remove('on');
+      // this.classList.remove('on');
 
       let v = this.dataset.view;
 
@@ -1650,7 +1789,7 @@ https://briefone.github.io/test/library/
       }
 
 
-
+      removebounding();
     }
 
     function filtercards(e){
@@ -1753,7 +1892,8 @@ https://briefone.github.io/test/library/
     }
 
     function blurmr(e){
-      console.log('blurup')
+      console.log('blurup');
+      document.getElementsByClassName('floatinglib').remove();
         let dc = this.getparent('dragcard');
         dc.classList.remove('editing');
         this.contentEditable = false;
@@ -1767,7 +1907,7 @@ https://briefone.github.io/test/library/
 
           return;
         }
-      }
+    }
 
     function keypress(e){
       console.log(e.keyCode);
@@ -2047,22 +2187,25 @@ https://briefone.github.io/test/library/
 
       let y = e.clientY;
 
-      let lists = this.getElementsByClassName('dragcard');
-      let inserted = false;
+      if ( this.classList.contains('list')){
 
-      for(var i=0;i<lists.length;i++){
-        let l = lists[i];
-        let lof = l.getBoundingClientRect().y;
+        let lists = this.getElementsByClassName('dragcard');
+        let inserted = false;
 
-        if ( y < lof ){
-          inserted = true;
-          l.parentElement.insertBefore(s,l);
-          break;
+        for(var i=0;i<lists.length;i++){
+          let l = lists[i];
+          let lof = l.getBoundingClientRect().y;
+
+          if ( y < lof ){
+            inserted = true;
+            l.parentElement.insertBefore(s,l);
+            break;
+          }
         }
-      }
 
-      if (!inserted){
-        this.appendChild(s);
+        if (!inserted){
+          this.appendChild(s);
+        }
       }
 
     }
@@ -2414,12 +2557,10 @@ https://briefone.github.io/test/library/
       kt.style.backgroundColor = kc;
       kt.style.color = kx;
       kt.appendChild(document.createTextNode(tagg));
+
       dragcard.appendChild(kt);
       dragcard.appendChild(mr);
      
-      dragcard.insertAfter(this);
-
-
       mr.focus();
     }
 
@@ -2442,14 +2583,13 @@ https://briefone.github.io/test/library/
 
       document.body.classList.add('mousegrab');
 
-      t.style.opacity = 0;
 
       clone.style.position = 'absolute';
       clone.style.left = ol - sl +'px';
       clone.style.zIndex =  999999999;
       // clone.style.backgroundColor = '#b3d8f0';
 
-      t.parentElement.appendChild(clone);
+      
 
       function move(e){
         let x = e.clientX;
@@ -2458,6 +2598,9 @@ https://briefone.github.io/test/library/
 
         if ( !moved && Math.abs(nx) < 5 ){
           return;
+        } else if(!moved){
+          t.style.opacity = 0;
+          t.parentElement.appendChild(clone);
         }
 
         moved = true;
@@ -2563,7 +2706,8 @@ https://briefone.github.io/test/library/
       let sy = e.clientY;
 
       let t = this;
-      if(!e.target.classList.contains('dragscroll') || !e.target.classList.contains('xxx') || !e.target.classList.contains('listcontainer')){
+
+      if(!e.target.classList.contains('dragscroll') && !e.target.classList.contains('xxx') && !e.target.classList.contains('listcontainer')){
         return;
       }
 
@@ -2613,32 +2757,54 @@ https://briefone.github.io/test/library/
     function newboard(){
       let s = document.createElement('section');
       let c = document.createElement('div');
-      let x = document.createElement('div');
-      let t = document.createElement('div');
       let b = document.createElement('div');
       let r = document.createElement('div');
 
       s.style.display = 'flex';
       
       c.className = 'listcontainer';
-      x.className = 'list';
-      let a = 'uncategorized';
-      t.appendChild(document.createTextNode(a));
-      t.className = 'listtag pop';
-      t.dataset.tag = a;
-
-      r.className = 'spacer';
 
       b.className = 'btn listbtn addlist';
       b.appendChild(document.createTextNode('Add list'));
 
-      x.appendChild(t);
-      c.appendChild(x);
+      r.className = 'spacer';
+
+      newlist.call(c)
       s.appendChild(c);
       s.appendChild(b);
       s.appendChild(r);
+
       let v = newview('xxx', s);
       newtab('Phase ' + romanize(Number(document.getElementsByClassName('tab board').length) + 1), 'board', v);
+    }
+
+    function newlist(tt, add = false){
+      let x = document.createElement('div');
+      let t = document.createElement('div');
+      let m = document.createElement('div');
+
+      x.className = 'list';
+      let a = tt || 'uncategorized';
+      t.appendChild(document.createTextNode(a));
+      t.className = 'listtag pop';
+      t.dataset.tag = a;
+      m.className = 'listmenu btn';
+
+      let g = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      let path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+
+      g.setAttribute('viewBox', '0 0 512 512');
+      path.setAttribute('d', 'M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z');
+      path.setAttribute('fill', 'currentColor');
+
+      g.appendChild(path);
+
+      m.appendChild(g);
+
+      x.appendChild(t);
+      x.appendChild(m);
+
+      this.appendChild(x);
     }
 
     function romanize(num) {
@@ -2671,6 +2837,15 @@ https://briefone.github.io/test/library/
 
     function newbrief(){
       let x = document.createElement('div');
+
+      x.innerHTML = `<div class=deck>
+            <div class=minislide></div>
+          </div>
+          <div class=slidecanvas>
+            <div class=slide>
+
+            </div>
+          </div>`;
      
       let v = newview('dragscroll', x);
       newtab('Untitled brief', 'brief', v);
@@ -2681,6 +2856,13 @@ https://briefone.github.io/test/library/
      
       let v = newview('dragscroll', x);
       newtab('Untitled orders', 'orders', v);
+    }
+
+    function newscratch(){
+      let x = document.createElement('div');
+      x.className = 'scratchpad';
+      let v = newview('dragscroll', x);
+      newtab('Untitled scratch', 'scratch', v);
     }
 
     function newtab(x, c, v){
@@ -2707,7 +2889,9 @@ https://briefone.github.io/test/library/
 
       tabs.appendChild(t);
 
-      t.click();
+      // t.click();
+
+      tab.call(t,{});
     }
 
     function resizecl(e){
@@ -2807,6 +2991,61 @@ https://briefone.github.io/test/library/
       ta.call(txa, e, true);
       mr.empty();
       mr.appendChild(document.createTextNode(t));
+
+
+
+      findcards.call(c, t);
+    }
+
+    function findcards(x){
+      let v = x.toLowerCase().trim();
+
+      console.log(v);
+
+      let cards = document.getElementById('cl').getElementsByClassName('card');
+
+      let arr = [];
+
+      for(let i=0;i<cards.length;i++){
+        let card = cards[i];
+        let kt = card.getElementsByClassName('keytag')[0].innerText;
+        let mr = card.getElementsByClassName('mr')[0].innerText;
+
+        let ex = false;
+
+        if ( kt.toLowerCase().indexOf(v) >= 0 ){
+          ex = true;
+        } else if (mr.toLowerCase().indexOf(v) >= 0){
+          ex = true;
+        } else {
+
+        }
+
+        if ( ex && card.dataset.id != this.dataset.id ){
+          arr.push(card);
+        }
+      }
+
+      document.getElementsByClassName('floatinglib').remove();
+
+      if ( !arr.length){
+        return;
+      }
+
+      let float = document.createElement('div');
+      float.className = 'floatinglib';
+
+      float.style.left = this.offsetLeft + 'px';
+      float.style.top = this.offsetHeight + this.getBoundingClientRect().y + 12 + 'px';
+
+      for(var i=0;i<Math.min(arr.length, 5);i++){
+        let a = arr[i];
+
+        let c = a.cloneNode(true);
+        float.appendChild(c);
+      }
+
+      document.body.appendChild(float);
     }
 
     function addlist(e){
@@ -2820,7 +3059,21 @@ https://briefone.github.io/test/library/
       t.type = 'text';
       t.className = 'taginput';
       t.placeholder = 'Enter tag...';
-      t.dataset.tag = 'unlabeled' + document.getElementsByClassName('list').length;
+      t.dataset.tag = 'untaged' + document.getElementsByClassName('list').length;
+
+      let m = document.createElement('div');
+      m.className = 'listmenu btn';
+
+      let g = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      let path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+
+      g.setAttribute('viewBox', '0 0 512 512');
+      path.setAttribute('d', 'M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z');
+      path.setAttribute('fill', 'currentColor');
+
+      g.appendChild(path);
+
+      m.appendChild(g);
 
       t.onkeydown = function(e){
         if ( e.keyCode == 13){
@@ -2857,8 +3110,13 @@ https://briefone.github.io/test/library/
       }
 
       l.appendChild(t);
+      l.appendChild(m);
 
       c.appendChild(l);
+
+      let cc = document.getElementById('container');
+
+      cc.scrollLeft = cc.scrollWidth;
 
       t.focus();
     }
@@ -2937,13 +3195,399 @@ https://briefone.github.io/test/library/
       return rgb;
     }
 
+      function removebounding(e){
+          var bb = document.getElementsByClassName('boundingbox');
+
+          while(bb[0]){
+              // bb[0].object.bounds = null;
+
+              // console.log(bb[0].object);
+              // bb[0].object['bounds'] = null;
+              // console.log(bb[0].object['bounds']);
+
+              // delete bb[0].object.bounds;
+              bb[0].parentNode.removeChild(bb[0]);
+          }
+
+          document.getElementsByClassName('dragcard selected').removeclass('selected');
+      }
+
+    function marquee(e){
+      if ( e.which == 3 || !e.target.classList.contains('scratchpad') ){
+          return;
+      }
+
+      // e.preventDefault();
+      removebounding();
+      // blurall();
+
+      var sx = e.clientX;
+      var sy = e.clientY;
+
+      //var sh = window.scrollTop || document.body.scrollTop || document.scrollTop;
+
+      var just = this;
+      var marq = document.createElement('div');
+
+      marq.style.border = '1px solid #1473e6';
+      marq.style.position = 'absolute';
+      marq.style.top = sy +'px';
+      marq.style.left = sx + 'px';
+      marq.style.zIndex = 133333333333333333333333333337;
+      marq.style.background = 'rgba(20, 115, 230,.15)';
+
+      marq.className = 'marquee';
+
+
+      //document.body.appendChild(marq);
+      var moved = false;
+
+      function move(e){
+          e.preventDefault();
+          e.stopPropagation();
+
+          var x = e.clientX;
+          var y = e.clientY;
+          var nx = x - sx;
+          var ny = y - sy;
+
+          if ( !moved ){
+            if ( Math.abs(nx) < 4 && Math.abs(ny) < 4 ){
+              return;
+            }
+            moved = true;
+            document.body.appendChild(marq);
+          }
+
+          var w = Math.abs(nx);
+          var h = Math.abs(ny);
+
+          marq.style.width = w + 'px';
+          marq.style.height = h + 'px';
+
+          var tx = nx < 0 ? nx : 0;
+          var ty = ny < 0 ? ny : 0;
+
+          marq.style.transform = 'translate(' + tx + 'px, ' + ty + 'px)';
+
+
+          var coords = marq.getBoundingClientRect();
+          var ml = coords.left;
+          //var mr = coords.right;
+          //var mb = coords.bottom;
+          var mt = coords.top;
+          var mh = coords.height;
+          var mw = coords.width;
+
+          var elms = just.getElementsByClassName('dragcard');
+
+          for(var i=0;i<elms.length;i++){
+              var elm = elms[i];
+              // var ol = elm.offsetLeft + elm.parentNode.offsetLeft + elm.parentNode.parentNode.offsetLeft  + Number(elm.dataset.x);
+              // var ot = elm.parentNode.offsetTop + Number(elm.dataset.y) + 52;
+              var bounds = elm.getBoundingClientRect();
+              var ol = bounds.left;
+              var ot = bounds.top;
+              //var ob = bounds.bottom;
+              //var or = bounds.right;
+              // var ew = elm.offsetWidth;
+              // var eh = elm.offsetHeight;
+              var oh = bounds.height;
+              var ow = bounds.width;
+
+                  var x1 = ml;
+                  var x2 = ml + mw;
+                  var y1 = mt;
+                  var y2 = mt + mh;
+
+                  var ox1 = ol;
+                  var ox2 = ol + ow;
+                  var oy1 = ot;
+                  var oy2 = ot + oh;
+
+              if ( (y2 < oy1 ) || (y1 > oy2) || (x2 < ox1) || (x1 > ox2) ){
+                elm.classList.remove('selected')
+              } else {
+                elm.classList.add('selected');
+              }
+          }
+
+          var boxes = just.getElementsByClassName('dragcard selected');
+
+          if ( !boxes.length ){
+            return;
+          } else if ( boxes.length === 1){
+            setboundingbox.call(boxes[0], e);
+          } else {
+            setmultibounds.call(boxes, e);
+          }
+      }
+
+      function end(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        window.removeEventListener('mousemove', move);
+        window.removeEventListener('mouseup', end);
+
+          if ( moved ){
+            setTimeout(function(){marq.remove();}, 100);
+          }
+      }
+
+      window.addEventListener('mouseup', end);
+      window.addEventListener('mousemove', move);
+  }
+
+  function setboundingbox(e){
+    if ( !!this.bounds ){
+
+      var bb = document.getElementsByClassName('boundingbox');
+
+          while(bb[0]){
+
+              bb[0].parentNode.removeChild(bb[0]);
+          }
+    }
+
+    var off = this.offset();
+
+    var x = off.x;
+    var y = off.y;
+    var w = off.w;
+    var h = off.h;
+
+    var b = document.createElement('div');
+    var handles = document.createElement('div');
+    // var hitbox = document.createElement('div');
+
+    b.className = 'boundingbox';
+
+    // hitbox.className = 'hitbox';
+
+    b.object = [this];
+
+    this.bounds = b;
+
+    b.style.left = x + 'px';
+    b.style.top = y + 'px';
+    b.style.position = 'absolute';
+    b.style.width = w + 'px';
+    b.style.height = h + 'px';
+    b.style.zIndex = 2147483640;
+
+    if ( h <= 72 ){
+      b.classList.add('minheight');
+    } else {
+      b.classList.remove('minheight');
+    }
+
+    if ( w <= 72 ){
+      b.classList.add('minwidth');
+    } else {
+      b.classList.remove('minwidth');
+    }
+
+    if ( this.classList.contains('canvasboard') ){
+      b.style.boxShadow = 'none';
+    }
+
+    for(var i=0;i<8;i++){
+      var a = document.createElement('div');
+      a.className = 'bhandle';
+
+      handles.appendChild(a);
+    }
+
+    b.appendChild(handles);
+    // b.appendChild(hitbox);
+
+    document.body.appendChild(b);
+  }
+
+    function setboundingposition(e){
+      var b = document.getElementsByClassName('boundingbox')[0];
+
+      if ( !b ){
+        return;
+      }
+
+      var s = document.getElementsByClassName('dragcard selected');
+
+      var tx = null;
+      var ty = null;
+      var tw = null;
+      var th = null;
+
+      b.object = [];
+
+      for(var i=0;i<s.length;i++){
+        var r = s[i];
+        var off = r.offset();
+
+        var x = off.x;
+        var y = off.y;
+        var w = off.w;
+        var h = off.h;
+
+        var x2 = x + w;
+        var y2 = y + h;
+
+        if ( !tx || x < tx){
+          tx = x;
+        }
+
+        if ( !ty || y < ty){
+          ty = y;
+        }
+
+        if ( !tw || x2 > tw ){
+          tw = x2;
+        }
+
+        if ( !th || y2 > th){
+          th = y2;
+        }
+
+        r.bounds = b;
+
+        b.object.push(r);
+      }
+
+      var nw = tw - tx;
+      var nh = th - ty;
+
+      b.style.left = tx + 'px';
+      b.style.top = ty + 'px';
+      b.style.position = 'absolute';
+      b.style.width = nw + 'px';
+      b.style.height = nh + 'px';
+      b.style.zIndex = 2147483641;
+
+      if ( nh <= 72 ){
+        b.classList.add('minheight');
+      } else {
+        b.classList.remove('minheight');
+      }
+
+      if ( nw <= 72 ){
+        b.classList.add('minwidth');
+      } else {
+        b.classList.remove('minwidth');
+      }
+    }
+
+    function setmultibounds(e){
+      var s = this;
+
+      var t = this[0];
+
+      var b = document.getElementsByClassName('multibox')[0];
+
+      if ( !b ){
+        var b = document.createElement('div');
+        b.className = 'boundingbox multibox';
+
+        for(var i=0;i<4;i++){
+          var a = document.createElement('div');
+          a.className = 'bhandle';
+
+          b.appendChild(a);
+        }
+
+        var o = document.getElementsByClassName('boundingbox');
+        o.remove();
+
+        document.body.appendChild(b);
+      }
+
+      var tx = null;
+      var ty = null;
+      var tw = null;
+      var th = null;
+
+      b.object = [];
+
+      for(var i=0;i<s.length;i++){
+        var r = s[i];
+        var off = r.offset();
+
+        var x = off.x;
+        var y = off.y;
+        var w = off.w;
+        var h = off.h;
+
+        var x2 = x + w;
+        var y2 = y + h;
+
+        if ( !tx || x < tx){
+          tx = x;
+        }
+
+        if ( !ty || y < ty){
+          ty = y;
+        }
+
+        if ( !tw || x2 > tw ){
+          tw = x2;
+        }
+
+        if ( !th || y2 > th){
+          th = y2;
+        }
+
+        r.bounds = b;
+
+        b.object.push(r);
+      }    
+
+      b.style.left = tx + 'px';
+      b.style.top = ty + 'px';
+      b.style.position = 'absolute';
+      b.style.width = tw - tx + 'px';
+      b.style.height = th - ty + 'px';
+      b.style.zIndex = 999999999999999;
+
+    }
+
+    function insertboard(e){
+      let cv = document.getElementsByClassName('view show')[0];
+      let sp = cv.getElementsByClassName('scratchpad')[0];
+
+      let s = document.createElement('section');
+      let c = document.createElement('div');
+      let b = document.createElement('div');
+      let r = document.createElement('div');
+
+      s.style.display = 'flex';
+      s.style.padding = '20px';
+      s.style.background = 'var(--ui2)';
+      s.style.overflow = 'auto hidden';
+      
+      
+      c.className = 'listcontainer';
+      c.style.flexWrap = 'wrap';
+
+      b.className = 'btn listbtn addlist';
+      b.appendChild(document.createTextNode('Add list'));
+
+      r.className = 'spacer';
+
+      newlist.call(c)
+      s.appendChild(c);
+      s.appendChild(b);
+      s.appendChild(r);
+
+      sp.appendChild(s);
+    }
+
     Attach.on('dragstart', '.card', dragStart);
 
-    Attach.on('dragover', '.list, .slide', handleDragOver);
-    Attach.on('dragenter', '.list, .slide', handleDragEnter);
-    Attach.on('dragleave', '.list, .slide', handleDragLeave);
-    Attach.on('dragend', '.list, .slide', handleDragEnd);
-    Attach.on('drop', '.list, .slide', handleDrop);
+    Attach.on('dragover', '.list, .slide, .scratchpad', handleDragOver);
+    Attach.on('dragenter', '.list', handleDragEnter);
+    Attach.on('dragleave', '.list', handleDragLeave);
+    Attach.on('dragend', '.list', handleDragEnd);
+    Attach.on('drop', '.list, .slide, .scratchpad', handleDrop);
 
     Attach.on('click', '.xbtn', closetab);
     Attach.on('click', '.ktitem', ktitem);
@@ -2955,7 +3599,7 @@ https://briefone.github.io/test/library/
     Attach.on('dblclick', '.dragcard', carddb);
     Attach.on('click', '.toggle', togglebtn);
     Attach.on('click', '.pop', popbtn);
-    Attach.on('click', '.tab', tab);
+    // Attach.on('click', '.tab', tab);
     Attach.on('click', '#wrapper', bodyclick);
     Attach.on('click', '.minbtn', minbtn);
     Attach.on('input', '.searchbar', filtercards);
@@ -2978,6 +3622,7 @@ https://briefone.github.io/test/library/
     Attach.on('click', '.newcebtn', newce);
     Attach.on('click', '.newbriefbtn', newbrief);
     Attach.on('click', '.newordersbtn', neworders);
+    Attach.on('click', '.newscratchbtn', newscratch);
     Attach.on('mousedown', '#resizecl', resizecl);
     Attach.on('blur', '.mr', blurmr);
     Attach.on('keydown', '.mr', sanitizeContenteditable);
@@ -2985,6 +3630,8 @@ https://briefone.github.io/test/library/
     Attach.on('click', '.addlist', addlist);
     Attach.on('click', '.tagdrop', addktpop);
     Attach.on('click', '.coloritem', changetagcolor);
+    Attach.on('mousedown', '.scratchpad', marquee);
+    Attach.on('click', '.insertboard', insertboard);
     
     document.addEventListener('keyup', keypress);
 
