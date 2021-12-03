@@ -3036,7 +3036,7 @@ https://briefone.github.io/test/library/
       let float = document.createElement('div');
       float.className = 'floatinglib';
 
-      float.style.left = this.offsetLeft + 'px';
+      float.style.left = this.getBoundingClientRect().x - 3 + 'px';
       float.style.top = this.offsetHeight + this.getBoundingClientRect().y + 12 + 'px';
 
       let tt = this;
