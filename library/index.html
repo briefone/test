@@ -1129,7 +1129,7 @@ https://briefone.github.io/test/library/
   </div>
   <script>
     function carddrag(e){
-      if ( e.which == 3 || this.draggable ){
+      if ( e.which == 3 || this.draggable || this.getparent('floatinglib') ){
         return;
       }
       let sp = this.getparent('scratchpad');
@@ -1434,6 +1434,18 @@ https://briefone.github.io/test/library/
                 tt.contentEditable = false;
                 tt.classList.add('ignore');
               }
+            }
+
+            if ( tt.classList.contains('keytag')){
+              console.log('kt')
+              let pop = makektpop(e);
+              if ( !tt.classList.contains('pop')){
+                tt.classList.add('pop');
+              } else {
+                tt.getElementsByClassName('ktpop').remove();
+              }
+
+              tt.appendChild(pop);
             }
 
             console.log(t, t.dataset.id)
@@ -3123,6 +3135,15 @@ https://briefone.github.io/test/library/
 
           tt.parentNode.insertBefore(dragcard, tt);
 
+          if (dragcard.parentElement.classList.contains('cedrop')){
+            dragcard.style.position = 'absolute';
+            let y = e.clientY;
+            let x = e.clientX;
+
+            dragcard.style.left = tt.offsetLeft + 'px';
+            dragcard.style.top = tt.offsetTop + 'px';
+          }
+
           let id = tt.dataset.id;
 
           if ( tt && tt.getElementsByClassName('mr')[0].innerText != '' ){
@@ -3692,7 +3713,6 @@ https://briefone.github.io/test/library/
     }
 
     function addtextblock(e){
-      console.log('e.target',e.target)
       let t = this;
       if ( !e.target.classList.contains('scratchpad') ){
         if ( !e.target.classList.contains('addtextblock') ){
@@ -3765,6 +3785,57 @@ https://briefone.github.io/test/library/
 
     }
 
+    function ceclick(e){
+
+      if ( !e.target.classList.contains('cedrop')){
+        return;
+      }
+      console.log('sdfsdf')
+        let tagg = 'uncategorized';
+
+        var foundIndex = KEYTAGS.findIndex(x => x.text == tagg);
+        console.log(foundIndex, KEYTAGS[foundIndex], 'fff');
+
+
+        let KT = KEYTAGS[foundIndex] || {color: 'rgb(221, 221, 221)', tcolor: 'black', text: tagg};
+        let kc = KT.color;
+        let kx = KT.tcolor;
+
+        let cid = makecards(1, true, KT);
+        dragcard = document.createElement('div');
+        dragcard.className = 'dragcard editing';
+        let kt = document.createElement('div');
+        let mr = document.createElement('div');
+        dragcard.style.position = 'absolute';
+        dragcard.style.pointerEvents = 'all';
+        dragcard.style.cursor = 'grab';
+        dragcard.style.background = kc;
+        dragcard.style.color = kx;
+        dragcard.dataset.blank = true;
+        mr.className = 'mr';
+        mr.contentEditable = true;
+        dragcard.dataset.id = cid;
+        kt.className = 'keytag ignore';
+        kt.dataset.tag = tagg;
+        kt.style.backgroundColor = kc;
+        kt.style.color = kx;
+        kt.appendChild(document.createTextNode(tagg));
+        dragcard.appendChild(kt);
+        dragcard.appendChild(mr);
+
+        let y = e.clientY;
+        let x = e.clientX;
+
+        dragcard.style.left = x + 'px';
+        dragcard.style.top = y - this.getBoundingClientRect().y + 'px';
+
+       
+        this.appendChild(dragcard);
+
+
+        mr.focus();
+    }
+
     Attach.on('dragstart', '.card', dragStart);
 
     Attach.on('dragover', '.list, .slide, .scratchpad', handleDragOver);
@@ -3820,6 +3891,7 @@ https://briefone.github.io/test/library/
     Attach.on('click', '.inserttable', inserttable);
     Attach.on('click', '.scratchpad, .addtextblock', addtextblock);
     Attach.on('contextmenu', '.scratchpad', spcontext);
+    Attach.on('click', '.cedrop', ceclick);
     
     document.addEventListener('keyup', keypress);
 
