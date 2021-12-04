@@ -269,7 +269,7 @@ https://briefone.github.io/test/library/
       .mousegrab  * {cursor:grabbing !important;}
 
       .dragcard {position:absolute;z-index:9999;background:var(--ui7);width:200px;padding:8px;color:white;cursor:grabbing;user-select:none;border-radius:3px;display: flex;flex-direction: column;align-items: self-start;justify-content: flex-start;}
-        .dragcard.focused, .dragcard:focus-within {box-shadow:0 0 0 2px #7B61FF !important;}
+        .dragcard.focused, .dragcard:focus-within {box-shadow:0 0 0 2px #7B61FF !important;    z-index: 10000;}
         .dragcard .mr {-webkit-line-clamp: 4;width:100%;}
           .slide .dragcard:not(.editing) .mr {-webkit-line-clamp: 8;}
 
