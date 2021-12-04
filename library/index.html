@@ -97,14 +97,14 @@ https://briefone.github.io/test/library/
     html {font: normal 14px var(--font-fam);color:var(--text);}
     body {background:var(--background);overflow:hidden;}
     input, textarea, select {font: normal 12px var(--font-fam);color:var(--text);outline:none;}
-    input:focus, textarea:focus {outline: 2px solid #0063FF;outline-offset:-2px;background-color:#0062ff17 !important;}
+    input:focus, textarea:focus, .textblock:focus {outline: 2px solid #0063FF;outline-offset:-2px;background-color:#0062ff17 !important;}
 
     #tabs {position:absolute;top:0;left:0;right:0;height:32px;background:var(--tabs);display:flex;align-items: center;justify-content: space-between;user-select: none;}
       #tabs .left {width:calc(100% - 32px);}
       #tabwrap {display:flex;width:100%;}
         #tabwrap::-webkit-scrollbar {display: none;}
       .popwindow #tabs, .popwindow .popout {display:none;}
-      .tab {height:100%;min-height:32px;font-size:11px;padding: 0 12px;color:var(--tabtext);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;white-space:nowrap;}
+      .tab {height:100%;min-height:32px;font-size:11px;padding: 0 12px;color:var(--tabtext);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;white-space:nowrap;background-color:var(--ui3);}
         .tab:hover {background:var(--border);}
         .tab.current {background:var(--tabactive);color:var(--textactive);}
 
@@ -124,6 +124,8 @@ https://briefone.github.io/test/library/
         .tab.timeline::before {content:'';background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236C757D' fill-rule='evenodd' d='M2 1.75a1 1 0 00-1 1v6.5a1 1 0 001 1h8a1 1 0 001-1v-6.5a1 1 0 00-1-1H2zm.25 1A.25.25 0 002 3v6c0 .138.112.25.25.25h1.5A.25.25 0 004 9V3a.25.25 0 00-.25-.25h-1.5zM5 3a.25.25 0 01.25-.25h1.5A.25.25 0 017 3v6a.25.25 0 01-.25.25h-1.5A.25.25 0 015 9V3zm3.25-.25A.25.25 0 008 3v6c0 .138.112.25.25.25h1.5A.25.25 0 0010 9V3a.25.25 0 00-.25-.25h-1.5z' clip-rule='evenodd'/%3E%3C/svg%3E");}
 
         .tab.orders::before {content:'';background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236C757D' fill-rule='evenodd' d='M2 1.75a1 1 0 00-1 1v6.5a1 1 0 001 1h8a1 1 0 001-1v-6.5a1 1 0 00-1-1H2zm.25 1A.25.25 0 002 3v6c0 .138.112.25.25.25h1.5A.25.25 0 004 9V3a.25.25 0 00-.25-.25h-1.5zM5 3a.25.25 0 01.25-.25h1.5A.25.25 0 017 3v6a.25.25 0 01-.25.25h-1.5A.25.25 0 015 9V3zm3.25-.25A.25.25 0 008 3v6c0 .138.112.25.25.25h1.5A.25.25 0 0010 9V3a.25.25 0 00-.25-.25h-1.5z' clip-rule='evenodd'/%3E%3C/svg%3E");}
+
+        .tab.scratch::before {content:'';background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 369 369' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%236C757D' d='M231.489 248.407C215.231 264.661 208.884 288.356 214.833 310.559C220.786 332.766 238.13 350.11 260.333 356.059C282.54 362.008 306.231 355.66 322.489 339.407L353.344 308.552L329.602 284.81L298.747 315.665L298.743 315.661C290.903 323.013 279.794 325.735 269.442 322.841C259.09 319.95 251.001 311.861 248.106 301.509C245.215 291.157 247.938 280.048 255.289 272.208L316.891 210.606H316.887C333.172 194.379 339.567 170.7 333.657 148.481C327.747 126.266 310.434 108.887 288.243 102.899C266.048 96.9064 242.341 103.211 226.055 119.438L119.655 225.838C111.816 233.189 100.702 235.912 90.3503 233.021C79.9983 230.127 71.9123 222.037 69.0183 211.685C66.1238 201.333 68.8464 190.224 76.198 182.384L137.8 120.782C154.046 104.536 160.39 80.8562 154.445 58.6652C148.496 36.4742 131.164 19.1422 108.972 13.1922C86.781 7.24693 63.101 13.5907 46.855 29.8372L16 60.6922L39.742 84.4342L70.597 53.5792L70.6009 53.5831C78.4407 46.2315 89.5499 43.5091 99.9019 46.4034C110.254 49.294 118.343 57.3834 121.238 67.7354C124.129 78.0874 121.406 89.1964 114.054 97.0364L52.4523 158.638H52.4562C36.1712 174.865 29.7762 198.544 35.6862 220.763C41.5964 242.978 58.9092 260.357 81.1002 266.345C103.295 272.338 127.002 266.033 143.288 249.806L249.688 143.406C257.528 136.055 268.641 133.332 278.993 136.223C289.345 139.117 297.431 147.207 300.325 157.559C303.22 167.911 300.497 179.02 293.146 186.86L231.489 248.407Z'/%3E%3C/svg%3E%0A");}
 
       .menubtn {height:100%;font-size:11px;padding: 0 12px;color:var(--secondary);align-items: center;line-height:32px;cursor:pointer;display:flex;gap:4px;white-space:nowrap;}
         .menubtn:hover, .menubtn.on  {background:var(--border);}
@@ -410,8 +412,11 @@ https://briefone.github.io/test/library/
     #subnav .left {gap:4px;}
       .subnavnav {padding:0 8px;}
 
-    .scratchpad {background:var(--ui1);position:absolute;top:0;left:0;right:0;bottom:0;overflow-y:scroll;}
+    .scratchpad {background:var(--ui1);position:absolute;top:0;left:0;right:0;bottom:0;overflow-y:scroll;cursor:pointer;padding-bottom:40px;}
 
+        .contextmenu {position:absolute;background:white;border-radius:3px;box-shadow:var(--shadow);padding:4px 0;min-width:120px;z-index: 999999999999999999999999999999999999;}
+          .contextitem {font-size:12px;font-weight:500;padding:4px 12px;cursor:pointer;}
+            .contextitem:hover {background:var(--ui2);}
 
 
     .boundingbox {box-shadow: 0 0 0 var(--selectwidth) var(--select);pointer-events:none;
@@ -445,6 +450,15 @@ https://briefone.github.io/test/library/
 
       .floatinglib {position:absolute;z-index:999999;background:white;width:240px;border-radius:3px;box-shadow:var(--shadow);}
 
+      .spwrap {max-width:400px;padding:8px 12px;margin:0 auto;}
+
+      .textblock {padding:12px;font-size:14px;min-height:12px;max-width:400px;margin:0 auto;}
+
+
+      table, th, td {
+      border: 2px solid black;
+      border-collapse: collapse;
+    }
   </style>
   <script src="../js/base.js"></script>
   <script src="../js/gator.js"></script>
@@ -1324,21 +1338,45 @@ https://briefone.github.io/test/library/
         tars.forEach(tar => {
           let slide = tar.classList.contains('slide');
           let scratch = tar.classList.contains('scratchpad');
+          let ce = tar.classList.contains('cedrop');
           let list = tar.classList.contains('list');
-          if ( list || slide || scratch){
+          if ( list || slide || scratch || ce){
             if (tar == t.getparent('list')){
+              cc.style.position = 'static';
               return;
             }
 
             cc.classList.add('focused');
             cc.style.opacity = 1;
 
-            if ( slide || scratch && !e.target.getparent('listcontainer') ){
+            if ( slide || scratch && !e.target.getparent('listcontainer') && !e.target.getparent('cedrop') ){
               cc.style.position = 'absolute';
               cc.style.top = e.clientY + ot + tar.scrollTop - tar.getBoundingClientRect().y - (slide ? 1 : 0) + 'px';
               cc.style.left = e.clientX + ol + tar.scrollLeft - tar.getBoundingClientRect().x - (slide ? 1 : 0) + 'px';
+
               tar.appendChild(cc);
             } 
+
+            if (ce){
+              cc.style.position = 'absolute';
+              cc.style.top = e.clientY + ot + tar.scrollTop - tar.getBoundingClientRect().y + tar.offsetTop + 'px';
+              cc.style.left = e.clientX + ol + tar.scrollLeft - tar.getBoundingClientRect().x + tar.offsetLeft + 'px';
+              tar.appendChild(cc);
+
+              return;
+            }
+
+            if (scratch && !e.target.getparent('listcontainer') && !e.target.getparent('cedrop')){
+              cc.style.position = 'static';
+
+              let wrap = document.createElement('div');
+              wrap.className = 'spwrap';
+
+              wrap.appendChild(cc);
+
+              tar.appendChild(wrap);
+
+            }
 
             used = true;
             inserted2 = true;
@@ -2868,14 +2906,14 @@ https://briefone.github.io/test/library/
       newtab('Untitled orders', 'orders', v);
     }
 
-    function newscratch(){
+    function newscratch(t, g = true){
       let x = document.createElement('div');
       x.className = 'scratchpad';
       let v = newview('dragscroll', x);
-      newtab('Untitled scratch', 'scratch', v);
+      newtab(t || 'Untitled scratch', 'scratch', v, g);
     }
 
-    function newtab(x, c, v){
+    function newtab(x, c, v, g = true){
       let t = document.createElement('div');
       t.className = `tab ${c} closeable`;
       t.dataset.view = v;
@@ -2901,7 +2939,9 @@ https://briefone.github.io/test/library/
 
       // t.click();
 
-      tab.call(t,{});
+      if ( g ){
+        tab.call(t,{});
+      }
     }
 
     function resizecl(e){
@@ -3007,6 +3047,10 @@ https://briefone.github.io/test/library/
     function findcards(x){
       let v = x.toLowerCase().trim();
 
+      if ( v == ''){
+        return;
+      }
+
       let cards = document.getElementById('cl').getElementsByClassName('card');
 
       let arr = [];
@@ -3054,6 +3098,7 @@ https://briefone.github.io/test/library/
 
         c.onmousedown = function(e){
           e.preventDefault();
+          // e.stopPropagation();
 
           let text = this.getElementsByClassName('mr')[0].cloneNode(true);
           let keytag = this.getElementsByClassName('keytag')[0];
@@ -3076,7 +3121,7 @@ https://briefone.github.io/test/library/
           dragcard.style.cursor = 'grab';
           dragcard.style.zIndex = 9999;
 
-          tt.parentNode.appendChild(dragcard);
+          tt.parentNode.insertBefore(dragcard, tt);
 
           let id = tt.dataset.id;
 
@@ -3259,7 +3304,7 @@ https://briefone.github.io/test/library/
       }
 
     function marquee(e){
-      if ( e.which == 3 || !e.target.classList.contains('scratchpad') ){
+      if ( e.which == 3 || !e.target.classList.contains('scratchpad') && !e.target.classList.contains('cedrop') ){
           return;
       }
 
@@ -3627,6 +3672,99 @@ https://briefone.github.io/test/library/
       sp.appendChild(s);
     }
 
+    function insertce(e){
+      let cv = document.getElementsByClassName('view show')[0];
+      let sp = cv.getElementsByClassName('scratchpad')[0];
+
+      let s = document.createElement('section');
+      let c = document.createElement('div');
+     
+      s.style.display = 'flex';
+      s.style.padding = '20px';
+      s.style.background = 'var(--ui2)';
+      s.style.overflow = 'auto hidden';
+      s.style.minHeight = '400px';
+
+      s.className = 'cedrop';
+    
+
+      sp.appendChild(s);
+    }
+
+    function addtextblock(e){
+      console.log('e.target',e.target)
+      let t = this;
+      if ( !e.target.classList.contains('scratchpad') ){
+        if ( !e.target.classList.contains('addtextblock') ){
+          return;
+        }
+        let cv = document.getElementsByClassName('view show')[0];
+        t = cv.getElementsByClassName('scratchpad')[0];
+      }
+
+      let b = document.createElement('div');
+      b.className = 'textblock';
+
+      b.contentEditable = true;
+
+      t.appendChild(b);
+
+      b.focus();
+    }
+
+    function removecontext(e){
+      document.body.removeEventListener('click', removecontext);
+      document.getElementsByClassName('contextmenu').remove();
+    }
+
+    function spcontext(e){
+      e.preventDefault();
+
+      console.log('contecxt');
+
+      removecontext(e);
+
+      let x= e.clientX ;
+      let y = e.clientY;
+
+      let m = document.createElement('div');
+
+      m.className = 'contextmenu';
+      m.style.left = x + 'px';
+      m.style.top = y +'px';
+
+      let items = [{text: 'Insert Board', class: 'insertboard'}, {text: 'Insert Cause & Effect', class: 'insertce'}, {text: 'Insert Text Block', class: 'addtextblock'}, {text: 'Insert Table', class: 'inserttable'}];
+
+      for(var i=0;i<items.length;i++){
+        let t = items[i];
+
+        let d= document.createElement('div');
+        d.className = 'contextitem ' + t.class;
+        d.appendChild(document.createTextNode(t.text));
+
+        m.appendChild(d);
+      }
+
+      document.body.addEventListener('click', removecontext);
+      document.body.appendChild(m);
+    }
+
+    function inserttable(e){
+      let t = document.createElement('table');
+      let tc = `<thead><tr contenteditable='true'></tr><tr contenteditable='true'></tr></thead><tbody><tr><td contenteditable='true'></td><td contenteditable='true'></td></tr><tr><td contenteditable='true'></td><td contenteditable='true'></td></tr></tbody>`;
+
+      t.style.width = '400px';
+      t.style.margin = '12px auto';
+
+      t.innerHTML = tc;
+
+      let cv = document.getElementsByClassName('view show')[0];
+      let sp = cv.getElementsByClassName('scratchpad')[0];
+
+      sp.appendChild(t);
+
+    }
+
     Attach.on('dragstart', '.card', dragStart);
 
     Attach.on('dragover', '.list, .slide, .scratchpad', handleDragOver);
@@ -3678,6 +3816,10 @@ https://briefone.github.io/test/library/
     Attach.on('click', '.coloritem', changetagcolor);
     Attach.on('mousedown', '.scratchpad', marquee);
     Attach.on('click', '.insertboard', insertboard);
+    Attach.on('click', '.insertce', insertce);
+    Attach.on('click', '.inserttable', inserttable);
+    Attach.on('click', '.scratchpad, .addtextblock', addtextblock);
+    Attach.on('contextmenu', '.scratchpad', spcontext);
     
     document.addEventListener('keyup', keypress);
 
@@ -3687,6 +3829,7 @@ https://briefone.github.io/test/library/
     popcorn();
 
     newboard();
+    newscratch('Road to War', false);
 
     if ( localStorage.opennew){
       document.getElementById('openpopwindow').classList.add('opened');
