@@ -1534,6 +1534,7 @@ https://briefone.github.io/test/library/
         pi.style.alignItems = 'center';
         pi.style.justifyContent = 'start';
         kt.className = 'keytag ignore';
+        kt.style.pointerEvents = 'none';
         kt.dataset.tag = t.text;
         kt.style.backgroundColor = t.color;
         kt.style.color = t.tcolor;
@@ -2711,9 +2712,10 @@ https://briefone.github.io/test/library/
     function ktitem(){
       let kt = this.getElementsByClassName('keytag')[0];
 
-      let card = this.getparent('card');
+      let card = this.getparent('card') || this.getparent('dragcard');
       let id = card.dataset.id;
-      let t = card.getElementsByClassName('tagdrop')[0];
+      let ca = document.querySelector('.card[data-id="' + id + '"]');
+      let t = ca.getElementsByClassName('tagdrop')[0];
       let k = t.getElementsByClassName('keytag')[0];
 
       let nk = kt.cloneNode(true);
@@ -2745,6 +2747,7 @@ https://briefone.github.io/test/library/
           }
           let p = k.parentElement;
           let kk = kt.cloneNode(true);
+          kk.style.pointerEvents = 'unset';
           
           p.insertBefore(kk, k);
           k.remove();   
