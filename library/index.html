@@ -1276,7 +1276,12 @@ https://briefone.github.io/test/library/
               let hovering = document.getElementsByClassName('list hovering');
 
               while(hovering[0]){
-                hovering[0].removeAttribute('style');
+                let color = hovering[0].dataset.color;
+                if (color){
+                  hovering[0].style.backgroundColor = color;
+                } else {
+                  hovering[0].removeAttribute('style');
+                }
                 hovering[0].classList.remove('hovering');
               }
               tar.classList.add('hovering');
@@ -1317,7 +1322,12 @@ https://briefone.github.io/test/library/
         if ( !hoverlist ){
           let hovering = document.getElementsByClassName('list hovering');
           while(hovering[0]){
-            hovering[0].removeAttribute('style');
+            let color = hovering[0].dataset.color;
+            if (color){
+              hovering[0].style.backgroundColor = color;
+            } else {
+              hovering[0].removeAttribute('style');
+            }
             hovering[0].classList.remove('hovering');
           }
 
@@ -1397,7 +1407,12 @@ https://briefone.github.io/test/library/
         let hovering = document.getElementsByClassName('list hovering');
 
         while(hovering[0]){
-          hovering[0].removeAttribute('style');
+          let color = hovering[0].dataset.color;
+          if (color){
+            hovering[0].style.backgroundColor = color;
+          } else {
+            hovering[0].removeAttribute('style');
+          }
           hovering[0].classList.remove('hovering');
         }
 
@@ -1490,6 +1505,8 @@ https://briefone.github.io/test/library/
             ta.call(txa);
             txa.focus();
             
+          } else if ( !e.target.getparent('expand') ) {
+            t.classList.remove('expanded');
           }
         }
       }
@@ -1551,7 +1568,7 @@ https://briefone.github.io/test/library/
       return ktpop;
     }
 
-    function makecards(c, single = false, keytag = false){
+    function makecards(c, single = false, keytag = false, text = false){
       let cl = document.getElementById('cl').getElementsByClassName('cardlist')[0];
 
       let cid = false;
@@ -1646,7 +1663,7 @@ https://briefone.github.io/test/library/
 
         men.appendChild(menupop);
 
-        let content = !single ? generate() : 'none';
+        let content = !single ? generate() : text || '';
 
         kt.appendChild(document.createTextNode(tag.text));
 
@@ -2511,7 +2528,7 @@ https://briefone.github.io/test/library/
             colorpop.removeAttribute('id');
             et.appendChild(colorpop);
 
-            et.classList.add('on');
+            et.classList.toggle('on');
 
             return;
           }
@@ -2575,6 +2592,12 @@ https://briefone.github.io/test/library/
 
           // t.appendChild(dragcard);
 
+          document.getElementsByClassName('card expanded').removeclass('expanded');
+
+          let pc = document.getElementById(cid);
+          pc.classList.add('expanded');
+          pc.scrollIntoViewIfNeeded(true);
+
           mr.focus();
 
         }
@@ -2620,9 +2643,17 @@ https://briefone.github.io/test/library/
       dragcard.appendChild(kt);
       dragcard.appendChild(mr);
 
-      this.parentElement.appendChild(dragcard);
-     
+      this.insertAfter(dragcard);
+      
+      document.getElementsByClassName('card expanded').removeclass('expanded');
+
+      let pc = document.getElementById(cid);
+      pc.classList.add('expanded');
+      pc.scrollIntoViewIfNeeded(true);
+
+
       mr.focus();
+
     }
 
     function dragtab(e){
@@ -3253,6 +3284,8 @@ https://briefone.github.io/test/library/
       let t = this.getparent('listtag');
       let k = t.dataset.tag;
 
+      let l = t.getparent('list');
+
       let object = KEYTAGS.find(x => x.text === k);
       var foundIndex = KEYTAGS.findIndex(x => x.text == k);
 
@@ -3260,6 +3293,8 @@ https://briefone.github.io/test/library/
       console.log(rgb);
       let w = contrastrrgb(rgb, [255,255,255]);
       let b = contrastrrgb(rgb, [0,0,0]);
+
+      l.style.backgroundColor = l.dataset.color = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ', 0.2)';
 
       let tx = w > b ? 'white': 'black';
 
@@ -3753,7 +3788,7 @@ https://briefone.github.io/test/library/
       let m = document.createElement('div');
 
       m.className = 'contextmenu';
-      m.style.left = x + 'px';
+      m.style.left = x + 4 + 'px';
       m.style.top = y +'px';
 
       let items = [{text: 'Insert Board', class: 'insertboard'}, {text: 'Insert Cause & Effect', class: 'insertce'}, {text: 'Insert Text Block', class: 'addtextblock'}, {text: 'Insert Table', class: 'inserttable'}];
@@ -3770,6 +3805,14 @@ https://briefone.github.io/test/library/
 
       document.body.addEventListener('click', removecontext);
       document.body.appendChild(m);
+
+      if ( m.offsetTop + m.offsetHeight > window.innerHeight ){
+        m.style.top = window.innerHeight - m.offsetHeight - 12 +'px';
+      }
+
+      if ( m.offsetLeft + m.offsetWidth > window.innerWidth ){
+        m.style.left = window.innerWidth - m.offsetWidth - 24 +'px';
+      }
     }
 
     function inserttable(e){
@@ -3830,13 +3873,97 @@ https://briefone.github.io/test/library/
         let x = e.clientX;
 
         dragcard.style.left = x + 'px';
-        dragcard.style.top = y - this.getBoundingClientRect().y + 'px';
+        dragcard.style.top =  y - 80 + 'px';
 
        
         this.appendChild(dragcard);
 
 
         mr.focus();
+    }
+
+    function mrpaste(e){
+      e.preventDefault();
+      let p = e.clipboardData.getData('text/plain');
+      console.log('p', p);
+
+      let cc = p.split('\n');
+
+      console.log(cc, p.indexOf('\n'))
+
+
+        var s = window.getSelection();
+        var range = document.createRange();
+        range.setStart(s.anchorNode, s.anchorOffset);
+        // range.setEnd(sel.focusNode, sel.focusOffset);
+
+        s.deleteFromDocument();
+
+      //   if(s.rangeCount > 1) {
+      //   for(var i = 1; i < s.rangeCount; i++) {
+      //     s.removeRange(s.getRangeAt(i));
+      //   }
+      // }
+
+
+
+        if ( cc.length === 1){
+          let newNode = document.createTextNode(p);
+          range.insertNode(newNode);
+          return;
+        }
+
+        let d = this.getparent('dragcard');
+
+        let o = d;
+
+        for(var i=0;i<cc.length;i++){
+          let v = cc[i].trim();
+          if ( v == '' ){
+            continue;
+          }
+          document.getElementsByClassName('focused').removeclass('focused');
+
+          let list = this.getparent('list');
+          let lt = list.getElementsByClassName('listtag');
+          let tagg = lt.length ? lt[0].dataset.tag.toLowerCase() : list.getElementsByClassName('taginput')[0].dataset.tag;
+          var foundIndex = KEYTAGS.findIndex(x => x.text == tagg);
+          console.log(foundIndex, KEYTAGS[foundIndex], 'fffffff');
+
+          let KT = KEYTAGS[foundIndex] || {color: 'rgb(221, 221, 221)', tcolor: 'black', text: tagg};
+          let kc = KT.color;
+          let kx = KT.tcolor;
+
+          let cid = makecards(1, true, KT, v);
+          dragcard = document.createElement('div');
+          dragcard.className = 'dragcard';
+          let kt = document.createElement('div');
+          let mr = document.createElement('div');
+          dragcard.style.position = 'static';
+          dragcard.style.pointerEvents = 'all';
+          dragcard.style.cursor = 'grab';
+          dragcard.style.background = kc;
+          dragcard.style.color = kx;
+          dragcard.dataset.blank = false;
+          mr.className = 'mr ignore';
+          mr.contentEditable = false;
+          dragcard.dataset.id = cid;
+          kt.className = 'keytag ignore';
+          kt.dataset.tag = tagg;
+          kt.style.backgroundColor = kc;
+          kt.style.color = kx;
+          kt.appendChild(document.createTextNode(tagg));
+
+          mr.appendChild(document.createTextNode(v));
+
+          dragcard.appendChild(kt);
+          dragcard.appendChild(mr);
+
+          o.insertAfter(dragcard);
+          o = dragcard;
+        }
+
+        d.remove();
     }
 
     Attach.on('dragstart', '.card', dragStart);
@@ -3895,8 +4022,11 @@ https://briefone.github.io/test/library/
     Attach.on('click', '.scratchpad, .addtextblock', addtextblock);
     Attach.on('contextmenu', '.scratchpad', spcontext);
     Attach.on('click', '.cedrop', ceclick);
+
+    Attach.on('paste', '.mr', mrpaste);
     
     document.addEventListener('keyup', keypress);
+
 
     makekeytags();
     makecards(40);

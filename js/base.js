@@ -38,7 +38,7 @@ String.prototype.stripslashes = function(){
 };
 
 Element.prototype.insertAfter = function (element) {
-    element.parentNode.insertBefore(this, element.nextSibling);
+    this.parentNode.insertBefore(element, this.nextSibling);
 },false;
 
 HTMLElement.prototype.getparent = function(c) { //class, tag, or id
