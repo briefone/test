@@ -1291,11 +1291,15 @@ https://briefone.github.io/test/library/
 
                 if ( Number(rgb[0]) < 200 || Number(rgb[1]) < 200 || Number(rgb[2]) < 200) {
                   tar.style.backgroundColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ', 0.3)';
+                } else {
+                  tar.style.backgroundColor = 'rgb(109 115 141 / 20%)';
                 }
               } else if (bg.indexOf('#') >= 0 ){
                 let rgb = hex2rgb(bg);
                 if ( Number(rgb[0]) < 200 || Number(rgb[1]) < 200 || Number(rgb[2]) < 200) {
                   tar.style.backgroundColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ', 0.3)';
+                } else {
+                  tar.style.backgroundColor = 'rgb(109 115 141 / 20%)';
                 }
               }
             }
@@ -1516,7 +1520,7 @@ https://briefone.github.io/test/library/
     }
 
     function makekeytags(){
-      window.KEYTAGS = [{color: '#003f5c', text: 'logisitics'}, {color: '#2f4b7c', text: 'fact'}, {color: '#665191', text: 'rfi'}, {color: '#a05195', text: 'operation'}, {color: '#d45087', text: 'combat'}, {color: '#f95d6a', text: 'enemy'}, {color: '#ff7c43', text: 'danger'}, {color: '#ffa600', text: 'neutral'}, {color: '#ddd', text: 'uncategorized'} ];
+      window.KEYTAGS = [{color: '#003f5c', text: 'logisitics'}, {color: '#2f4b7c', text: 'fact'}, {color: '#665191', text: 'rfi'}, {color: '#a05195', text: 'operation'}, {color: '#d45087', text: 'combat'}, {color: '#f95d6a', text: 'enemy'}, {color: '#ff7c43', text: 'danger'}, {color: '#ffa600', text: 'neutral'}, {color: '#d6d8e1', text: 'uncategorized'} ];
 
       for(var i=0;i<KEYTAGS.length;i++){
         let t = KEYTAGS[i];
@@ -3249,7 +3253,7 @@ https://briefone.github.io/test/library/
             to.dataset.tag = tt;
           }
 
-          KEYTAGS.push({color: '#ddd', tcolor: '#000', text: tt});
+          KEYTAGS.push({color: '#d6d8e1', tcolor: '#000', text: tt});
         } else if ( e.keyCode == 27 ){
           this.getparent('list').remove();
         }
