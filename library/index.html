@@ -79,6 +79,8 @@ https://briefone.github.io/test/library/
       --selectgap: 0px;
       --selectwidth: 2px;
 
+      --cardfocus: #7a61ff;
+
     }
 
     .dark {
@@ -235,8 +237,8 @@ https://briefone.github.io/test/library/
         
 
         .card .expand {width:100%;display:none;flex-direction: column;gap:16px;align-items: flex-start;padding:8px 0;}
-          .popoveredit #cl .card .expand {position:fixed;left:0;top:50%;transform:translate(-102%, -50%);background:var(--ui1);padding:12px 16px;border:1px solid var(--border);max-height:80%;overflow-y:auto;box-shadow: 0 0 0 2px #7a61ff;border-radius:3px;}
-        .card.expanded {box-shadow: inset 0 0 0 2px #7a61ff;background:transparent;}
+          .popoveredit #cl .card .expand {position:fixed;left:0;top:50%;transform:translate(-102%, -50%);background:var(--ui1);padding:12px 16px;border:1px solid var(--border);max-height:80%;overflow-y:auto;box-shadow: 0 0 0 2px var(--cardfocus);border-radius:3px;}
+        .card.expanded {box-shadow: inset 0 0 0 2px var(--cardfocus);background:transparent;}
           
         .expanded .expand {display:flex;}
           body:not(.popoveredit) #cl .expanded .tr, body:not(.popoveredit) #cl .expanded .mr, body:not(.popoveredit) #cl .expanded .br, body:not(.popoveredit) #cl .expanded .check,.modal .expanded .tr,.modal .expanded .mr, .modal .expanded .br, .modal .expanded .check {display:none;}
@@ -269,7 +271,7 @@ https://briefone.github.io/test/library/
       .mousegrab  * {cursor:grabbing !important;}
 
       .dragcard {position:absolute;z-index:9999;background:var(--ui7);width:200px;padding:8px;color:white;cursor:grabbing;user-select:none;border-radius:3px;display: flex;flex-direction: column;align-items: self-start;justify-content: flex-start;}
-        .dragcard.focused, .dragcard:focus-within {box-shadow:0 0 0 2px #7B61FF !important;    z-index: 10000;}
+        .dragcard.focused, .dragcard:focus-within {box-shadow:0 0 0 2px var(--cardfocus) !important;z-index: 10000;}
         .dragcard .mr {-webkit-line-clamp: 4;width:100%;}
           .slide .dragcard:not(.editing) .mr {-webkit-line-clamp: 8;}
 
@@ -451,6 +453,7 @@ https://briefone.github.io/test/library/
       .floatinglib {position:absolute;z-index:999999;background:white;width:240px;border-radius:3px;box-shadow:var(--shadow);}
 
       .spwrap {max-width:400px;padding:8px 12px;margin:0 auto;}
+        .spwrap .dragcard {width:100%;-webkit-line-clamp: unset;}
 
       .textblock {padding:12px;font-size:14px;min-height:12px;max-width:400px;margin:0 auto;}
 
@@ -459,6 +462,25 @@ https://briefone.github.io/test/library/
       border: 2px solid black;
       border-collapse: collapse;
     }
+
+    .timelinewrap {overflow-x:scroll;}
+      .timelinescroll {position:relative;width:14600px;}
+      .timelinewrap .days {display:flex;flex-wrap: nowrap;background:#fff;}
+        .days .day {min-width:40px;font-size:10px;color:rgba(0,0,0,0.54);padding:4px 0;}
+      .timelinewrap .timeline {min-height:200px;background:#fdfdfd;position:relative;width:100%;}
+
+      .timeline .dragcard {box-sizing:border-box;}
+        .timeline .dragcard .mr {min-width:400px;-webkit-line-clamp: 2;}
+
+        .timeline .dragcard .mr::before {content:attr(data-content);color:black !important;}
+
+      .timelinehandle {position:absolute;top:50%;left:-5px;transform:translateY(-50%);width:8px;height:8px;border:2px solid var(--cardfocus);box-sizing:border-box;background:white;border-radius:1.5px;cursor:ew-resize;display:none;}
+        .timeline .focused .timelinehandle {display:block;}
+        .timelinehandle::after {content:'';display:block;width:20px;height:20px;top:-10px;left:-10px;position:absolute;}
+          .righthandle {right:-5px;left:auto;}
+
+
+
   </style>
   <script src="../js/base.js"></script>
   <script src="../js/gator.js"></script>
@@ -709,18 +731,6 @@ https://briefone.github.io/test/library/
           </div>
           <div class="btn listbtn addlist shadowbtn">Add list</div>
         </div>
-
-        <div id=p3 class=view>
-          <div class=timeline>
-            <div class=timelength>
-              length
-            </div>
-            <div class=timecanvas>
-              canvas
-            </div>
-          </div>
-        </div>
-
 
       </div>
     </div>
@@ -1164,7 +1174,7 @@ https://briefone.github.io/test/library/
       document.body.classList.add('mousegrab');
       console.log(keytag.innerText.toLowerCase());
       let foundIndex = KEYTAGS.findIndex(x => x.text == keytag.innerText.toLowerCase());
-      let KT = KEYTAGS[foundIndex] || {color: 'rgb(221, 221, 221)', tcolor: 'black',  text: keytag.innerText.toLowerCase()};
+      let KT = KEYTAGS[foundIndex] || {color: 'rgb(214, 216, 225)', tcolor: 'black',  text: keytag.innerText.toLowerCase()};
       let bg = KT.color;
       let kc = KT.tcolor;
 
@@ -1286,20 +1296,19 @@ https://briefone.github.io/test/library/
               }
               tar.classList.add('hovering');
 
-              if ( bg.indexOf('rgb') >= 0 ){
-                let rgb = bg.replace('rgb(', '').replace(')', '').split(',');
+              let rgb = false;
 
-                if ( Number(rgb[0]) < 200 || Number(rgb[1]) < 200 || Number(rgb[2]) < 200) {
-                  tar.style.backgroundColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ', 0.3)';
-                } else {
-                  tar.style.backgroundColor = 'rgb(109 115 141 / 20%)';
-                }
+              if ( bg.indexOf('rgb') >= 0 ){
+                rgb = bg.replace('rgb(', '').replace('rgba(', '').replace(')', '').split(',');
               } else if (bg.indexOf('#') >= 0 ){
-                let rgb = hex2rgb(bg);
+                rgb = hex2rgb(bg);
+              }
+
+              if ( rgb ){
                 if ( Number(rgb[0]) < 200 || Number(rgb[1]) < 200 || Number(rgb[2]) < 200) {
                   tar.style.backgroundColor = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ', 0.3)';
                 } else {
-                  tar.style.backgroundColor = 'rgb(109 115 141 / 20%)';
+                  tar.style.backgroundColor = 'rgb(109 115 141 / 13%)';
                 }
               }
             }
@@ -1354,7 +1363,9 @@ https://briefone.github.io/test/library/
           let scratch = tar.classList.contains('scratchpad');
           let ce = tar.classList.contains('cedrop');
           let list = tar.classList.contains('list');
-          if ( list || slide || scratch || ce){
+          let tl = tar.classList.contains('timeline');
+
+          if ( list || slide || scratch || ce || tl ){
             if (tar == t.getparent('list')){
               cc.style.position = 'static';
               return;
@@ -1363,7 +1374,7 @@ https://briefone.github.io/test/library/
             cc.classList.add('focused');
             cc.style.opacity = 1;
 
-            if ( slide || scratch && !e.target.getparent('listcontainer') && !e.target.getparent('cedrop') ){
+            if ( slide || scratch && !e.target.getparent('listcontainer') && !e.target.getparent('cedrop') && !e.target.getparent('timeline') ){
               cc.style.position = 'absolute';
               cc.style.top = e.clientY + ot + tar.scrollTop - tar.getBoundingClientRect().y - (slide ? 1 : 0) + 'px';
               cc.style.left = e.clientX + ol + tar.scrollLeft - tar.getBoundingClientRect().x - (slide ? 1 : 0) + 'px';
@@ -1372,6 +1383,7 @@ https://briefone.github.io/test/library/
             } 
 
             if (ce){
+              inserted2 = true;
               cc.style.position = 'absolute';
               cc.style.top = e.clientY + ot + tar.scrollTop - tar.getBoundingClientRect().y + tar.offsetTop + 'px';
               cc.style.left = e.clientX + ol + tar.scrollLeft - tar.getBoundingClientRect().x + tar.offsetLeft + 'px';
@@ -1380,7 +1392,65 @@ https://briefone.github.io/test/library/
               return;
             }
 
-            if (scratch && !e.target.getparent('listcontainer') && !e.target.getparent('cedrop')){
+            if (tl){
+               if (!moved) {
+                 return;
+               }
+
+               inserted2 = true;
+              cc.style.position = 'absolute';
+
+              let tx = e.clientX + ol - tar.offsetLeft + tar.scrollLeft - tar.getBoundingClientRect().x + tar.offsetLeft;
+              let ty = e.clientY + ot - tar.offsetTop + tar.scrollTop - tar.getBoundingClientRect().y + tar.offsetTop;
+
+              tx = Math.round(tx / 40 )* 40;
+
+              cc.style.top = ty + 'px';
+              cc.style.left = tx + 'px';
+              // cc.style.position = 'relative';
+
+              if ( !cc.getElementsByClassName('timelinehandle').length ){
+                let h = document.createElement('div');
+                h.className = 'timelinehandle lefthandle';
+
+                let hr = document.createElement('div');
+                hr.className = 'timelinehandle righthandle';
+
+                cc.appendChild(h);
+                cc.appendChild(hr);
+              }
+
+              tar.appendChild(cc);
+
+              let th = 0;
+
+              let d = tar.getElementsByClassName('dragcard');
+
+              let order = [];
+
+              for(var i=0;i<d.length;i++){
+                let aa = d[i];
+
+                order.push({elm: aa, top: aa.offsetTop});
+              }
+
+              let so = order.sort((a, b) => (a.top > b.top) ? 1 : -1);
+
+              let row = 72;
+
+              for( var i=0;i<so.length;i++){
+                let oo = so[i];
+                oo.elm.style.top = i * row  + 'px';
+              }
+
+              th = order.length * row;
+
+              tar.style.height = th + row + 'px';
+
+              return;
+            }
+
+            if (scratch && !e.target.getparent('listcontainer') && !e.target.getparent('cedrop') && !e.target.getparent('timeline')){
               cc.style.position = 'static';
 
               let wrap = document.createElement('div');
@@ -1389,7 +1459,6 @@ https://briefone.github.io/test/library/
               wrap.appendChild(cc);
 
               tar.appendChild(wrap);
-
             }
 
             used = true;
@@ -2548,7 +2617,7 @@ https://briefone.github.io/test/library/
           console.log(foundIndex, KEYTAGS[foundIndex], 'fff');
 
 
-          let KT = KEYTAGS[foundIndex] || {color: 'rgb(221, 221, 221)', tcolor: 'black', text: tagg};
+          let KT = KEYTAGS[foundIndex] || {color: 'rgb(214, 216, 225)', tcolor: 'black', text: tagg};
           let kc = KT.color;
           let kx = KT.tcolor;
 
@@ -2615,12 +2684,15 @@ https://briefone.github.io/test/library/
       document.getElementsByClassName('focused').removeclass('focused');
 
       let list = this.getparent('list');
+      if ( !list ){
+        return;
+      }
       let lt = list.getElementsByClassName('listtag');
       let tagg = lt.length ? lt[0].dataset.tag.toLowerCase() : list.getElementsByClassName('taginput')[0].dataset.tag;
       var foundIndex = KEYTAGS.findIndex(x => x.text == tagg);
       console.log(foundIndex, KEYTAGS[foundIndex], 'fffffff');
 
-      let KT = KEYTAGS[foundIndex] || {color: 'rgb(221, 221, 221)', tcolor: 'black', text: tagg};
+      let KT = KEYTAGS[foundIndex] || {color: 'rgb(214, 216, 225)', tcolor: 'black', text: tagg};
       let kc = KT.color;
       let kx = KT.tcolor;
 
@@ -2921,13 +2993,72 @@ https://briefone.github.io/test/library/
 
     function newtimeline(){
       let x = document.createElement('div');
+
+      let w = document.createElement('div');
+      let s = document.createElement('div');
+      let d = document.createElement('div');
+      let t = document.createElement('div');
+
+      x.style.position = 'absolute';
+      x.style.top = 0;
+      x.style.left = 0;
+      x.style.right = 0;
+      x.style.bottom = 0;
+
+      w.className = 'timelinewrap';
+      s.className = 'timelinescroll';
+      d.className = 'days';
+
+      t.className = 'timeline';
+
+      let days = 365;
+
+      for(var i=0;i<days;i++){
+        let a = document.createElement('div');
+        a.className = 'day';
+        let x = i !== 0 ? i : 'D';
+        a.appendChild(document.createTextNode(i));
+        d.appendChild(a);
+      }
+
+      s.appendChild(d);
+      s.appendChild(t);
+      w.appendChild(s);
+
+      x.appendChild(w);
      
       let v = newview('dragscroll', x);
       newtab('Untitled timeline', 'timeline', v);
+
+
+      
     }
 
     function newce(){
       let x = document.createElement('div');
+
+
+      let s = document.createElement('section');
+      let c = document.createElement('div');
+
+      x.style.position = 'absolute';
+      x.style.top = 0;
+      x.style.left = 0;
+      x.style.right = 0;
+      x.style.bottom = 0;
+     
+      s.style.display = 'flex';
+      s.style.padding = '20px';
+      s.style.background = 'var(--ui2)';
+      s.style.overflow = 'auto hidden';
+      s.style.minHeight = '400px';
+      s.style.height = '100%';
+      s.style.boxSizing = 'border-box';
+
+      s.className = 'cedrop';
+    
+
+      x.appendChild(s);
      
       let v = newview('dragscroll', x);
       newtab('Untitled cause & effect', 'ce', v);
@@ -3154,7 +3285,7 @@ https://briefone.github.io/test/library/
           let keytag = this.getElementsByClassName('keytag')[0];
 
           let foundIndex = KEYTAGS.findIndex(x => x.text == keytag.innerText.toLowerCase());
-          let KT = KEYTAGS[foundIndex] || {color: 'rgb(221, 221, 221)', tcolor: 'black',  text: keytag.innerText.toLowerCase()};
+          let KT = KEYTAGS[foundIndex] || {color: 'rgb(214, 216, 225)', tcolor: 'black',  text: keytag.innerText.toLowerCase()};
           let bg = KT.color;
           let kc = KT.tcolor;
 
@@ -3704,6 +3835,38 @@ https://briefone.github.io/test/library/
 
     }
 
+    function inserttimeline(e){
+      let cv = document.getElementsByClassName('view show')[0];
+      let sp = cv.getElementsByClassName('scratchpad')[0];
+
+      let w = document.createElement('div');
+      let s = document.createElement('div');
+      let d = document.createElement('div');
+      let t = document.createElement('div');
+
+      w.className = 'timelinewrap';
+      s.className = 'timelinescroll';
+      d.className = 'days';
+
+      t.className = 'timeline';
+
+      let days = 365;
+
+      for(var i=0;i<days;i++){
+        let a = document.createElement('div');
+        a.className = 'day';
+        let x = i !== 0 ? i : 'D';
+        a.appendChild(document.createTextNode(i));
+        d.appendChild(a);
+      }
+
+      s.appendChild(d);
+      s.appendChild(t);
+      w.appendChild(s);
+
+      sp.appendChild(w);
+    }
+
     function insertboard(e){
       let cv = document.getElementsByClassName('view show')[0];
       let sp = cv.getElementsByClassName('scratchpad')[0];
@@ -3727,7 +3890,7 @@ https://briefone.github.io/test/library/
 
       r.className = 'spacer';
 
-      newlist.call(c)
+      newlist.call(c);
       s.appendChild(c);
       s.appendChild(b);
       s.appendChild(r);
@@ -3795,7 +3958,7 @@ https://briefone.github.io/test/library/
       m.style.left = x + 4 + 'px';
       m.style.top = y +'px';
 
-      let items = [{text: 'Insert Board', class: 'insertboard'}, {text: 'Insert Cause & Effect', class: 'insertce'}, {text: 'Insert Text Block', class: 'addtextblock'}, {text: 'Insert Table', class: 'inserttable'}];
+      let items = [{text: 'Insert Board', class: 'insertboard'}, {text: 'Insert Timeline', class: 'inserttimeline'}, {text: 'Insert Cause & Effect', class: 'insertce'}, {text: 'Insert Text Block', class: 'addtextblock'}, {text: 'Insert Table', class: 'inserttable'}];
 
       for(var i=0;i<items.length;i++){
         let t = items[i];
@@ -3847,7 +4010,7 @@ https://briefone.github.io/test/library/
         console.log(foundIndex, KEYTAGS[foundIndex], 'fff');
 
 
-        let KT = KEYTAGS[foundIndex] || {color: 'rgb(221, 221, 221)', tcolor: 'black', text: tagg};
+        let KT = KEYTAGS[foundIndex] || {color: 'rgb(214, 216, 225)', tcolor: 'black', text: tagg};
         let kc = KT.color;
         let kx = KT.tcolor;
 
@@ -3934,7 +4097,7 @@ https://briefone.github.io/test/library/
           var foundIndex = KEYTAGS.findIndex(x => x.text == tagg);
           console.log(foundIndex, KEYTAGS[foundIndex], 'fffffff');
 
-          let KT = KEYTAGS[foundIndex] || {color: 'rgb(221, 221, 221)', tcolor: 'black', text: tagg};
+          let KT = KEYTAGS[foundIndex] || {color: 'rgb(214, 216, 225)', tcolor: 'black', text: tagg};
           let kc = KT.color;
           let kx = KT.tcolor;
 
@@ -3968,6 +4131,48 @@ https://briefone.github.io/test/library/
         }
 
         d.remove();
+    }
+
+    function timelinehandle(e){
+      if ( e.which == 3  ){
+        return;
+      }
+
+      let sp = this.getparent('scratchpad');
+
+      let moved = false;
+      
+      let t = this.getparent('dragcard');
+
+      let sx = e.clientX;
+      let sy = e.clientY;
+
+      let ow = t.offsetWidth;
+      let ol = t.offsetLeft;
+
+      let left = this.classList.contains('lefthandle');
+
+      function move(e){
+        let x = e.clientX;
+        let y = e.clientY;
+
+        let nx = x -sx;
+
+        if ( left ){
+          t.style.left = ol + nx + 'px';
+          t.style.width = ow - nx + 'px';
+        } else {
+          t.style.width = ow + nx + 'px';
+        }
+      }
+
+      function end(e){
+        document.removeEventListener('mousemove', move);
+        document.removeEventListener('mouseup', end);
+      }
+
+      document.addEventListener('mousemove', move);
+      document.addEventListener('mouseup', end);
     }
 
     Attach.on('dragstart', '.card', dragStart);
@@ -4021,11 +4226,14 @@ https://briefone.github.io/test/library/
     Attach.on('click', '.coloritem', changetagcolor);
     Attach.on('mousedown', '.scratchpad', marquee);
     Attach.on('click', '.insertboard', insertboard);
+    Attach.on('click', '.inserttimeline', inserttimeline);
     Attach.on('click', '.insertce', insertce);
     Attach.on('click', '.inserttable', inserttable);
     Attach.on('click', '.scratchpad, .addtextblock', addtextblock);
     Attach.on('contextmenu', '.scratchpad', spcontext);
     Attach.on('click', '.cedrop', ceclick);
+
+    Attach.on('mousedown', '.timelinehandle', timelinehandle);
 
     Attach.on('paste', '.mr', mrpaste);
     
