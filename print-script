@@ -52,10 +52,10 @@ print();
 
 // Save Slide to PDF
 
-let d = document.getElementsByTagName('div');
+javascript:window.printhackdivs = document.getElementsByTagName('div');
 
-for(var i=0;i<d.length;i++){
-  let div = d[i];
+for(var i=0;i<printhackdivs.length;i++){
+  let div = printhackdivs[i];
 
   div.classList.remove('border');
   div.classList.remove('shadow');
@@ -78,27 +78,28 @@ for(var i=0;i<d.length;i++){
     div.classList.remove('px-4');
     div.classList.remove('pb-4');
   }
+
+  if ( div.classList.contains('bg-light')){
+    div.classList.remove('bg-light');
+  }
 }
 
-let n = document.getElementsByTagName('nav');
+window.printhacknavs = document.getElementsByTagName('nav');
 
-for(var i=0;i<n.length;i++){
-  n[i].classList.add('printhide');
+for(var i=0;i<printhacknavs.length;i++){
+  printhacknavs[i].classList.add('printhide');
 }
-
 
 document.head.insertAdjacentHTML("beforeend", `<style type="text/css" media="print">
 @page { size: landscape; }
-html, body {width:11in;height:8.5in;overflow:hidden;}
+html, body {width:11in;height:8.5in;overflow:hidden;background:white;}
 .css-ql29xz, .position-relative.border-right.bg-white.flex-shrink-0, .css-nsk33v, .css-br4tg4 {display:none;}
 nav, .printhide {display:none !important;}
-
 
 overflow-hidden {overflow:visible !important;}
 
 .css-1bc2y8z {overflow:hidden !important;}
 
 </style>`);
-
 
 print();
