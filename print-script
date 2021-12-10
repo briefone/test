@@ -37,7 +37,7 @@ for(var i=0;i<d.length;i++){
 let n = document.getElementsByTagName('nav');
 
 for(var i=0;i<n.length;i++){
-  n[i].style.display = 'none';
+  n[i].style.display = 'none !important';
 }
 
 document.head.insertAdjacentHTML("beforeend", `<style type="text/css" media="print">
@@ -52,35 +52,45 @@ print();
 
 // Save Slide to PDF
 
+window.printhackdivs = document.getElementsByTagName('div');
 
-let d = document.getElementsByTagName('div');
+for(var i=0;i<printhackdivs.length;i++){
+  let div = printhackdivs[i];
 
-for(var i=0;i<d.length;i++){
-  let div = d[i];
+  if ( div.classList.contains('css-1bc2y8z')){
+    div.classList.add('overflow-hidden');
+    div.style.transform = 'matrix3d(0.825, 0, 0, 0, 0, 0.825, 0, 0, 0, 0, 1, 0, 0, 90, 0, 1)';
+  }
 
-  div.classList.remove('border');
-  div.classList.remove('shadow');
-  div.classList.remove('shadow-sm');
-  div.classList.remove('mb-5');
-
+  if ( div.classList.contains('css-ql29xz')){
+    div.classList.add('printhide');
+    div.parentElement.classList.add('printhide');
+  }
 
   if ( div.classList.contains('pt-5')){
-    div.classList.remove('pt-5');
-    div.classList.remove('px-4');
-    div.classList.remove('pb-4');
+    div.classList.add('print-padding');
+  }
+
+  if ( div.classList.contains('bg-light')){
+    div.classList.add('print-white');
   }
 }
 
-let n = document.getElementsByTagName('nav');
+window.printhacknavs = document.getElementsByTagName('nav');
 
-for(var i=0;i<n.length;i++){
-  n[i].style.display = 'none';
+for(var i=0;i<printhacknavs.length;i++){
+  printhacknavs[i].classList.add('printhide');
 }
 
 document.head.insertAdjacentHTML("beforeend", `<style type="text/css" media="print">
 @page { size: landscape; }
+html, body {width:11in;height:8.5in;overflow:hidden;background:white;}
 .css-ql29xz, .position-relative.border-right.bg-white.flex-shrink-0, .css-nsk33v, .css-br4tg4 {display:none;}
+nav, .printhide {display:none !important;}
+overflow-hidden {overflow:visible !important;}
+.print-padding {padding:0 !important;}
+.css-1bc2y8z {overflow:hidden !important;box-shadow:none !important;border:none !important;}
+.print-white {background:white !important;}
 </style>`);
-
 
 print();
