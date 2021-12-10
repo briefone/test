@@ -458,28 +458,44 @@ https://briefone.github.io/test/library/
       .textblock {padding:12px;font-size:14px;min-height:12px;max-width:400px;margin:0 auto;}
 
 
-      table, th, td {
-      border: 2px solid black;
-      border-collapse: collapse;
-    }
+      table, th, td {border: 2px solid black;border-collapse: collapse;}
 
     .timelinewrap {overflow-x:scroll;}
-      .timelinescroll {position:relative;width:14600px;}
-      .timelinewrap .days {display:flex;flex-wrap: nowrap;background:#fff;}
-        .days .day {min-width:40px;font-size:10px;color:rgba(0,0,0,0.54);padding:4px 0;}
-      .timelinewrap .timeline {min-height:200px;background:#fdfdfd;position:relative;width:100%;}
+      .timelinescroll {position:relative;width:29240px;}
+      .timelinewrap .days {display:flex;flex-wrap: nowrap;background:var(--ui1);top:0;position:sticky;z-index:2;border-bottom:1px solid var(--border);}
+        .days .day {min-width:40px;font-size:10px;color:rgba(0,0,0,0.54);line-height: 24px;box-sizing: border-box;user-select:none;pointer-events: none;text-align:center;}
+          .days .day:nth-child(even) {background:#fdfdfd}
+          .days .day:nth-child(366) {background:var(--cardfocus);color:white;}
+          .dday {font-weight:700;color:black;color:white;}
+      .timelinewrap .timeline {min-height:200px;background:repeating-linear-gradient(90deg,transparent 0 14600px,var(--ui3) 14600px 14640px), repeating-linear-gradient(90deg,#fdfdfd 0 40px,var(--ui2) 40px 80px);position:relative;width:100%;overflow:hidden;}
+
+      .monthscale .timeline {background:repeating-linear-gradient(90deg,transparent 0 14600px,var(--ui3) 14600px 14640px), repeating-linear-gradient(90deg,#fdfdfd 0 40px,var(--ui2) 40px 80px);}
+      .yearscale .timeline {background:repeating-linear-gradient(90deg,transparent 0 7300px,var(--ui3) 7300px 7320px), repeating-linear-gradient(90deg,#fdfdfd 0 20px,var(--ui2) 20px 40px);}
+      .quarterscale .timeline {background:repeating-linear-gradient(90deg,transparent 0 10950px,var(--ui3) 10950px 10980px), repeating-linear-gradient(90deg,#fdfdfd 0 30px,var(--ui2) 30px 60px);}
+
+      .monthscale .days .day {min-width:40px;}
+      .yearscale .days .day {min-width:20px;}
+      .quarterscale .days .day {min-width:30px;}
+
+      .monthscale .timelinescroll {position:relative;width:29240px;}
+      .yearscale .timelinescroll {position:relative;width:14620px;}
+      .quarterscale .timelinescroll {position:relative;width:21930px;}
 
       .timeline .dragcard {box-sizing:border-box;}
-        .timeline .dragcard .mr {min-width:400px;-webkit-line-clamp: 2;}
+        .timeline .dragcard:not(.editing) {z-index: 1 !important;}
+        .timeline .dragcard:not(.editing) .mr {min-width:400px;-webkit-line-clamp: 2;}
+          .timecard .mr {-webkit-line-clamp: 2;}
 
-        .timeline .dragcard .mr::before {content:attr(data-content);color:black !important;}
+        .timeline .dragcard .mr::before {}
 
       .timelinehandle {position:absolute;top:50%;left:-5px;transform:translateY(-50%);width:8px;height:8px;border:2px solid var(--cardfocus);box-sizing:border-box;background:white;border-radius:1.5px;cursor:ew-resize;display:none;}
         .timeline .focused .timelinehandle {display:block;}
         .timelinehandle::after {content:'';display:block;width:20px;height:20px;top:-10px;left:-10px;position:absolute;}
           .righthandle {right:-5px;left:auto;}
 
+      .timelinescale {position:absolute;top:-40px;right:40px;}
 
+    #viewbtns {display:flex;gap:4px;}
 
   </style>
   <script src="../js/base.js"></script>
@@ -646,7 +662,7 @@ https://briefone.github.io/test/library/
       <div id=resizecl></div>
       <div id="subnav">
         <div class=left>
-          <div class="subnavnav btn pop">File
+          <div class="subnavnav btn pop">Export
             <div class=popover style="left:0;">
               <div class=popitem>Download</div>
               <div class=popitem>New</div>
@@ -668,6 +684,7 @@ https://briefone.github.io/test/library/
           </div>
         </div>
         <div class="right">
+          <div id=viewbtns></div>
           <div class="btn pop" data-class=boardprop>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>
             <div class=popover id=tabpop style="left:auto;right:0;">
@@ -1200,6 +1217,8 @@ https://briefone.github.io/test/library/
         cc.style.pointerEvents = 'all';
         cc.style.cursor = 'grab';
         cc.style.zIndex = 9999;
+
+
       } else {
         let c = this.cloneNode(true);
         document.body.appendChild(c);
@@ -1208,6 +1227,14 @@ https://briefone.github.io/test/library/
         // dragcard.style.pointerEvents = 'none';
         ol = this.offset().x - sx;
         ot = this.offset().y - sy;
+
+        if ( this.getparent('timeline') ){
+          cc.classList.add('timecard');
+          dragcard.classList.add('timecard');
+        } else {
+          cc.classList.remove('timecard');
+          dragcard.classList.remove('timecard');
+        }
 
         dragcard.style.opacity = 0;
       }
@@ -1403,7 +1430,17 @@ https://briefone.github.io/test/library/
               let tx = e.clientX + ol - tar.offsetLeft + tar.scrollLeft - tar.getBoundingClientRect().x + tar.offsetLeft;
               let ty = e.clientY + ot - tar.offsetTop + tar.scrollTop - tar.getBoundingClientRect().y + tar.offsetTop;
 
-              tx = Math.round(tx / 40 )* 40;
+              let thres = 40;
+
+              let tw = tar.getparent('timelinewrap');
+
+              if (tw.classList.contains('quarterscale')){
+                thres = 30;
+              } else  if (tw.classList.contains('yearscale')){
+                thres = 20;
+              }
+
+              tx = Math.round(tx / thres ) * thres;
 
               cc.style.top = ty + 'px';
               cc.style.left = tx + 'px';
@@ -1440,12 +1477,12 @@ https://briefone.github.io/test/library/
 
               for( var i=0;i<so.length;i++){
                 let oo = so[i];
-                oo.elm.style.top = i * row  + 'px';
+                oo.elm.style.top = i * row + 8  + 'px';
               }
 
               th = order.length * row;
 
-              tar.style.height = th + row + 'px';
+              tar.style.minHeight = th + row + 'px';
 
               return;
             }
@@ -2877,7 +2914,7 @@ https://briefone.github.io/test/library/
 
       let t = this;
 
-      if(!e.target.classList.contains('dragscroll') && !e.target.classList.contains('xxx') && !e.target.classList.contains('listcontainer')){
+      if(!e.target.classList.contains('dragscroll') && !e.target.classList.contains('xxx') && !e.target.classList.contains('listcontainer') && !e.target.classList.contains('timeline') && !e.target.classList.contains('days')){
         return;
       }
 
@@ -2894,6 +2931,8 @@ https://briefone.github.io/test/library/
       function end(e){
         document.removeEventListener('mousemove', move);
         document.removeEventListener('mouseup', end);
+
+        
       }
 
       document.addEventListener('mousemove', move);
@@ -2999,25 +3038,40 @@ https://briefone.github.io/test/library/
       let d = document.createElement('div');
       let t = document.createElement('div');
 
+      let vb = document.getElementById('viewbtns');
+
       x.style.position = 'absolute';
       x.style.top = 0;
       x.style.left = 0;
       x.style.right = 0;
       x.style.bottom = 0;
 
-      w.className = 'timelinewrap';
+      w.className = 'timelinewrap monthscale dragscroll';
       s.className = 'timelinescroll';
       d.className = 'days';
 
       t.className = 'timeline';
 
-      let days = 365;
+      w.style.height = '100%';
+      s.style.height = '100%';
+      t.style.height = 'calc(100% - 25px)';
+
+
+      vb.empty();
+      vb.innerHTML = `<div class="btn timelinebtn on" data-scale=month>Month</div><div class="btn timelinebtn" data-scale=quarter>Quarter</div><div class="btn timelinebtn" data-scale=year>Year</div>`;
+
+      let days = 731;
 
       for(var i=0;i<days;i++){
         let a = document.createElement('div');
         a.className = 'day';
-        let x = i !== 0 ? i : 'D';
-        a.appendChild(document.createTextNode(i));
+        let b = i - 365; 
+        let x = b;
+
+        if ( x == 0 ){
+          a.classList.add('dday');
+        }
+        a.appendChild(document.createTextNode(x));
         d.appendChild(a);
       }
 
@@ -3030,8 +3084,7 @@ https://briefone.github.io/test/library/
       let v = newview('dragscroll', x);
       newtab('Untitled timeline', 'timeline', v);
 
-
-      
+      w.scrollLeft = 14600 - (window.innerWidth /2) + 360;
     }
 
     function newce(){
@@ -3844,19 +3897,22 @@ https://briefone.github.io/test/library/
       let d = document.createElement('div');
       let t = document.createElement('div');
 
-      w.className = 'timelinewrap';
+      w.className = 'timelinewrap dragscroll';
       s.className = 'timelinescroll';
       d.className = 'days';
 
       t.className = 'timeline';
 
-      let days = 365;
+      let days = 731;
 
       for(var i=0;i<days;i++){
         let a = document.createElement('div');
         a.className = 'day';
-        let x = i !== 0 ? i : 'D';
-        a.appendChild(document.createTextNode(i));
+        let x = i - 365;
+        if ( x == 0 ){
+          a.classList.add('dday');
+        }
+        a.appendChild(document.createTextNode(x));
         d.appendChild(a);
       }
 
@@ -3865,6 +3921,8 @@ https://briefone.github.io/test/library/
       w.appendChild(s);
 
       sp.appendChild(w);
+
+      w.scrollLeft = 14600 - (window.innerWidth /2) + 360;
     }
 
     function insertboard(e){
@@ -4049,6 +4107,104 @@ https://briefone.github.io/test/library/
         mr.focus();
     }
 
+    function tclick(e){
+
+      if ( !e.target.classList.contains('timeline')){
+        return;
+      }
+      console.log('sdfsdf')
+        let tagg = 'uncategorized';
+
+        let tw = this.getparent('timelinewrap');
+        let ot = tw.getBoundingClientRect().y;
+        let sl = tw.scrollLeft;
+
+        var foundIndex = KEYTAGS.findIndex(x => x.text == tagg);
+        console.log(foundIndex, KEYTAGS[foundIndex], 'fff');
+
+
+        let KT = KEYTAGS[foundIndex] || {color: 'rgb(214, 216, 225)', tcolor: 'black', text: tagg};
+        let kc = KT.color;
+        let kx = KT.tcolor;
+
+        let cid = makecards(1, true, KT);
+        dragcard = document.createElement('div');
+        dragcard.className = 'dragcard focused editing';
+        let kt = document.createElement('div');
+        let mr = document.createElement('div');
+        dragcard.style.position = 'absolute';
+        dragcard.style.pointerEvents = 'all';
+        dragcard.style.cursor = 'grab';
+        dragcard.style.background = kc;
+        dragcard.style.color = kx;
+        dragcard.dataset.blank = true;
+        mr.className = 'mr';
+        mr.contentEditable = true;
+        dragcard.dataset.id = cid;
+        kt.className = 'keytag ignore';
+        kt.dataset.tag = tagg;
+        kt.style.backgroundColor = kc;
+        kt.style.color = kx;
+        kt.appendChild(document.createTextNode(tagg));
+        dragcard.appendChild(kt);
+        dragcard.appendChild(mr);
+
+        let h = document.createElement('div');
+        h.className = 'timelinehandle lefthandle';
+
+        let hr = document.createElement('div');
+        hr.className = 'timelinehandle righthandle';
+
+        dragcard.appendChild(h);
+        dragcard.appendChild(hr);
+
+        let y = e.clientY;
+        let x = e.clientX;
+
+        let thres = 40;
+
+        if (tw.classList.contains('quarterscale')){
+          thres = 30;
+        } else  if (tw.classList.contains('yearscale')){
+          thres = 20;
+        }
+
+        dragcard.style.left = Math.round((x + sl) / thres ) * thres + 'px';
+        dragcard.style.top =  y - ot - 24 + 'px';
+
+      
+        this.appendChild(dragcard);
+
+
+
+
+        let ccc = tw.getElementsByClassName('dragcard');
+
+        let order = [];
+
+        for(var i=0;i<ccc.length;i++){
+          let aa = ccc[i];
+
+          order.push({elm: aa, top: aa.offsetTop});
+        }
+
+        let so = order.sort((a, b) => (a.top > b.top) ? 1 : -1);
+
+        let row = 72;
+
+        for( var i=0;i<so.length;i++){
+          let oo = so[i];
+          oo.elm.style.top = i * row + 8  + 'px';
+        }
+
+        let th = order.length * row;
+
+        tw.getElementsByClassName('timeline')[0].style.minHeight = th + row + 'px';
+
+
+        mr.focus();
+      }
+
     function mrpaste(e){
       e.preventDefault();
       let p = e.clipboardData.getData('text/plain');
@@ -4152,17 +4308,30 @@ https://briefone.github.io/test/library/
 
       let left = this.classList.contains('lefthandle');
 
+      let thres = 40;
+
+      let tw = this.getparent('timelinewrap');
+
+      if (tw.classList.contains('quarterscale')){
+        thres = 30;
+      } else  if (tw.classList.contains('yearscale')){
+        thres = 20;
+      }
+
       function move(e){
         let x = e.clientX;
         let y = e.clientY;
 
-        let nx = x -sx;
+        let nx = x - sx;
 
         if ( left ){
-          t.style.left = ol + nx + 'px';
-          t.style.width = ow - nx + 'px';
+          let f = ol + nx;
+          let f2 = Math.round(f / thres ) * thres;
+          t.style.left = f2 + 'px';
+          t.style.width = Math.max(ow - (f2 - ol), thres) + 'px';
         } else {
-          t.style.width = ow + nx + 'px';
+          let f = ow + nx;
+          t.style.width = Math.max(Math.round(f / thres ) * thres, thres) + 'px';
         }
       }
 
@@ -4173,6 +4342,56 @@ https://briefone.github.io/test/library/
 
       document.addEventListener('mousemove', move);
       document.addEventListener('mouseup', end);
+    }
+
+    function timelinebtn(e){
+
+      let v = document.getElementsByClassName('view show')[0];
+      let o = this.parentElement.getElementsByClassName('on');
+      o.removeclass('on');
+
+      this.classList.add('on');
+
+      let s = this.dataset.scale;
+      let t = v.getElementsByClassName('timelinewrap')[0];
+
+      let m = t.classList.contains('monthscale');
+      let y = t.classList.contains('yearscale');
+      let q = t.classList.contains('quarterscale');
+
+      t.classList.remove('monthscale', 'yearscale', 'quarterscale');
+
+      let thres = 40;
+      let old = m ? 40 : y ? 20 : 30;
+
+      if ( s == 'month'){
+        t.classList.add('monthscale');
+      } else if ( s == 'year'){
+        t.classList.add('yearscale');
+        thres = 20;
+      } else {
+        t.classList.add('quarterscale');
+        thres = 30;
+      }
+
+      let c = t.getElementsByClassName('dragcard');
+      for(var i=0;i<c.length;i++){
+        let card = c[i];
+        let cw = card.offsetWidth;
+        let cl = card.offsetLeft;
+
+        let x = Math.floor(cl / old);
+        let w = Math.floor(cw / old);
+
+        card.style.left = x * thres + 'px';
+        card.style.width = w * thres + 'px';
+      }
+
+      if ( c[0]){
+        c[0].scrollIntoViewIfNeeded(true);
+      } else {
+        t.scrollLeft = (t.scrollWidth / 2) - (window.innerWidth / 2) + 360;
+      }
     }
 
     Attach.on('dragstart', '.card', dragStart);
@@ -4232,6 +4451,8 @@ https://briefone.github.io/test/library/
     Attach.on('click', '.scratchpad, .addtextblock', addtextblock);
     Attach.on('contextmenu', '.scratchpad', spcontext);
     Attach.on('click', '.cedrop', ceclick);
+    Attach.on('click', '.timeline', tclick);
+    Attach.on('click', '.timelinebtn', timelinebtn);
 
     Attach.on('mousedown', '.timelinehandle', timelinehandle);
 
