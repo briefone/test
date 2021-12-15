@@ -1426,7 +1426,9 @@ https://briefone.github.io/test/library/
         let tars = document.elementsFromPoint(e.clientX, e.clientY);
 
         if ( !e.target.getparent('view') ){
-          let tl = document.getElementsByClassName('view show')[0].getElementsByClassName('timeline')[0];
+          let v = document.getElementsByClassName('view show')[0];
+          
+          let tl = v.getElementsByClassName('timeline')[0] || v;
 
           tars = [tl];
         }
