@@ -217,7 +217,7 @@ https://briefone.github.io/test/library/
       .card::before {content:'';background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 10'%3E%3Crect width='2' height='2' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' y='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' y='4' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' y='8' fill='%236C757D' rx='1'/%3E%3Crect width='2' height='2' x='4' y='8' fill='%236C757D' rx='1'/%3E%3C/svg%3E");position:absolute;left:8px;top:50%;transform:translateY(-50%);width:6px;height:10px;}
       .card.hide {display:none;}
       .card.used {background:#66519114;}
-      .keytag {background:var(--border);color:var(--secondary);font-weight:600;text-transform:uppercase;font-size:11px;padding:0px 4px 1px;border-radius:2px;}
+      .keytag {background:var(--border);color:var(--secondary);font-weight:600;text-transform:uppercase;font-size:11px;padding:0px 4px 1px;border-radius:2px;display:inline-flex;}
       .mr {line-height:1.2;overflow:hidden;text-overflow: ellipsis;padding-bottom: 2px;overflow-wrap: anywhere;
    display: -webkit-box;
    -webkit-box-orient: vertical;
@@ -495,9 +495,9 @@ https://briefone.github.io/test/library/
 
         .timeline .dragcard .mr::before {}
 
-      .timelinehandle {position:absolute;top:50%;left:-5px;transform:translateY(-50%);width:8px;height:8px;border:2px solid var(--cardfocus);box-sizing:border-box;background:white;border-radius:1.5px;cursor:ew-resize;display:none;}
-        .timeline .focused .timelinehandle, .timeline .dragcard:hover .timelinehandle, .timeline .dragcard:active .timelinehandle {display:block;}
-        .timelinehandle::after {content:'';display:block;width:20px;height:20px;top:-10px;left:-10px;position:absolute;}
+      .timelinehandle, .ordershandle {position:absolute;top:50%;left:-5px;transform:translateY(-50%);width:8px;height:8px;border:2px solid var(--cardfocus);box-sizing:border-box;background:white;border-radius:1.5px;cursor:ew-resize;display:none;}
+        .timeline .focused .timelinehandle, .timeline .dragcard:hover .timelinehandle, .timeline .dragcard:active .timelinehandle, .ordersdoc .dragcard:hover .ordershandle, .ordersdoc .dragcard:active .ordershandle, .ordersdoc .focused .ordershandle {display:block;}
+        .timelinehandle::after, .ordershandle::after {content:'';display:block;width:20px;height:20px;top:-10px;left:-10px;position:absolute;}
           .righthandle {right:-5px;left:auto;}
 
       .timelinescale {position:absolute;top:-40px;right:40px;}
@@ -505,13 +505,20 @@ https://briefone.github.io/test/library/
     #viewbtns {display:flex;gap:4px;}
 
     .orderswrap {width: 100%;}  
-      .ordersdoc {width:8.5in;min-height:11in;background:var(--ui1);margin: 0 auto;border: 1px solid rgb(0 0 0 / 15%);border-radius: 3px;box-sizing: border-box;padding:0.5in 1in;}
+      .ordersdoc {width:8.5in;min-height:11in;background:var(--ui1);margin: 0 auto;list-style:decimal;border: 1px solid rgb(0 0 0 / 15%);border-radius: 3px;box-sizing: border-box;padding:0.5in 1in;}
+
         .ordersdoc .s {width:100%;margin-bottom:12px;position:static;}
-        .ordersdoc .dragcard {width:100%;margin-bottom:12px;position:static;}
+        .ordersdoc .dragcard {width:100%;margin-bottom:12px;position:static;display:list-item;}
+          .dragcard::marker {color:black;}
+
           .ordersdoc .dragcard .mr {-webkit-line-clamp: unset;}
+
+
 
       .ordersdoc .textblock {margin-bottom:8px;padding:8px 8px;font-weight:600;}
 
+      .printview .ordersdoc .dragcard {background:transparent !important;color:black !important;margin-bottom:0;box-shadow:none;border:none;}
+        .printview .ordersdoc .dragcard .keytag {display:none;}
   </style>
   <script src="../js/base.js"></script>
   <script src="../js/gator.js"></script>
@@ -1108,12 +1115,12 @@ https://briefone.github.io/test/library/
     </div>
 
     <div id=cardtitle class=cardtitle style="width:100%;">
-      <div class=label>Title (Optional)</div>
+      <div class=label>Label (Optional)</div>
       <input class="etitle" type="text" />
     </div>
 
     <div id=etext class=etext style="width:100%;">
-      <div class=label style="margin-bottom:4px;">Description</div>
+      <div class=label style="margin-bottom:4px;">Content</div>
       <div class=editorbar>
         <div class=btn>H</div><div class=btn>B</div>
       </div>
@@ -1511,7 +1518,13 @@ https://briefone.github.io/test/library/
 
             if ( od ){
               inserted2 = true;
-              cc.style.position = 'static';
+              cc.style.position = 'relative';
+
+              if ( !cc.getElementsByClassName('ordershandle').length ){
+                let h = document.createElement('div');
+                h.className = 'ordershandle lefthandle';
+                cc.appendChild(h);
+              }
 
               let oc = tar.getElementsByClassName('dragcard');
 
@@ -1872,8 +1885,8 @@ https://briefone.github.io/test/library/
         etr.appendChild(rt);
 
         expand.appendChild(etr);
-        expand.appendChild(ect);
         expand.appendChild(etext);
+        expand.appendChild(ect);
         expand.appendChild(etags);
         expand.appendChild(euses);
         // expand.appendChild(eas);
@@ -3229,6 +3242,15 @@ https://briefone.github.io/test/library/
 
       o.appendChild(tb);
       x.appendChild(o);
+
+      let vb = document.getElementById('viewbtns');
+      let pv = document.createElement('div');
+
+      pv.className = 'btn printviewbtn toggle';
+      pv.dataset.class = 'printview';
+      pv.appendChild(document.createTextNode('Print View'));
+      vb.empty();
+      vb.appendChild(pv);
      
       let v = newview('dragscroll', x);
       newtab('New orders', 'orders', v);
