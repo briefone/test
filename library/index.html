@@ -508,7 +508,8 @@ https://briefone.github.io/test/library/
       .ordersdoc {width:8.5in;min-height:11in;background:var(--ui1);margin: 0 auto;list-style:decimal;border: 1px solid rgb(0 0 0 / 15%);border-radius: 3px;box-sizing: border-box;padding:0.5in 1in;}
 
         .ordersdoc .s {width:100%;margin-bottom:12px;position:static;}
-        .ordersdoc .dragcard {width:100%;margin-bottom:12px;position:static;display:list-item;}
+        .ordersdoc .dragcard {width:100%;margin-bottom:12px;position:static;}
+          .ordersdoc .dragcard .mr::before {content: attr(data-level);margin-right:20px;font-weight:600;}
           .dragcard::marker {color:black;}
 
           .ordersdoc .dragcard .mr {-webkit-line-clamp: unset;}
@@ -1406,7 +1407,7 @@ https://briefone.github.io/test/library/
         if ( od ){
           let lists = od.getElementsByClassName('dragcard');
           let inserted = false;
-
+          
           for(var i=0;i<lists.length;i++){
             let l = lists[i];
             let lof = l.getBoundingClientRect().y;
@@ -1418,9 +1419,14 @@ https://briefone.github.io/test/library/
             }
           }
 
+          for(var i=0;i<lists.length;i++){
+            let l = lists[i];
+            l.dataset.sect = i;
+          }
+
           if (!inserted){
             od.appendChild(cc);
-          }
+          }          
         }
       }
 
@@ -1540,6 +1546,8 @@ https://briefone.github.io/test/library/
               }
 
               tar.insertBefore(cc, ib);
+
+              renumber.call(tar);
 
               return;
             }
@@ -4285,7 +4293,7 @@ https://briefone.github.io/test/library/
         dragcard.className = 'dragcard focused editing';
         let kt = document.createElement('div');
         let mr = document.createElement('div');
-        dragcard.style.position = 'static';
+        dragcard.style.position = 'relative';
         dragcard.style.pointerEvents = 'all';
         dragcard.style.cursor = 'grab';
         dragcard.style.background = kc;
@@ -4299,6 +4307,11 @@ https://briefone.github.io/test/library/
         kt.style.backgroundColor = kc;
         kt.style.color = kx;
         kt.appendChild(document.createTextNode(tagg));
+
+        let h = document.createElement('div');
+        h.className = 'ordershandle lefthandle';
+        dragcard.appendChild(h);
+
         dragcard.appendChild(kt);
         dragcard.appendChild(mr);
 
@@ -4318,6 +4331,8 @@ https://briefone.github.io/test/library/
         }
 
         this.insertBefore(dragcard, ib);
+
+        renumber.call(tw);
 
         mr.focus();
     }
@@ -4619,6 +4634,90 @@ https://briefone.github.io/test/library/
       
     }
 
+    function ordershandle(e){
+      if ( e.which == 3  ){
+        return;
+      }
+
+      let moved = false;
+      
+      let t = this.getparent('dragcard');
+
+      let sx = e.clientX;
+      let ml = parseFloat(window.getComputedStyle(t).left);
+
+      let thres = 40;
+
+      function move(e){
+        let x = e.clientX;
+
+        let nx = x - sx;
+
+        let f = Math.round(Math.min(Math.max(ml + nx, 0) / thres, 14));
+        
+        let f2 = f * thres;
+
+        t.style.left = f2 + 'px';
+        t.style.width = 'calc(100% - ' + f2 + 'px)';
+
+        renumber.call(t.getparent('ordersdoc'));
+      }
+
+      function end(e){
+        document.removeEventListener('mousemove', move);
+        document.removeEventListener('mouseup', end);
+      }
+
+      document.addEventListener('mousemove', move);
+      document.addEventListener('mouseup', end);
+    }
+
+    function renumber(){
+      let dc = this.getElementsByClassName('dragcard');
+
+      let sec = 0;
+
+      let sublevels = [];
+
+      for(var i=0;i<dc.length;i++){
+        let c = dc[i];
+
+        let ml = parseFloat(window.getComputedStyle(c).left);
+
+        let f = Math.round(ml / 40);
+
+        if ( f === 0){
+          sublevels = [];
+          sec++;
+        }
+
+        if ( f < sublevels.length ){
+          sublevels = sublevels.slice(0, f+1);
+        }
+
+        sublevels[f] = (sublevels[f] || 0) + 1;
+
+        let slx = fillEmptySlots(sublevels);
+        let sl = [...slx];
+        sl.shift();
+
+        c.getElementsByClassName('mr')[0].dataset.level = sec  + '.' + sl.slice(0, f).join('.');
+
+        if ( !c.getElementsByClassName('ordershandle').length ){
+          let h = document.createElement('div');
+          h.className = 'ordershandle lefthandle';
+          c.appendChild(h);
+        }
+      }
+    }
+
+    function fillEmptySlots(arr) {
+      return Array.from(arr, (_, i) => {
+        if (!(i in arr)) return 0;
+        else return arr[i];
+      });
+    }
+
     Attach.on('dragstart', '.card', dragStart);
 
     Attach.on('dragover', '.list, .slide, .scratchpad', handleDragOver);
@@ -4682,6 +4781,7 @@ https://briefone.github.io/test/library/
     Attach.on('click', '.timelinebtn', timelinebtn);
 
     Attach.on('mousedown', '.timelinehandle', timelinehandle);
+    Attach.on('mousedown', '.ordershandle', ordershandle);
 
     Attach.on('paste', '.mr', mrpaste);
     
