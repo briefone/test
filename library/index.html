@@ -121,7 +121,7 @@ https://briefone.github.io/test/library/
 
         .tab.brief::before {content:'';background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%236C757D' d='M22.389 2.22H1.61A.61.61 0 001 2.831v.611a.61.61 0 00.611.611h.611v10.39c0 .674.548 1.221 1.222 1.221h7.64v1.67L8.117 20.3a.611.611 0 000 .864l.432.432a.611.611 0 00.864 0L12 19.01l2.586 2.587a.611.611 0 00.865 0l.431-.433a.611.611 0 000-.864l-2.965-2.966v-1.67h7.639c.674 0 1.222-.547 1.222-1.222V4.053h.61a.611.611 0 00.612-.61V2.83a.611.611 0 00-.611-.611zm-2.445 11.611H4.056V4.053h15.888v9.778z'/%3E%3C/svg%3E");}
 
-        .tab.ce::before {content:'';background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236C757D' fill-rule='evenodd' d='M2 1.75a1 1 0 00-1 1v6.5a1 1 0 001 1h8a1 1 0 001-1v-6.5a1 1 0 00-1-1H2zm.25 1A.25.25 0 002 3v6c0 .138.112.25.25.25h1.5A.25.25 0 004 9V3a.25.25 0 00-.25-.25h-1.5zM5 3a.25.25 0 01.25-.25h1.5A.25.25 0 017 3v6a.25.25 0 01-.25.25h-1.5A.25.25 0 015 9V3zm3.25-.25A.25.25 0 008 3v6c0 .138.112.25.25.25h1.5A.25.25 0 0010 9V3a.25.25 0 00-.25-.25h-1.5z' clip-rule='evenodd'/%3E%3C/svg%3E");}
+        .tab.ce::before {content:'';background-image:url("data:image/svg+xml,%3Csvg  viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M23 14.75L19.8512 17.8988L15.8912 13.9388L13.9387 15.8913L17.8987 19.8513L14.75 23L23 23L23 14.75ZM23 9.25L23 1L14.75 1L17.8988 4.14875L11.4363 10.625L1 10.625L1 13.375L12.5638 13.375L19.8513 6.10125L23 9.25Z' fill='%236C757D'/%3E%3C/svg%3E%0A");}
 
         .tab.timeline::before {content:'';background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 2h10a3 3 0 010 6H6a3 3 0 110-6zm0 2a1 1 0 100 2h10a1 1 0 000-2H6zm4 5h8a3 3 0 010 6h-8a3 3 0 010-6zm0 2a1 1 0 000 2h8a1 1 0 000-2h-8zm-4 5h6a3 3 0 010 6H6a3 3 0 010-6zm0 2a1 1 0 000 2h6a1 1 0 000-2H6z' fill='%236C757D' fill-rule='evenodd'%3E%3C/path%3E%3C/svg%3E");}
 
@@ -488,7 +488,7 @@ https://briefone.github.io/test/library/
       .quarterscale .timelinescroll {position:relative;width:21930px;}
 
       .timeline .dragcard {box-sizing:border-box;}
-        .timeline .dragcard:hover, .timeline .dragcard:active {box-shadow:0 0 0 2px var(--cardfocus) !important;}
+        .timeline .dragcard:not(.focused):hover, .timeline .dragcard:not(.focused):active {box-shadow:0 0 0 2px var(--cardfocuslite) !important;}
 
         .timeline .dragcard:not(.editing) {z-index: 1 !important;}
         .timeline .dragcard:not(.editing) .mr {min-width:400px;-webkit-line-clamp: 2;}
@@ -657,19 +657,7 @@ https://briefone.github.io/test/library/
           </div>
         </div>
         <div id=tabwrap>
-          <!-- <div class="tab board closeable current" data-view=p1>
-            Phase I
-            <div class="btn xbtn">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M14.87 12.002l4.3-4.3a1.352 1.352 0 000-1.91l-.956-.956a1.352 1.352 0 00-1.912 0l-4.3 4.3-4.3-4.3a1.352 1.352 0 00-1.91 0l-.956.955a1.352 1.352 0 000 1.912l4.3 4.3-4.3 4.3a1.352 1.352 0 000 1.91l.955.956a1.352 1.352 0 001.912 0l4.3-4.3 4.3 4.3a1.352 1.352 0 001.91 0l.956-.955a1.352 1.352 0 000-1.912l-4.3-4.3z"/>
-              </svg>
-            </div>
-          </div> -->
-          <div class="tab brief closeable" data-view=p2 data-class=brief>Mission Brief<div class="btn xbtn">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <path d="M14.87 12.002l4.3-4.3a1.352 1.352 0 000-1.91l-.956-.956a1.352 1.352 0 00-1.912 0l-4.3 4.3-4.3-4.3a1.352 1.352 0 00-1.91 0l-.956.955a1.352 1.352 0 000 1.912l4.3 4.3-4.3 4.3a1.352 1.352 0 000 1.91l.955.956a1.352 1.352 0 001.912 0l4.3-4.3 4.3 4.3a1.352 1.352 0 001.91 0l.956-.955a1.352 1.352 0 000-1.912l-4.3-4.3z"/>
-            </svg>
-          </div></div>
+
         </div>
       </div>
       <div class="right">
@@ -759,26 +747,6 @@ https://briefone.github.io/test/library/
               <div>Board 1</div><div>2 days ago</div>
             </div>
           </div>
-        </div>
-
-        <div id=p2 class=view>
-          <div class=deck>
-            <div class=minislide></div>
-          </div>
-          <div class=slidecanvas>
-            <div class=slide>
-
-            </div>
-          </div>
-        </div>
-
-        <div id=p1 class="view show">
-          <div class=listcontainer>
-            <div class=list>
-              <div class=listtag>Uncategorized</div>
-            </div>
-          </div>
-          <div class="btn listbtn addlist shadowbtn">Add list</div>
         </div>
 
       </div>
@@ -2076,6 +2044,13 @@ https://briefone.github.io/test/library/
 
 
       removebounding();
+
+      if ( cc == 'timeline'){
+        let tw = view.getElementsByClassName('timelinewrap')[0];
+        let ts = tw.getElementsByClassName('timelinescroll')[0];
+        console.log(ts.scrollWidth, ts.offsetWidth, 'ts')
+        tw.scrollLeft = ts.scrollWidth/ 2 - (window.innerWidth /2) + 360;
+      }
     }
 
     function filtercards(e){
@@ -3145,7 +3120,7 @@ https://briefone.github.io/test/library/
       return Array(+digits.join("") + 1).join("M") + roman;
     }
 
-    function newtimeline(){
+    function newtimeline(l, g = true){
       let x = document.createElement('div');
 
       let w = document.createElement('div');
@@ -3203,12 +3178,12 @@ https://briefone.github.io/test/library/
       x.appendChild(w);
      
       let v = newview('dragscroll', x);
-      newtab('New timeline', 'timeline', v);
+      newtab(l || 'New timeline', 'timeline', v, g);
 
       w.scrollLeft = 14600 - (window.innerWidth /2) + 360;
     }
 
-    function newce(){
+    function newce(t, g = true){
       let x = document.createElement('div');
 
 
@@ -3235,10 +3210,10 @@ https://briefone.github.io/test/library/
       x.appendChild(s);
      
       let v = newview('dragscroll', x);
-      newtab('New cause & effect', 'ce', v);
+      newtab(t ||'New cause & effect', 'ce', v, g);
     }
 
-    function newbrief(){
+    function newbrief(t, g = true){
       let x = document.createElement('div');
 
       x.innerHTML = `<div class=deck>
@@ -3251,10 +3226,10 @@ https://briefone.github.io/test/library/
           </div>`;
      
       let v = newview('dragscroll', x);
-      newtab('New brief', 'brief', v);
+      newtab(t ||'New brief', 'brief', v, g);
     }
 
-    function neworders(){
+    function neworders(t, g = true){
       let x = document.createElement('div');
 
       let o = document.createElement('div');
@@ -3290,7 +3265,7 @@ https://briefone.github.io/test/library/
       }
      
       let v = newview('dragscroll', x);
-      newtab('New orders', 'orders', v);
+      newtab(t ||'New orders', 'orders', v, g);
     }
 
     function newscratch(t, g = true){
@@ -4268,6 +4243,57 @@ https://briefone.github.io/test/library/
         mr.focus();
     }
 
+    function sclick(e){
+
+      if ( !e.target.classList.contains('slide')){
+        return;
+      }
+
+        let tagg = 'uncategorized';
+
+        var foundIndex = KEYTAGS.findIndex(x => x.text == tagg);
+        console.log(foundIndex, KEYTAGS[foundIndex], 'fff');
+
+
+        let KT = KEYTAGS[foundIndex] || {color: 'rgb(214, 216, 225)', tcolor: 'black', text: tagg};
+        let kc = KT.color;
+        let kx = KT.tcolor;
+
+        let cid = makecards(1, true, KT);
+        dragcard = document.createElement('div');
+        dragcard.className = 'dragcard editing';
+        let kt = document.createElement('div');
+        let mr = document.createElement('div');
+        dragcard.style.position = 'absolute';
+        dragcard.style.pointerEvents = 'all';
+        dragcard.style.cursor = 'grab';
+        dragcard.style.background = kc;
+        dragcard.style.color = kx;
+        dragcard.dataset.blank = true;
+        mr.className = 'mr';
+        mr.contentEditable = true;
+        dragcard.dataset.id = cid;
+        kt.className = 'keytag ignore';
+        kt.dataset.tag = tagg;
+        kt.style.backgroundColor = kc;
+        kt.style.color = kx;
+        kt.appendChild(document.createTextNode(tagg));
+        dragcard.appendChild(kt);
+        dragcard.appendChild(mr);
+
+        let y = e.clientY;
+        let x = e.clientX;
+
+        dragcard.style.left = x - this.getBoundingClientRect().x + 'px';
+        dragcard.style.top =  y -  this.getBoundingClientRect().y + 'px';
+
+      
+        this.appendChild(dragcard);
+
+
+        mr.focus();
+      }
+
     function tdown(e){
       let t = this;
       let moved = false;
@@ -4383,6 +4409,9 @@ https://briefone.github.io/test/library/
         let tagg = 'uncategorized';
 
         let tw = this.getparent('timelinewrap');
+        if ( !tw ){
+          return;
+        }
         let ot = tw.getBoundingClientRect().y;
         let sl = tw.scrollLeft;
 
@@ -4843,6 +4872,7 @@ https://briefone.github.io/test/library/
     Attach.on('click', '.scratchpad, .addtextblock', addtextblock);
     Attach.on('contextmenu', '.scratchpad', spcontext);
     Attach.on('click', '.cedrop', ceclick);
+    Attach.on('click', '.slide', sclick);
     Attach.on('mousedown', '.timeline', tdown);
     Attach.on('mousedown', '.ordersdoc', odown);
     Attach.on('click', '.timelinebtn', timelinebtn);
@@ -4861,8 +4891,12 @@ https://briefone.github.io/test/library/
     restorecustom();
     popcorn();
 
+    newbrief('Mission Brief', false);
     newboard();
     newscratch('Road to War', false);
+    newce('C -> E', false);
+    neworders('WARNO', false);
+    newtimeline('Sync Matrix', false);
 
     if ( localStorage.opennew){
       document.getElementById('openpopwindow').classList.add('opened');
