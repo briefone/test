@@ -665,7 +665,7 @@ https://briefone.github.io/test/library/
               </svg>
             </div>
           </div> -->
-          <div class="tab brief closeable" data-view=p2>Mission Brief<div class="btn xbtn">
+          <div class="tab brief closeable" data-view=p2 data-class=brief>Mission Brief<div class="btn xbtn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M14.87 12.002l4.3-4.3a1.352 1.352 0 000-1.91l-.956-.956a1.352 1.352 0 00-1.912 0l-4.3 4.3-4.3-4.3a1.352 1.352 0 00-1.91 0l-.956.955a1.352 1.352 0 000 1.912l4.3 4.3-4.3 4.3a1.352 1.352 0 000 1.91l.955.956a1.352 1.352 0 001.912 0l4.3-4.3 4.3 4.3a1.352 1.352 0 001.91 0l.956-.955a1.352 1.352 0 000-1.912l-4.3-4.3z"/>
             </svg>
@@ -2039,7 +2039,7 @@ https://briefone.github.io/test/library/
 
       let cc = this.dataset.class;
 
-      document.body.classList.remove('vtimeline','vboard','vorders','vscratch','vce','vbriefs');
+      document.body.classList.remove('vtimeline','vboard','vorders','vscratch','vce','vbrief');
       document.body.classList.add('v'+cc);
 
         // return;
@@ -4774,6 +4774,17 @@ https://briefone.github.io/test/library/
       });
     }
 
+    function docclick(e){
+      let c = e.target.getparent('dragcard');
+      let c2 = e.target.getparent('card');
+
+      console.log(c, c2, 'docclick')
+
+      if ( !c && !c2 ){
+        document.getElementsByClassName('dragcard focused').removeclass('focused');
+      }
+    }
+
     Attach.on('dragstart', '.card', dragStart);
 
     Attach.on('dragover', '.list, .slide, .scratchpad', handleDragOver);
@@ -4842,6 +4853,7 @@ https://briefone.github.io/test/library/
     Attach.on('paste', '.mr', mrpaste);
     
     document.addEventListener('keyup', keypress);
+    document.addEventListener('mousedown', docclick);
 
 
     makekeytags();
