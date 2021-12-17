@@ -505,6 +505,9 @@ https://briefone.github.io/test/library/
         .ordersdoc .dragcard:hover, .ordersdoc .dragcard:active  {box-shadow:0 0 0 2px var(--cardfocuslite);}
           .ordersdoc .dragcard.focused {box-shadow:0 0 0 2px var(--cardfocus) !important;}
 
+          .ordersdoc .dragcard.ordererror {box-shadow:0 0 0 2px red !important;}
+            .ordersdoc .dragcard.ordererror .ordershandle {border-color:red;}
+
       .timelinescale {position:absolute;top:-40px;right:40px;}
 
     #viewbtns {display:flex;gap:4px;}
@@ -4787,6 +4790,15 @@ https://briefone.github.io/test/library/
 
         c.getElementsByClassName('mr')[0].dataset.level = sec  + '.' + sl.slice(0, f).join('.');
         c.style.width = 'calc(6.5in - ' + ml + 'px)';
+
+        let p = slx[slx.length-2];
+
+        if ( f != 0 && (p == 0 || !p) ){
+          c.classList.add('ordererror');
+        } else {
+          c.classList.remove('ordererror');
+        }
+
 
         if ( !c.getElementsByClassName('ordershandle').length ){
           let h = document.createElement('div');
