@@ -80,7 +80,7 @@ https://briefone.github.io/test/library/
       --selectwidth: 2px;
 
       --cardfocus: #7a61ff;
-
+      --cardfocuslite: #b1a3ff;
     }
 
     .dark {
@@ -280,7 +280,8 @@ https://briefone.github.io/test/library/
           .timeline .dragcard.focused {z-index: 2 !important;}
 
     .whitecards .dragcard {background-color:white !important;color:var(--text) !important;box-shadow: rgb(23 43 77 / 10%) 0px 1px 1px, rgb(23 43 77 / 20%) 0px 0px 1px;}
-        .whitecards .timeline .dragcard, .whitecards .ordersdoc .dragcard, .whitecards .scratchpad .dragcard {box-shadow: 0 0 0 2px #00000029;}
+        .whitecards .timeline .dragcard,  .whitecards .scratchpad .dragcard {box-shadow: 0 0 0 2px #00000029;}
+          .whitecards .ordersdoc .dragcard {box-shadow:none;}
         .whitecards .dragcard .keytag {box-shadow:none;}
 
     .tagdrop {font-size:9px;display:flex;width:100%;padding:4px 8px 4px 4px;border-radius:0px;background:var(--input);border-bottom:1px solid var(--inputborder);color:var(--secondary);justify-content: space-between;align-items:center;cursor:pointer;}
@@ -495,10 +496,14 @@ https://briefone.github.io/test/library/
 
         .timeline .dragcard .mr::before {}
 
-      .timelinehandle, .ordershandle {position:absolute;top:50%;left:-5px;transform:translateY(-50%);width:8px;height:8px;border:2px solid var(--cardfocus);box-sizing:border-box;background:white;border-radius:1.5px;cursor:ew-resize;display:none;}
-        .timeline .focused .timelinehandle, .timeline .dragcard:hover .timelinehandle, .timeline .dragcard:active .timelinehandle, .ordersdoc .dragcard:hover .ordershandle, .ordersdoc .dragcard:active .ordershandle, .ordersdoc .focused .ordershandle {display:block;}
+      .timelinehandle, .ordershandle {position:absolute;top:50%;left:-5px;transform:translateY(-50%);width:8px;height:8px;border:2px solid var(--cardfocuslite);box-sizing:border-box;background:white;border-radius:1.5px;cursor:ew-resize;display:none;}
+      .timeline .dragcard:hover .timelinehandle, .timeline .dragcard:active .timelinehandle, .ordersdoc .dragcard:hover .ordershandle, .ordersdoc .dragcard:active .ordershandle {display:block;}
+        .timeline .focused .timelinehandle, .ordersdoc .focused .ordershandle {display:block;border-color:var(--cardfocus);}
         .timelinehandle::after, .ordershandle::after {content:'';display:block;width:20px;height:20px;top:-10px;left:-10px;position:absolute;}
           .righthandle {right:-5px;left:auto;}
+
+        .ordersdoc .dragcard:hover, .ordersdoc .dragcard:active  {box-shadow:0 0 0 2px var(--cardfocuslite);}
+          .ordersdoc .dragcard.focused {box-shadow:0 0 0 2px var(--cardfocus) !important;}
 
       .timelinescale {position:absolute;top:-40px;right:40px;}
 
@@ -518,8 +523,12 @@ https://briefone.github.io/test/library/
 
       .ordersdoc .textblock {margin-bottom:8px;padding:8px 8px;font-weight:600;}
 
-      .printview .ordersdoc .dragcard {background:transparent !important;color:black !important;margin-bottom:0;box-shadow:none;border:none;}
+      .printview .ordersdoc .dragcard {background:transparent !important;color:black !important;margin-bottom:8px;border:none;}
         .printview .ordersdoc .dragcard .keytag {display:none;}
+
+
+      .subnavactions {display:none;gap:4px;}
+        .vorders .orderssubnav, .vtimeline .timelinesubnav {display:flex;}
   </style>
   <script src="../js/base.js"></script>
   <script src="../js/gator.js"></script>
@@ -1525,6 +1534,7 @@ https://briefone.github.io/test/library/
             if ( od ){
               inserted2 = true;
               cc.style.position = 'relative';
+              cc.style.width = '6.5in';
 
               if ( !cc.getElementsByClassName('ordershandle').length ){
                 let h = document.createElement('div');
@@ -1546,6 +1556,8 @@ https://briefone.github.io/test/library/
               }
 
               tar.insertBefore(cc, ib);
+
+              // cc.style.width = 'calc(6.5in - ' + cc.offsetLeft + 'px)';
 
               renumber.call(tar);
 
@@ -2024,6 +2036,11 @@ https://briefone.github.io/test/library/
           this.classList.add('pop2');
 
         }
+
+      let cc = this.dataset.class;
+
+      document.body.classList.remove('vtimeline','vboard','vorders','vscratch','vce','vbriefs');
+      document.body.classList.add('v'+cc);
 
         // return;
       // }
@@ -3137,6 +3154,9 @@ https://briefone.github.io/test/library/
       let t = document.createElement('div');
 
       let vb = document.getElementById('viewbtns');
+      let tb = document.createElement('div');
+
+      tb.className = 'timelinesubnav subnavactions';
 
       x.style.position = 'absolute';
       x.style.top = 0;
@@ -3155,8 +3175,11 @@ https://briefone.github.io/test/library/
       t.style.height = 'calc(100% - 25px)';
 
 
-      vb.empty();
-      vb.innerHTML = `<div class="btn timelinebtn on" data-scale=month>Month</div><div class="btn timelinebtn" data-scale=quarter>Quarter</div><div class="btn timelinebtn" data-scale=year>Year</div>`;
+      if ( !vb.getElementsByClassName('timelinesubnav').length ){
+        tb.innerHTML = `<div class="btn timelinebtn on" data-scale=month>Month</div><div class="btn timelinebtn" data-scale=quarter>Quarter</div><div class="btn timelinebtn" data-scale=year>Year</div>`;
+
+        vb.appendChild(tb);
+      }
 
       let days = 731;
 
@@ -3236,7 +3259,9 @@ https://briefone.github.io/test/library/
 
       let o = document.createElement('div');
       let tb = document.createElement('div');
+      let ob = document.createElement('div');
 
+      ob.className = 'orderssubnav subnavactions';
       x.className = 'orderswrap';
       o.className = 'ordersdoc';
       tb.className = 'textblock';
@@ -3257,8 +3282,12 @@ https://briefone.github.io/test/library/
       pv.className = 'btn printviewbtn toggle';
       pv.dataset.class = 'printview';
       pv.appendChild(document.createTextNode('Print View'));
-      vb.empty();
-      vb.appendChild(pv);
+
+      if ( !vb.getElementsByClassName('orderssubnav').length ){
+        ob.appendChild(pv);
+
+        vb.appendChild(ob);
+      }
      
       let v = newview('dragscroll', x);
       newtab('New orders', 'orders', v);
@@ -3274,6 +3303,7 @@ https://briefone.github.io/test/library/
     function newtab(x, c, v, g = true){
       let t = document.createElement('div');
       t.className = `tab ${c} closeable`;
+      t.dataset.class = c;
       t.dataset.view = v;
       t.appendChild(document.createTextNode(x));
 
@@ -3498,6 +3528,13 @@ https://briefone.github.io/test/library/
 
           let oc = document.querySelector('.card[data-id="' + id +'"]');
           oc.remove();
+
+          let od = dragcard.getparent('ordersdoc');
+
+          if ( od ){
+            dragcard.style.position = 'relative';
+            renumber.call(od);
+          }
         }
       
         float.appendChild(c);
@@ -4275,7 +4312,7 @@ https://briefone.github.io/test/library/
     }
 
     function oclick(e){
-
+      document.getElementsByClassName('dragcard focused').removeclass('focused');
         let tagg = 'uncategorized';
 
         let tw = this.getparent('orderswrap');
@@ -4452,13 +4489,14 @@ https://briefone.github.io/test/library/
         let o = d;
 
         let timeline = d.getparent('timeline');
+        let od = d.getparent('ordersdoc');
 
         for(var i=0;i<cc.length;i++){
           let v = cc[i].trim();
           if ( v == '' ){
             continue;
           }
-          document.getElementsByClassName('focused').removeclass('focused');
+          document.getElementsByClassName('dragcard focused').removeclass('focused');
 
           let list = this.getparent('list');
           let lt = list ? list.getElementsByClassName('listtag') : [];
@@ -4511,6 +4549,15 @@ https://briefone.github.io/test/library/
             dragcard.appendChild(hr);
           }
 
+          if ( od ){
+            dragcard.style.position = 'relative';
+
+            let h = document.createElement('div');
+            h.className = 'timelinehandle lefthandle';
+
+            dragcard.appendChild(h);
+          }
+
           o.insertAfter(dragcard);
           o = dragcard;
         }
@@ -4519,6 +4566,10 @@ https://briefone.github.io/test/library/
 
         if ( timeline ){
           reshuffletimeline.call(timeline, {});
+        }
+
+        if ( od ){
+          renumber.call(od);
         }
     }
 
@@ -4648,6 +4699,10 @@ https://briefone.github.io/test/library/
 
       let thres = 40;
 
+      document.getElementsByClassName('dragcard focused').removeclass('focused');
+
+      t.classList.add('focused');
+
       function move(e){
         let x = e.clientX;
 
@@ -4658,7 +4713,7 @@ https://briefone.github.io/test/library/
         let f2 = f * thres;
 
         t.style.left = f2 + 'px';
-        t.style.width = 'calc(100% - ' + f2 + 'px)';
+        t.style.width = 'calc(6.5in - ' + f2 + 'px)';
 
         renumber.call(t.getparent('ordersdoc'));
       }
@@ -4702,6 +4757,7 @@ https://briefone.github.io/test/library/
         sl.shift();
 
         c.getElementsByClassName('mr')[0].dataset.level = sec  + '.' + sl.slice(0, f).join('.');
+        c.style.width = 'calc(6.5in - ' + ml + 'px)';
 
         if ( !c.getElementsByClassName('ordershandle').length ){
           let h = document.createElement('div');
