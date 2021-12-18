@@ -3489,13 +3489,16 @@ https://briefone.github.io/test/library/
 
           tt.parentNode.insertBefore(dragcard, tt);
 
+          let ol = tt.offsetLeft;
+          let ot = tt.offsetTop;
+
           if (dragcard.parentElement.classList.contains('cedrop')){
             dragcard.style.position = 'absolute';
             let y = e.clientY;
             let x = e.clientX;
 
-            dragcard.style.left = tt.offsetLeft + 'px';
-            dragcard.style.top = tt.offsetTop + 'px';
+            dragcard.style.left = ol + 'px';
+            dragcard.style.top = ot + 'px';
           }
 
           let id = tt.dataset.id;
@@ -3509,10 +3512,30 @@ https://briefone.github.io/test/library/
 
           let od = dragcard.getparent('ordersdoc');
 
+
           if ( od ){
             dragcard.style.position = 'relative';
             renumber.call(od);
           }
+
+          let tl = dragcard.getparent('timeline');
+          if (tl){
+            dragcard.style.position = 'absolute';
+            dragcard.style.left = ol + 'px';
+            dragcard.style.top = ot + 'px';
+
+            let h = document.createElement('div');
+            h.className = 'timelinehandle lefthandle';
+
+            let hr = document.createElement('div');
+            hr.className = 'timelinehandle righthandle';
+
+            dragcard.appendChild(h);
+            dragcard.appendChild(hr);
+
+            reshuffletimeline.call(tl);
+          }
+          
         }
       
         float.appendChild(c);
