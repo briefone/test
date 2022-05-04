@@ -3123,7 +3123,7 @@ https://briefone.github.io/test/library/
       return Array(+digits.join("") + 1).join("M") + roman;
     }
 
-    function newtimeline(l, g = true){
+    function newtimeline(e, l, g = true){
       let x = document.createElement('div');
 
       let w = document.createElement('div');
@@ -3154,7 +3154,7 @@ https://briefone.github.io/test/library/
 
 
       if ( !vb.getElementsByClassName('timelinesubnav').length ){
-        tb.innerHTML = `<div class="btn timelinebtn on" data-scale=month>Month</div><div class="btn timelinebtn" data-scale=quarter>Quarter</div><div class="btn timelinebtn" data-scale=year>Year</div>`;
+        tb.innerHTML = `<div class="btn timelinebtn on" data-scale=month>Month</div><div class="btn timelinebtn" data-scale=quarter>Quarter</div><div class="btn timelinebtn" data-scale=year>Year</div><div class="btn timelinebtn" data-scale=all>Show all</div>`;
 
         vb.appendChild(tb);
       }
@@ -3170,6 +3170,13 @@ https://briefone.github.io/test/library/
         if ( x == 0 ){
           a.classList.add('dday');
         }
+
+        // if ( x >= 0 ){
+        //   x = '+' + x;
+        // }
+        
+        // x = 'D' + x
+        
         a.appendChild(document.createTextNode(x));
         d.appendChild(a);
       }
@@ -3186,7 +3193,7 @@ https://briefone.github.io/test/library/
       w.scrollLeft = 14600 - (window.innerWidth /2) + 360;
     }
 
-    function newce(t, g = true){
+    function newce(e, t, g = true){
       let x = document.createElement('div');
 
 
@@ -3216,7 +3223,7 @@ https://briefone.github.io/test/library/
       newtab(t ||'New cause & effect', 'ce', v, g);
     }
 
-    function newbrief(t, g = true){
+    function newbrief(e, t, g = true){
       let x = document.createElement('div');
 
       x.innerHTML = `<div class=deck>
@@ -3232,7 +3239,7 @@ https://briefone.github.io/test/library/
       newtab(t ||'New brief', 'brief', v, g);
     }
 
-    function neworders(t, g = true){
+    function neworders(e, t, g = true){
       let x = document.createElement('div');
 
       let o = document.createElement('div');
@@ -3271,7 +3278,7 @@ https://briefone.github.io/test/library/
       newtab(t ||'New orders', 'orders', v, g);
     }
 
-    function newscratch(t, g = true){
+    function newscratch(e, t, g = true){
       let x = document.createElement('div');
       x.className = 'scratchpad';
       let v = newview('dragscroll', x);
@@ -4926,12 +4933,12 @@ https://briefone.github.io/test/library/
     restorecustom();
     popcorn();
 
-    newbrief('Mission Brief', false);
+    newbrief(null, 'Mission Brief', false);
     newboard();
-    newscratch('Road to War', false);
-    newce('C -> E', false);
-    neworders('WARNO', false);
-    newtimeline('Sync Matrix', false);
+    newscratch(null, 'Road to War', false);
+    newce(null, 'C -> E', false);
+    neworders(null, 'WARNO', false);
+    newtimeline(null, 'Sync Matrix', false);
 
     if ( localStorage.opennew){
       document.getElementById('openpopwindow').classList.add('opened');
