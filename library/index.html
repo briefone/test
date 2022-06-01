@@ -2054,6 +2054,8 @@ https://briefone.github.io/test/library/
         console.log(ts.scrollWidth, ts.offsetWidth, 'ts')
         tw.scrollLeft = ts.scrollWidth/ 2 - (window.innerWidth /2) + 360;
       }
+
+      location.hash = v;
     }
 
     function filtercards(e){
@@ -4856,6 +4858,23 @@ https://briefone.github.io/test/library/
       }
     }
 
+    function loaded(h){
+      let hash = h?.replace('#', '');
+      let tabs = document.getElementsByClassName('tab');
+
+      if ( hash == 'p2' || hash == '' || hash == '#'){
+        return;
+      }
+
+      for(var i=0;i <tabs.length;i++){
+        let t = tabs[i];
+        if ( t.dataset.view == hash){
+          tab.call(t);
+          return;
+        }
+      }
+    }
+
     Attach.on('dragstart', '.card', dragStart);
 
     Attach.on('dragover', '.list, .slide, .scratchpad', handleDragOver);
@@ -4927,6 +4946,7 @@ https://briefone.github.io/test/library/
     document.addEventListener('keyup', keypress);
     document.addEventListener('mousedown', docclick);
 
+    let HASH = location.hash;
 
     makekeytags();
     makecards(40);
@@ -4943,6 +4963,8 @@ https://briefone.github.io/test/library/
     if ( localStorage.opennew){
       document.getElementById('openpopwindow').classList.add('opened');
     }
+
+    loaded(HASH);
   </script>
 </body>
 </html>
