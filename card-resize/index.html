@@ -662,8 +662,9 @@
                 rect.getElementsByClassName('text')[0].style.fontSize = (12 + ((nw-240) * 0.1)) / 6.66 + 'ch';
                 setboundingposition();
             } else {
-
-              rect.style.height = Math.max(nh, rect.getElementsByClassName('text')[0].offsetHeight + rect.getElementsByClassName('kt')[0].offsetHeight + 24 + 4) + 'px';
+              if ( !rect.classList.contains('widthonly')){
+                rect.style.height = Math.max(nh, rect.getElementsByClassName('text')[0].offsetHeight + rect.getElementsByClassName('kt')[0].offsetHeight + 24 + 4) + 'px';
+              }
 
               setboundingposition();
             }
